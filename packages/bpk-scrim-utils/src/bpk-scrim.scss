@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,10 +25,15 @@
   bottom: 0;
   left: 0;
   z-index: $bpk-zindex-scrim;
-  transition: opacity $bpk-duration-xs ease-in-out;
+  transition: opacity $bpk-duration-sm ease-in-out;
   background-color: $bpk-scrim-background-color;
   opacity: $bpk-scrim-opacity;
   overflow: hidden;
+
+  &--dark {
+    background-color: $bpk-scrim-dark-background-color;
+    opacity: $bpk-scrim-dark-opacity;
+  }
 
   &--full-screen {
     @include bpk-breakpoint-mobile {
@@ -42,9 +47,5 @@
 
   &--appear-active {
     opacity: $bpk-scrim-opacity;
-
-    @include bpk-breakpoint-mobile {
-      opacity: $bpk-scrim-mobile-opacity;
-    }
   }
 }

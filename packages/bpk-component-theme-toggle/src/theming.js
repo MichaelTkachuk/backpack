@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,8 @@ import {
   horizontalNavLinkActiveColor,
   calendarDayHoverColor,
   calendarDayActiveColor,
-  colorGray100,
+  colorSkyGrayTint06,
+  colorSkyGrayTint02,
   colorWhite,
 } from 'bpk-tokens/tokens/base.es6';
 
@@ -33,10 +34,29 @@ const generateTheme = ({
   secondaryColor500,
   secondaryColor600,
   secondaryColor700,
+  fontSize,
+  docsSidebarBackground,
+  docsSidebarLink,
+  docsSidebarLinkBorder,
+  docsSidebarSelectedArrowColor,
+  themeName,
 }) => ({
+  themeName,
+
+  primaryColor: primaryColor500,
+  logoFillColor: primaryColor500,
+
   accordionActiveColor: primaryColor700,
   accordionColor: primaryColor500,
   accordionHoverColor: primaryColor600,
+
+  badgeBackgroundColor: primaryColor500,
+  badgeSuccessBackgroundColor: secondaryColor500,
+  badgeDestructiveBackgroundColor: colorSkyGrayTint02,
+
+  bannerAlertSuccessColor: secondaryColor500,
+  bannerAlertWarnColor: 'orange',
+  bannerAlertErrorColor: primaryColor500,
 
   barchartBarBackgroundColor: primaryColor300,
   barchartBarHoverBackgroundColor: primaryColor500,
@@ -44,6 +64,8 @@ const generateTheme = ({
   barchartBarSelectedBackgroundColor: primaryColor700,
 
   blockquoteBarColor: primaryColor500,
+
+  buttonFontSize: fontSize,
 
   buttonPrimaryTextColor: colorWhite,
   buttonPrimaryHoverTextColor: colorWhite,
@@ -57,12 +79,38 @@ const generateTheme = ({
   buttonSecondaryTextColor: primaryColor500,
   buttonSecondaryHoverTextColor: primaryColor600,
   buttonSecondaryActiveTextColor: primaryColor700,
-  buttonSecondaryBorderColor: colorGray100,
+  buttonSecondaryBorderColor: colorSkyGrayTint06,
   buttonSecondaryHoverBorderColor: primaryColor600,
   buttonSecondaryActiveBorderColor: primaryColor700,
   buttonSecondaryBackgroundColor: colorWhite,
   buttonSecondaryHoverBackgroundColor: colorWhite,
   buttonSecondaryActiveBackgroundColor: colorWhite,
+
+  buttonFeaturedTextColor: colorWhite,
+  buttonFeaturedHoverTextColor: colorWhite,
+  buttonFeaturedActiveTextColor: colorWhite,
+  buttonFeaturedGradientStartColor: primaryColor500,
+  buttonFeaturedGradientEndColor: primaryColor600,
+  buttonFeaturedBackgroundColor: primaryColor600,
+  buttonFeaturedHoverBackgroundColor: primaryColor600,
+  buttonFeaturedActiveBackgroundColor: primaryColor700,
+
+  buttonDestructiveTextColor: secondaryColor500,
+  buttonDestructiveHoverTextColor: secondaryColor600,
+  buttonDestructiveActiveTextColor: secondaryColor700,
+  buttonDestructiveBorderColor: colorSkyGrayTint06,
+  buttonDestructiveHoverBorderColor: secondaryColor500,
+  buttonDestructiveActiveBorderColor: secondaryColor500,
+  buttonDestructiveBackgroundColor: colorWhite,
+  buttonDestructiveHoverBackgroundColor: colorWhite,
+  buttonDestructiveActiveBackgroundColor: colorWhite,
+
+  fieldsetLabelTextColor: secondaryColor500,
+
+  formValidationIconFill: secondaryColor500,
+  formValidationTextColor: secondaryColor500,
+
+  inputInvalidBorderColor: secondaryColor500,
 
   linkColor: primaryColor300,
   linkHoverColor: primaryColor500,
@@ -71,10 +119,8 @@ const generateTheme = ({
 
   linkAlternateColor: colorWhite,
   linkAlternateHoverColor: colorWhite,
-  linkAlternateActiveColor: colorGray100,
+  linkAlternateActiveColor: colorSkyGrayTint06,
   linkAlternateVisitedColor: colorWhite,
-
-  logoFillColor: primaryColor500,
 
   horizontalNavBarSelectedColor: primaryColor500,
   horizontalNavLinkSelectedColor: primaryColor500,
@@ -82,9 +128,15 @@ const generateTheme = ({
   horizontalNavLinkHoverColor,
   horizontalNavLinkActiveColor,
 
+  selectInvalidBorderColor: secondaryColor500,
+
   spinnerPrimaryColor: primaryColor500,
 
+  starRatingFilledColor: primaryColor500,
+
   sliderBarColor: primaryColor500,
+
+  textareaInvalidBorderColor: secondaryColor500,
 
   paginationNudgerActiveColor: primaryColor500,
   paginationNudgerColor: primaryColor500,
@@ -106,39 +158,84 @@ const generateTheme = ({
 
   checkboxCheckedColor: primaryColor700,
   radioCheckedColor: primaryColor700,
+
+  ratingHighColor: primaryColor500,
+  ratingMediumColor: secondaryColor500,
+  ratingLowColor: colorSkyGrayTint02,
+
+  mapMarkerPrimaryBackgroundColor: primaryColor700,
+  mapMarkerSecondaryBackgroundColor: secondaryColor700,
+
+  navigationBarIconButtonColor: colorWhite,
+  navigationBarIconButtonHoverColor: colorWhite,
+  navigationBarIconButtonActiveColor: colorWhite,
+  navigationBarButtonLinkColor: colorWhite,
+  navigationBarButtonLinkHoverColor: colorWhite,
+  navigationBarButtonLinkActiveColor: colorWhite,
+  navigationBarButtonLinkVisitedColor: colorWhite,
+  navigationBarTitleColor: colorWhite,
+  navigationBarBackgroundColor: primaryColor500,
+  docsSidebarBackground,
+  docsSidebarLink,
+  docsSidebarLinkBorder,
+  docsSidebarSelectedArrowColor,
 });
 
+const londonTheme = {
+  primaryColor300: '#F28494',
+  primaryColor500: '#ED1B28',
+  primaryColor600: '#D11622',
+  primaryColor700: '#B1121C',
+  secondaryColor300: '#6889AB',
+  secondaryColor500: '#013A76',
+  secondaryColor600: '#002F61',
+  secondaryColor700: '#00254B',
+  fontSize: '1.2rem',
+  docsSidebarBackground: '#013A76',
+  docsSidebarLink: '#6889AB',
+  docsSidebarLinkBorder: '#6889AB',
+  docsSidebarSelectedArrowColor: '#ED1B28',
+  themeName: 'London',
+};
+
+const hongKongTheme = {
+  primaryColor300: '#108685',
+  primaryColor500: '#006463',
+  primaryColor600: '#024D4D',
+  primaryColor700: '#013838',
+  secondaryColor300: '#686868',
+  secondaryColor500: '#4C4C4C',
+  secondaryColor600: '#3C3C3C',
+  secondaryColor700: '#2A2A2A',
+  fontSize: '1.2rem',
+  docsSidebarBackground: '#4C4C4C',
+  docsSidebarLink: '#686868',
+  docsSidebarLinkBorder: '#686868',
+  docsSidebarSelectedArrowColor: '#108685',
+  themeName: 'HongKong',
+};
+
+const dohaTheme = {
+  primaryColor300: '#BF3671',
+  primaryColor500: '#9B104C',
+  primaryColor600: '#7F083B',
+  primaryColor700: '#5E072C',
+  secondaryColor300: '#ffd54f',
+  secondaryColor500: '#ffc107',
+  secondaryColor600: '#ffb300',
+  secondaryColor700: '#ffa000',
+  fontSize: '1.2rem',
+  docsSidebarBackground: '#5E072C',
+  docsSidebarLink: '#BF3671',
+  docsSidebarLinkBorder: '#BF3671',
+  docsSidebarSelectedArrowColor: '#BF3671',
+  themeName: 'Doha',
+};
+
 const bpkCustomThemes = {
-  London: generateTheme({
-    primaryColor300: '#E57373',
-    primaryColor500: '#F44336',
-    primaryColor600: '#E53935',
-    primaryColor700: '#D32F2F',
-    secondaryColor300: '#7986CB',
-    secondaryColor500: '#3F51B5',
-    secondaryColor600: '#303F9F',
-    secondaryColor700: '#263490',
-  }),
-  'Hong Kong': generateTheme({
-    primaryColor300: '#108685',
-    primaryColor500: '#006463',
-    primaryColor600: '#024D4D',
-    primaryColor700: '#013838',
-    secondaryColor300: '#686868',
-    secondaryColor500: '#4C4C4C',
-    secondaryColor600: '#3C3C3C',
-    secondaryColor700: '#2A2A2A',
-  }),
-  Doha: generateTheme({
-    primaryColor300: '#BF3671',
-    primaryColor500: '#9B104C',
-    primaryColor600: '#7F083B',
-    primaryColor700: '#5E072C',
-    secondaryColor300: '#ffd54f',
-    secondaryColor500: '#ffc107',
-    secondaryColor600: '#ffb300',
-    secondaryColor700: '#ffa000',
-  }),
+  London: generateTheme(londonTheme),
+  'Hong Kong': generateTheme(hongKongTheme),
+  Doha: generateTheme(dohaTheme),
 };
 
 export default bpkCustomThemes;

@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,18 +15,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/* @flow */
+/* @flow strict */
 
 import React from 'react';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
-
 import BpkCloseButton from 'bpk-component-close-button';
 
 import { ALERT_TYPES } from './common-types';
 import BpkBannerAlertDismissable from './BpkBannerAlertDismissable';
 import BpkBannerAlertExpandable from './BpkBannerAlertExpandable';
-
 import withBannerAlertState from './withBannerAlertState';
 
 const message = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.';

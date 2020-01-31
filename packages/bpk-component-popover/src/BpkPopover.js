@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,10 +16,11 @@
  * limitations under the License.
  */
 
-/* @flow */
+/* @flow strict */
 
 import PropTypes from 'prop-types';
 import React, { type Node } from 'react';
+import BpkText from 'bpk-component-text';
 import { BpkButtonLink } from 'bpk-component-link';
 import BpkCloseButton from 'bpk-component-close-button';
 import { TransitionInitialMount, cssModules } from 'bpk-react-utils';
@@ -43,33 +44,33 @@ const bindEventSource = (source, callback) => event => {
 };
 
 export type Props = {
+  children: Node,
+  closeButtonIcon: boolean,
+  closeButtonText: string,
   id: string,
+  label: string,
+  labelAsTitle: boolean,
   onClose: (
     event: SyntheticEvent<>,
-    props: {
-      source: $Values<typeof EVENT_SOURCES>,
-    },
+    props: { source: $Values<typeof EVENT_SOURCES> },
   ) => mixed,
-  label: string,
-  closeButtonText: string,
-  children: Node,
   padded: boolean,
-  labelAsTitle: boolean,
-  closeButtonIcon: boolean,
   className: ?string,
+  closeButtonProps: ?Object,
 };
 
 const BpkPopover = (props: Props) => {
   const {
-    id,
-    onClose,
-    label,
-    closeButtonText,
     children,
     className,
-    padded,
-    labelAsTitle,
     closeButtonIcon,
+    closeButtonProps,
+    closeButtonText,
+    id,
+    label,
+    labelAsTitle,
+    onClose,
+    padded,
     ...rest
   } = props;
 
@@ -109,9 +110,9 @@ const BpkPopover = (props: Props) => {
         />
         {labelAsTitle ? (
           <header className={getClassName('bpk-popover__header')}>
-            <h2 id={labelId} className={getClassName('bpk-popover__heading')}>
+            <BpkText tagName="h2" id={labelId} bold>
               {label}
-            </h2>
+            </BpkText>
             &nbsp;
             {closeButtonIcon ? (
               <BpkCloseButton
@@ -121,6 +122,7 @@ const BpkPopover = (props: Props) => {
                   EVENT_SOURCES.CLOSE_BUTTON,
                   props.onClose,
                 )}
+                {...closeButtonProps}
               />
             ) : (
               <BpkButtonLink
@@ -128,6 +130,7 @@ const BpkPopover = (props: Props) => {
                   EVENT_SOURCES.CLOSE_LINK,
                   props.onClose,
                 )}
+                {...closeButtonProps}
               >
                 {closeButtonText}
               </BpkButtonLink>
@@ -143,6 +146,7 @@ const BpkPopover = (props: Props) => {
           <footer className={getClassName('bpk-popover__footer')}>
             <BpkButtonLink
               onClick={bindEventSource(EVENT_SOURCES.CLOSE_LINK, props.onClose)}
+              {...closeButtonProps}
             >
               {closeButtonText}
             </BpkButtonLink>
@@ -153,23 +157,28 @@ const BpkPopover = (props: Props) => {
   );
 };
 
-BpkPopover.propTypes = {
-  id: PropTypes.string.isRequired,
-  onClose: PropTypes.func.isRequired,
-  label: PropTypes.string.isRequired,
-  closeButtonText: PropTypes.string.isRequired,
+export const propTypes = {
   children: PropTypes.node.isRequired,
-  padded: PropTypes.bool,
-  labelAsTitle: PropTypes.bool,
-  closeButtonIcon: PropTypes.bool,
+  closeButtonText: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  onClose: PropTypes.func.isRequired,
   className: PropTypes.string,
+  closeButtonIcon: PropTypes.bool,
+  closeButtonProps: PropTypes.object,
+  labelAsTitle: PropTypes.bool,
+  padded: PropTypes.bool,
 };
 
-BpkPopover.defaultProps = {
-  padded: true,
-  labelAsTitle: false,
-  closeButtonIcon: true,
+export const defaultProps = {
   className: null,
+  closeButtonIcon: true,
+  closeButtonProps: null,
+  labelAsTitle: false,
+  padded: true,
 };
+
+BpkPopover.propTypes = { ...propTypes };
+BpkPopover.defaultProps = { ...defaultProps };
 
 export default BpkPopover;

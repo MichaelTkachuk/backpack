@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@
 
 import React from 'react';
 import renderer from 'react-test-renderer';
+
 import BpkLink, { themeAttributes } from './BpkLink';
 
 describe('BpkLink', () => {
@@ -41,6 +42,28 @@ describe('BpkLink', () => {
     const tree = renderer
       .create(
         <BpkLink href="#" blank>
+          Link (new window)
+        </BpkLink>,
+      )
+      .toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('should render correctly with a "rel" attribute', () => {
+    const tree = renderer
+      .create(
+        <BpkLink href="#" blank rel="rel-attr">
+          Link (new window)
+        </BpkLink>,
+      )
+      .toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('should render correctly with "blank" and "rel" attributes', () => {
+    const tree = renderer
+      .create(
+        <BpkLink href="#" blank rel="rel-overwrite">
           Link (new window)
         </BpkLink>,
       )

@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,8 +19,10 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
-import BpkBarchart from './BpkBarchart';
+
 import data from '../data.json';
+
+import BpkBarchart from './BpkBarchart';
 
 const { prices } = data;
 const size = 200;
@@ -36,6 +38,54 @@ describe('BpkBarchart', () => {
         initialWidth={size}
         initialHeight={size}
         data={prices}
+      />,
+    );
+    expect(toJson(tree)).toMatchSnapshot();
+  });
+
+  it('should render correctly with "className" prop', () => {
+    const tree = shallow(
+      <BpkBarchart
+        xScaleDataKey="month"
+        yScaleDataKey="price"
+        xAxisLabel="Month"
+        yAxisLabel="Average price (£)"
+        initialWidth={size}
+        initialHeight={size}
+        data={prices}
+        className="my-custom-class-name"
+      />,
+    );
+    expect(toJson(tree)).toMatchSnapshot();
+  });
+
+  it('should render correctly with "leadingScrollIndicatorClassName" prop', () => {
+    const tree = shallow(
+      <BpkBarchart
+        xScaleDataKey="month"
+        yScaleDataKey="price"
+        xAxisLabel="Month"
+        yAxisLabel="Average price (£)"
+        initialWidth={size}
+        initialHeight={size}
+        data={prices}
+        leadingScrollIndicatorClassName="my-custom-class-name"
+      />,
+    );
+    expect(toJson(tree)).toMatchSnapshot();
+  });
+
+  it('should render correctly with "trailingScrollIndicatorClassName" prop', () => {
+    const tree = shallow(
+      <BpkBarchart
+        xScaleDataKey="month"
+        yScaleDataKey="price"
+        xAxisLabel="Month"
+        yAxisLabel="Average price (£)"
+        initialWidth={size}
+        initialHeight={size}
+        data={prices}
+        trailingScrollIndicatorClassName="my-custom-class-name"
       />,
     );
     expect(toJson(tree)).toMatchSnapshot();
@@ -84,22 +134,6 @@ describe('BpkBarchart', () => {
         initialHeight={size}
         data={prices}
         onBarHover={() => null}
-      />,
-    );
-    expect(toJson(tree)).toMatchSnapshot();
-  });
-
-  it('should render with "onBarTouch" prop', () => {
-    const tree = shallow(
-      <BpkBarchart
-        xScaleDataKey="month"
-        yScaleDataKey="price"
-        xAxisLabel="Month"
-        yAxisLabel="Average price (£)"
-        initialWidth={size}
-        initialHeight={size}
-        data={prices}
-        onBarTouch={() => null}
       />,
     );
     expect(toJson(tree)).toMatchSnapshot();
@@ -164,6 +198,21 @@ describe('BpkBarchart', () => {
         initialHeight={size}
         data={prices}
         disableDataTable
+      />,
+    );
+    expect(toJson(tree)).toMatchSnapshot();
+  });
+  it('should render correctly with "yAxisDomain" prop', () => {
+    const tree = shallow(
+      <BpkBarchart
+        xScaleDataKey="month"
+        yScaleDataKey="price"
+        xAxisLabel="Month"
+        yAxisLabel="Average price (£)"
+        initialWidth={size}
+        initialHeight={size}
+        data={prices}
+        yAxisDomain={[null, 100]}
       />,
     );
     expect(toJson(tree)).toMatchSnapshot();

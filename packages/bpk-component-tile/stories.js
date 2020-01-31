@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@
 
 import React from 'react';
 import { storiesOf } from '@storybook/react';
+
 import { colors } from '../bpk-tokens/tokens/base.es6';
 
 import BpkTile from './index';
@@ -27,7 +28,7 @@ storiesOf('bpk-component-tile', module)
     <BpkTile
       heading="Using icons in code."
       imageSource="https://www.w3schools.com/css/trolltunga.jpg"
-      backgroundColor={colors.colorGreen500}
+      backgroundColor={colors.colorMonteverde}
       dark
     />
   ))
@@ -35,7 +36,7 @@ storiesOf('bpk-component-tile', module)
     <BpkTile
       heading="Using icons in sketch."
       imageSource="https://www.w3schools.com/css/trolltunga.jpg"
-      backgroundColor={colors.colorRed500}
+      backgroundColor={colors.colorPanjin}
     />
   ))
   .add('Illustration', () => (
@@ -56,6 +57,6 @@ storiesOf('bpk-component-tile', module)
     <BpkTile
       heading="Illustration guidelines and best practices"
       imageSource="https://www.w3schools.com/css/trolltunga.jpg"
-      backgroundColor={colors.colorYellow500}
+      backgroundColor={colors.colorKolkata}
     />
   ));

@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,10 +18,9 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import { cssModules } from 'bpk-react-utils';
-import BpkStar, { STAR_TYPES } from './BpkStar';
 
+import BpkStar, { STAR_TYPES } from './BpkStar';
 import STYLES from './BpkStarRating.scss';
 
 const getClassName = cssModules(STYLES);
@@ -39,8 +38,22 @@ export const getTypeByRating = (starNumber, rating) => {
   return STAR_TYPES.EMPTY;
 };
 
+export const ROUNDING_TYPES = {
+  down: n => Math.floor(n * 2) / 2,
+  up: n => Math.ceil(n * 2) / 2,
+  nearest: n => Math.round(n * 2) / 2,
+};
+
 const BpkStarRating = props => {
-  const { rating, ratingLabel, maxRating, large, className, ...rest } = props;
+  const {
+    rating,
+    ratingLabel,
+    maxRating,
+    large,
+    className,
+    rounding,
+    ...rest
+  } = props;
 
   const stars = [];
   const classNames = [getClassName('bpk-star-rating')];
@@ -52,7 +65,7 @@ const BpkStarRating = props => {
   }
 
   for (let starNumber = 1; starNumber <= maxRating; starNumber += 1) {
-    const type = getTypeByRating(starNumber, currentRating);
+    const type = getTypeByRating(starNumber, rounding(currentRating));
 
     stars.push(
       <BpkStar key={`star-${starNumber}`} type={type} large={large} />,
@@ -78,6 +91,11 @@ BpkStarRating.propTypes = {
   large: PropTypes.bool,
   maxRating: PropTypes.number,
   rating: PropTypes.number,
+  rounding: PropTypes.oneOf([
+    ROUNDING_TYPES.down,
+    ROUNDING_TYPES.up,
+    ROUNDING_TYPES.nearest,
+  ]),
 };
 
 BpkStarRating.defaultProps = {
@@ -85,6 +103,7 @@ BpkStarRating.defaultProps = {
   large: false,
   maxRating: 5,
   rating: 0,
+  rounding: ROUNDING_TYPES.down,
 };
 
 export default BpkStarRating;

@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,12 +18,20 @@
 
 import React from 'react';
 import renderer from 'react-test-renderer';
+import { StaticRouter } from 'react-router-dom';
+
 import BpkRouterLink from './BpkRouterLink';
+
+const context = {};
 
 describe('BpkRouterLink', () => {
   it('should render correctly with a "to" attribute', () => {
     const tree = renderer
-      .create(<BpkRouterLink to="#">Link</BpkRouterLink>)
+      .create(
+        <StaticRouter location="/" context={context}>
+          <BpkRouterLink to="/home">Link</BpkRouterLink>
+        </StaticRouter>,
+      )
       .toJSON();
     expect(tree).toMatchSnapshot();
   });
@@ -31,9 +39,14 @@ describe('BpkRouterLink', () => {
   it('should render correctly with a "className" attribute', () => {
     const tree = renderer
       .create(
-        <BpkRouterLink to="#" className="my-custom-class-1 my-custom-class-2">
-          Link
-        </BpkRouterLink>,
+        <StaticRouter location="/" context={context}>
+          <BpkRouterLink
+            to="/home"
+            className="my-custom-class-1 my-custom-class-2"
+          >
+            Link
+          </BpkRouterLink>
+        </StaticRouter>,
       )
       .toJSON();
     expect(tree).toMatchSnapshot();
@@ -42,9 +55,11 @@ describe('BpkRouterLink', () => {
   it('should render correctly with arbitrary attributes', () => {
     const tree = renderer
       .create(
-        <BpkRouterLink to="#" target="_blank">
-          Link
-        </BpkRouterLink>,
+        <StaticRouter location="/" context={context}>
+          <BpkRouterLink to="/home" target="_blank">
+            Link
+          </BpkRouterLink>
+        </StaticRouter>,
       )
       .toJSON();
     expect(tree).toMatchSnapshot();

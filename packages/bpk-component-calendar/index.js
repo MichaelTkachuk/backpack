@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,10 +19,15 @@
 import BpkCalendarContainer, {
   withCalendarState,
 } from './src/BpkCalendarContainer';
-import BpkCalendarGrid from './src/BpkCalendarGrid';
+import BpkCalendarGrid, {
+  propTypes as BpkCalendarGridPropTypes,
+  BpkCalendarGridWithTransition,
+} from './src/BpkCalendarGrid';
 import BpkCalendarGridHeader from './src/BpkCalendarGridHeader';
 import BpkCalendarNav from './src/BpkCalendarNav';
-import BpkCalendarDate from './src/BpkCalendarDate';
+import BpkCalendarDate, {
+  propTypes as BpkCalendarDatePropTypes,
+} from './src/BpkCalendarDate';
 import composeCalendar from './src/composeCalendar';
 import CustomPropTypes from './src/custom-proptypes';
 import * as DateUtils from './src/date-utils';
@@ -40,4 +45,7 @@ export {
   composeCalendar,
   withCalendarState,
   themeAttributes,
+  BpkCalendarDatePropTypes,
+  BpkCalendarGridPropTypes,
+  BpkCalendarGridWithTransition,
 };

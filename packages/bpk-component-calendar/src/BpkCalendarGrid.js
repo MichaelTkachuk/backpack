@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,8 +29,17 @@ import {
   orderDaysOfWeek,
 } from './date-utils';
 import CustomPropTypes from './custom-proptypes';
+import STYLES from './BpkCalendarGrid.scss';
+import { addCalendarGridTransition } from './BpkCalendarGridTransition';
+// This should be imported after `./BpkCalendarGrid.scss`.
+// Because of how css specificity works the class `bpk-calendar-grid-transition__grid` needs to be defined
+// after `bpk-calendar-grid` (defined by BpkCalendarGrid.scss) so it can override width and display of the calendar
 
-import STYLES from './bpk-calendar-grid.scss';
+// This is because the calendar with transiction is expected to have a fixed width and whenever `bpk-calendar-grid-transition__grid`
+// class is applyed it should override the calendar style.
+
+// NOTE that ./Week is also importing ./BpkCalendarGrid.scss so adding this after `./Week` would also do the job but
+// for clarity we should leave it here.
 
 const getClassName = cssModules(STYLES);
 
@@ -88,9 +97,14 @@ class BpkCalendarGrid extends Component {
       markToday,
       markOutsideDays,
       selectedDate,
+      selectionEnd,
+      selectionStart,
       focusedDate,
       minDate,
       maxDate,
+      ignoreOutsideDate,
+      dateProps,
+      cellClassName,
     } = this.props;
 
     const { calendarMonthWeeks, daysOfWeek } = this.state;
@@ -133,9 +147,14 @@ class BpkCalendarGrid extends Component {
               markToday={markToday}
               markOutsideDays={markOutsideDays}
               selectedDate={selectedDate}
+              selectionEnd={selectionEnd}
+              selectionStart={selectionStart}
               focusedDate={focusedDate}
               minDate={minDate}
               maxDate={maxDate}
+              ignoreOutsideDate={ignoreOutsideDate}
+              dateProps={dateProps}
+              cellClassName={cellClassName}
             />
           ))}
         </tbody>
@@ -144,15 +163,17 @@ class BpkCalendarGrid extends Component {
   }
 }
 
-BpkCalendarGrid.propTypes = {
+export const propTypes = {
   // Required
   DateComponent: PropTypes.func.isRequired,
   daysOfWeek: CustomPropTypes.DaysOfWeek.isRequired,
   formatDateFull: PropTypes.func.isRequired,
   formatMonth: PropTypes.func.isRequired,
   month: PropTypes.instanceOf(Date).isRequired,
+  weekStartsOn: PropTypes.number.isRequired,
   // Optional
   className: PropTypes.string,
+  cellClassName: PropTypes.string,
   dateModifiers: CustomPropTypes.DateModifiers,
   focusedDate: PropTypes.instanceOf(Date),
   isKeyboardFocusable: PropTypes.bool,
@@ -164,9 +185,14 @@ BpkCalendarGrid.propTypes = {
   onDateKeyDown: PropTypes.func,
   preventKeyboardFocus: PropTypes.bool,
   selectedDate: PropTypes.instanceOf(Date),
+  selectionEnd: PropTypes.instanceOf(Date),
+  selectionStart: PropTypes.instanceOf(Date),
   showWeekendSeparator: PropTypes.bool,
-  weekStartsOn: PropTypes.number,
+  ignoreOutsideDate: PropTypes.bool,
+  dateProps: PropTypes.object, // eslint-disable-line react/forbid-prop-types
 };
+
+BpkCalendarGrid.propTypes = { ...propTypes };
 
 BpkCalendarGrid.defaultProps = {
   className: null,
@@ -181,8 +207,17 @@ BpkCalendarGrid.defaultProps = {
   onDateKeyDown: null,
   preventKeyboardFocus: false,
   selectedDate: null,
+  selectionEnd: null,
+  selectionStart: null,
   showWeekendSeparator: true,
-  weekStartsOn: 1,
+  ignoreOutsideDate: false,
+  dateProps: null,
+  cellClassName: null,
 };
 
+const BpkCalendarGridWithTransition = addCalendarGridTransition(
+  BpkCalendarGrid,
+);
+
 export default BpkCalendarGrid;
+export { BpkCalendarGridWithTransition };

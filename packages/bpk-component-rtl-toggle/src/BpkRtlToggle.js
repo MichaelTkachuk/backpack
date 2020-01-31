@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { BpkButtonLink } from 'bpk-component-link';
+
 import { getHtmlElement, DIRECTIONS, DIRECTION_CHANGE_EVENT } from './utils';
 
 const getDirection = () => getHtmlElement().dir || DIRECTIONS.LTR;
@@ -34,9 +35,6 @@ class BpkRtlToggle extends React.Component {
   constructor(props) {
     super(props);
 
-    this.toggleRtl = this.toggleRtl.bind(this);
-    this.handleKeyDown = this.handleKeyDown.bind(this);
-
     this.state = {
       direction: getDirection(),
     };
@@ -50,13 +48,13 @@ class BpkRtlToggle extends React.Component {
     document.removeEventListener('keydown', this.handleKeyDown);
   }
 
-  handleKeyDown(e) {
+  handleKeyDown = e => {
     if (e.ctrlKey && e.metaKey && e.key.toLowerCase() === 'r') {
       this.toggleRtl(e);
     }
-  }
+  };
 
-  toggleRtl(e) {
+  toggleRtl = e => {
     e.preventDefault();
 
     const direction =
@@ -65,7 +63,7 @@ class BpkRtlToggle extends React.Component {
     setDirection(direction);
 
     this.setState({ direction });
-  }
+  };
 
   render() {
     const { className } = this.props;

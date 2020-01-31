@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -53,5 +53,15 @@ storiesOf('bpk-component-textarea', module)
       onChange={action('input changed')}
       placeholder="Please enter some text"
       disabled
+    />
+  ))
+  .add('Invalid', () => (
+    <BpkTextarea
+      id="disabled"
+      name="disabled"
+      value=""
+      onChange={action('input changed')}
+      placeholder="Please enter some text"
+      valid={false}
     />
   ));

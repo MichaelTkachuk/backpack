@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@
 
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-
 import { wrapDisplayName } from 'bpk-react-utils';
 
 const withInteractiveStarRatingState = InteractiveStarRating => {
@@ -30,13 +29,9 @@ const withInteractiveStarRatingState = InteractiveStarRating => {
         rating: 0,
         hoverRating: 0,
       };
-
-      this.onRatingHover = this.onRatingHover.bind(this);
-      this.onMouseLeave = this.onMouseLeave.bind(this);
-      this.onRatingSelect = this.onRatingSelect.bind(this);
     }
 
-    onRatingSelect(rating, event) {
+    onRatingSelect = (rating, event) => {
       if (event) {
         event.persist();
       }
@@ -48,15 +43,15 @@ const withInteractiveStarRatingState = InteractiveStarRating => {
       };
 
       this.setState(() => ({ rating }), callback);
-    }
+    };
 
-    onMouseLeave() {
+    onMouseLeave = () => {
       this.setState(() => ({ hoverRating: 0 }));
-    }
+    };
 
-    onRatingHover(hoverRating) {
+    onRatingHover = hoverRating => {
       this.setState(() => ({ hoverRating }));
-    }
+    };
 
     render() {
       return (

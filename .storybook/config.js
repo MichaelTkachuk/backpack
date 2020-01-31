@@ -17,19 +17,24 @@
  */
 import React from 'react';
 import { configure, addDecorator } from '@storybook/react';
+import { withKnobs } from '@storybook/addon-knobs';
+import { withA11y } from '@storybook/addon-a11y';
 
 import '../packages/bpk-stylesheets';
-import TOKENS from './../packages/bpk-tokens/tokens/base.common';
-import BpkGridToggle from './../packages/bpk-component-grid-toggle';
-import BpkRtlToggle from './../packages/bpk-component-rtl-toggle';
+import TOKENS from '../packages/bpk-tokens/tokens/base.common';
+import BpkGridToggle from '../packages/bpk-component-grid-toggle';
+import BpkRtlToggle from '../packages/bpk-component-rtl-toggle';
 import BpkThemeToggle, {
   updateOnThemeChange,
-} from './../packages/bpk-component-theme-toggle';
-import BpkThemeProvider from './../packages/bpk-theming';
+} from '../packages/bpk-component-theme-toggle';
+import BpkThemeProvider from '../packages/bpk-theming';
+
 import themeableAttributes from './themeableAttributes';
 
 const EnhancedThemeProvider = updateOnThemeChange(BpkThemeProvider);
 
+addDecorator(withA11y);
+addDecorator(withKnobs);
 addDecorator(story => (
   <div style={{ padding: TOKENS.spacingBase }}>
     <EnhancedThemeProvider themeAttributes={themeableAttributes}>
@@ -54,10 +59,12 @@ configure(() => {
   require('./../packages/bpk-component-banner-alert/stories');
   require('./../packages/bpk-component-barchart/stories');
   require('./../packages/bpk-component-blockquote/stories');
+  require('./../packages/bpk-component-breadcrumb/stories');
   require('./../packages/bpk-component-breakpoint/stories');
   require('./../packages/bpk-component-button/stories');
   require('./../packages/bpk-component-calendar/stories');
   require('./../packages/bpk-component-card/stories');
+  require('./../packages/bpk-component-carousel/stories');
   require('./../packages/bpk-component-checkbox/stories');
   require('./../packages/bpk-component-chip/stories');
   require('./../packages/bpk-component-close-button/stories');
@@ -69,29 +76,38 @@ configure(() => {
   require('./../packages/bpk-component-dialog/stories');
   require('./../packages/bpk-component-drawer/stories');
   require('./../packages/bpk-component-fieldset/stories');
+  require('./../packages/bpk-component-flare/stories');
   require('./../packages/bpk-component-form-validation/stories');
-  require('./../packages/bpk-component-grid/stories');
   require('./../packages/bpk-component-grid-toggle/stories');
+  require('./../packages/bpk-component-grid/stories');
   require('./../packages/bpk-component-heading/stories');
   require('./../packages/bpk-component-horizontal-nav/stories');
   require('./../packages/bpk-component-icon/stories');
   require('./../packages/bpk-component-image/stories');
+  require('./../packages/bpk-component-infinite-scroll/stories');
   require('./../packages/bpk-component-input/stories');
   require('./../packages/bpk-component-label/stories');
   require('./../packages/bpk-component-link/stories');
   require('./../packages/bpk-component-list/stories');
   require('./../packages/bpk-component-loading-button/stories');
+  require('./../packages/bpk-component-map/stories');
   require('./../packages/bpk-component-mobile-scroll-container/stories');
   require('./../packages/bpk-component-modal/stories');
+  require('./../packages/bpk-component-navigation-bar/stories');
+  require('./../packages/bpk-component-navigation-stack/stories');
   require('./../packages/bpk-component-nudger/stories');
   require('./../packages/bpk-component-pagination/stories');
   require('./../packages/bpk-component-panel/stories');
   require('./../packages/bpk-component-paragraph/stories');
+  require('./../packages/bpk-component-phone-input/stories');
   require('./../packages/bpk-component-popover/stories');
   require('./../packages/bpk-component-progress/stories');
   require('./../packages/bpk-component-radio/stories');
+  require('./../packages/bpk-component-rating/stories');
   require('./../packages/bpk-component-router-link/stories');
   require('./../packages/bpk-component-rtl-toggle/stories');
+  require('./../packages/bpk-component-scrollable-calendar/stories');
+  require('./../packages/bpk-component-section-list/stories');
   require('./../packages/bpk-component-select/stories');
   require('./../packages/bpk-component-slider/stories');
   require('./../packages/bpk-component-spinner/stories');

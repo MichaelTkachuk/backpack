@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,8 @@
 
 import React from 'react';
 import renderer from 'react-test-renderer';
+
+import BpkConfigurableNudger from './BpkConfigurableNudger';
 import BpkNudger from './BpkNudger';
 
 describe('BpkNudger', () => {
@@ -32,6 +34,65 @@ describe('BpkNudger', () => {
           onChange={() => null}
           decreaseButtonLabel="Decrease"
           increaseButtonLabel="Increase"
+        />,
+      )
+      .toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('should render as an outline nudger correctly', () => {
+    const tree = renderer
+      .create(
+        <BpkNudger
+          id="nudger"
+          min={1}
+          max={9}
+          value={2}
+          onChange={() => null}
+          decreaseButtonLabel="Decrease"
+          increaseButtonLabel="Increase"
+          buttonType="outline"
+        />,
+      )
+      .toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('should render as a configurable nudger correctly', () => {
+    const compareValues = (a, b) => {
+      const options = ['economy', 'premium', 'business', 'first'];
+      const [aIndex, bIndex] = [options.indexOf(a), options.indexOf(b)];
+      return aIndex - bIndex;
+    };
+
+    const incrementValue = currentValue => {
+      const options = ['economy', 'premium', 'business', 'first'];
+      const [aIndex] = [options.indexOf(currentValue) + 1];
+      return options[aIndex];
+    };
+
+    const decrementValue = currentValue => {
+      const options = ['economy', 'premium', 'business', 'first'];
+      const [aIndex] = [options.indexOf(currentValue) - 1];
+      return options[aIndex];
+    };
+
+    const formatValue = a => a.toString();
+
+    const tree = renderer
+      .create(
+        <BpkConfigurableNudger
+          id="nudger"
+          min="economy"
+          max="first"
+          value="premium"
+          onChange={() => null}
+          decreaseButtonLabel="Decrease"
+          increaseButtonLabel="Increase"
+          compareValues={compareValues}
+          incrementValue={incrementValue}
+          decrementValue={decrementValue}
+          formatValue={formatValue}
         />,
       )
       .toJSON();

@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,12 +18,20 @@
 
 import React from 'react';
 import renderer from 'react-test-renderer';
+
 import BpkRadio from './BpkRadio';
 
 describe('BpkRadio', () => {
   it('should render correctly', () => {
     const tree = renderer
       .create(<BpkRadio name="radio" label="Direct" />)
+      .toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('should render correctly when label is a node', () => {
+    const tree = renderer
+      .create(<BpkRadio name="radio" label={<span>Direct</span>} />)
       .toJSON();
     expect(tree).toMatchSnapshot();
   });
@@ -59,6 +67,29 @@ describe('BpkRadio', () => {
   it('should render correctly with value attribute', () => {
     const tree = renderer
       .create(<BpkRadio name="radio" label="Direct" value="my-value" />)
+      .toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('should render correctly when invalid', () => {
+    const tree = renderer
+      .create(
+        <BpkRadio name="radio" label="Direct" value="my-value" valid={false} />,
+      )
+      .toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('should render correctly with ariaLabel attribute', () => {
+    const tree = renderer
+      .create(
+        <BpkRadio
+          id="radio"
+          name="radio"
+          label="Direct"
+          ariaLabel="Is this direct"
+        />,
+      )
       .toJSON();
     expect(tree).toMatchSnapshot();
   });

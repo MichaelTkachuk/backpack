@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { borderRadiusXs } from 'bpk-tokens/tokens/base.es6';
+
 import { remToPx } from './utils';
 
 const borderRadius = remToPx(borderRadiusXs);
@@ -48,7 +49,6 @@ const BpkBarchartBars = props => {
     onBarClick,
     onBarHover,
     onBarFocus,
-    onBarTouch,
     data,
     xScaleDataKey,
     yScaleDataKey,
@@ -89,7 +89,6 @@ const BpkBarchartBars = props => {
             onClick={onBarClick ? e => onBarClick(e, { point }) : null}
             onHover={onBarHover ? e => onBarHover(e, { point }) : null}
             onFocus={onBarFocus ? e => onBarFocus(e, { point }) : null}
-            onTouch={onBarTouch ? e => onBarTouch(e, { point }) : null}
             selected={getBarSelection(point)}
             padding={innerPadding}
             {...rest}
@@ -123,7 +122,6 @@ BpkBarchartBars.propTypes = {
   onBarClick: PropTypes.func,
   onBarHover: PropTypes.func,
   onBarFocus: PropTypes.func,
-  onBarTouch: PropTypes.func,
 };
 
 BpkBarchartBars.defaultProps = {
@@ -132,7 +130,6 @@ BpkBarchartBars.defaultProps = {
   onBarClick: null,
   onBarHover: null,
   onBarFocus: null,
-  onBarTouch: null,
   getBarSelection: () => false,
 };
 

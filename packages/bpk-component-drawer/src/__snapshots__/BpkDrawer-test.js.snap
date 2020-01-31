@@ -7,10 +7,10 @@ exports[`BpkDrawer should render correctly in the given target if renderTarget i
   <div>
     <div
       class="bpk-scrim-content bpk-drawer__container"
-      data-reactroot=""
     >
       <div
         class="bpk-scrim"
+        role="presentation"
       />
       <section
         aria-labelledby="bpk-drawer-heading-my-drawer"
@@ -28,9 +28,7 @@ exports[`BpkDrawer should render correctly in the given target if renderTarget i
           >
             Drawer title
           </h2>
-          <!-- react-text: 6 -->
            
-          <!-- /react-text -->
           <button
             aria-label="Close"
             class="bpk-close-button bpk-drawer__close-button"
@@ -40,6 +38,7 @@ exports[`BpkDrawer should render correctly in the given target if renderTarget i
             <svg
               class="bpk-close-button__icon"
               height="18"
+              style="width: 1.125rem; height: 1.125rem;"
               viewBox="0 0 24 24"
               width="18"
               xmlns="http://www.w3.org/2000/svg"

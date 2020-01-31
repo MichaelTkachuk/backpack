@@ -2,7 +2,7 @@
  *
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,17 +24,20 @@ import androidTokens from '../tokens/base.raw.android.json';
 import iosTokens from '../tokens/base.raw.ios.json';
 
 const ANDROID_ONLY_PROPS = [
-  'FONT_FAMILY_EMPHASIZE',
-  'ELEVATION_XS',
-  'ELEVATION_SM',
   'ELEVATION_BASE',
   'ELEVATION_LG',
+  'ELEVATION_SM',
   'ELEVATION_XL',
+  'ELEVATION_XS',
+  'ELEVATION_XXL',
+  'FONT_FAMILY_EMPHASIZE',
+  'FONT_FAMILY_HEAVY',
 ];
 
 const IOS_ONLY_PROPS = [
   'UNDERLAY_COLOR',
   'UNDERLAY_OPACITY',
+  'TEXT_HEAVY_FONT_WEIGHT',
   'TOUCHABLE_OVERLAY_COLOR',
   'TOUCHABLE_OVERLAY_OPACITY',
   'SHADOW_SM_COLOR',

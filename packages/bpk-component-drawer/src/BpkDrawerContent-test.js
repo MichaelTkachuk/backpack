@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,7 +36,6 @@ describe('BpkDrawerContent', () => {
           onCloseAnimationComplete={jest.fn()}
           closeLabel="Close"
           dialogRef={jest.fn()}
-          isIphone={false}
         >
           Drawer content
         </BpkDrawerContent>,
@@ -56,7 +55,6 @@ describe('BpkDrawerContent', () => {
           onCloseAnimationComplete={jest.fn()}
           closeLabel="Close"
           dialogRef={jest.fn()}
-          isIphone={false}
         >
           Drawer content
         </BpkDrawerContent>,
@@ -76,7 +74,6 @@ describe('BpkDrawerContent', () => {
           onCloseAnimationComplete={jest.fn()}
           closeLabel="Close"
           dialogRef={jest.fn()}
-          isIphone={false}
         >
           Drawer content
         </BpkDrawerContent>,
@@ -96,6 +93,25 @@ describe('BpkDrawerContent', () => {
           closeLabel="Close"
           dialogRef={jest.fn()}
           hideTitle
+        >
+          Drawer content
+        </BpkDrawerContent>,
+      )
+      .toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('should render correctly with arbitrary attributes', () => {
+    const tree = renderer
+      .create(
+        <BpkDrawerContent
+          id="my-drawer"
+          title="Drawer title"
+          onClose={jest.fn()}
+          onCloseAnimationComplete={jest.fn()}
+          closeLabel="Close"
+          dialogRef={jest.fn()}
+          data-arbitrary="prop"
         >
           Drawer content
         </BpkDrawerContent>,

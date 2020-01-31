@@ -1,4 +1,7 @@
 {
+  "imports": [
+    "./aliases.json"
+  ],
   "global": {
     "type": "size",
     "category": "elevation"
@@ -18,6 +21,9 @@
     },
     "ELEVATION_XL": {
       "value": "{!ELEVATION_XL}"
+    },
+    "ELEVATION_XXL": {
+      "value": "{!ELEVATION_XXL}"
     }
   }
 }

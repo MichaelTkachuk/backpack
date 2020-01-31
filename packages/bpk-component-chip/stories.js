@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,15 +16,22 @@
  * limitations under the License.
  */
 
-/* @flow */
+/* @flow strict */
 
 import React from 'react';
-import { storiesOf, action } from '@storybook/react';
+import { storiesOf } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
 
 import BpkChip from './index';
 
-storiesOf('bpk-component-chip', module).add('Default', () => (
-  <BpkChip onClose={action('Chip closing!')} closeLabel="Close">
-    This is a chip!
-  </BpkChip>
-));
+storiesOf('bpk-component-chip', module)
+  .add('Default', () => (
+    <BpkChip onClose={action('Chip closing!')} closeLabel="Close">
+      This is a chip!
+    </BpkChip>
+  ))
+  .add('Non-dimissible', () => (
+    <BpkChip onClose={() => null} closeLabel="Close" dismissible={false}>
+      This is a non-dismissible chip!
+    </BpkChip>
+  ));

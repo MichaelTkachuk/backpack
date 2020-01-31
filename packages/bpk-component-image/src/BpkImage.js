@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/* @flow */
+/* @flow strict */
 
 import React, { type Node, Component } from 'react';
 import PropTypes from 'prop-types';
@@ -24,7 +24,8 @@ import { BpkSpinner } from 'bpk-component-spinner';
 import CSSTransition from 'react-transition-group/CSSTransition';
 import { animations } from 'bpk-tokens/tokens/base.es6';
 
-import STYLES from './bpk-image.scss';
+import STYLES from './BpkImage.scss';
+import BORDER_RADIUS_STYLES from './BpkImageBorderRadiusStyles';
 
 const getClassName = cssModules(STYLES);
 
@@ -35,67 +36,90 @@ type BpkImageProps = {
   loading: boolean,
   src: string,
   width: number,
+  borderRadiusStyle: $Keys<typeof BORDER_RADIUS_STYLES>,
   className: ?string,
   onLoad: ?() => mixed,
   style: ?{}, // eslint-disable-line react/forbid-prop-types
+  suppressHydrationWarning: boolean,
 };
 
 type ImageProps = {
   altText: string,
-  hidden: boolean,
-  onImageLoad: ?() => mixed,
+  hidden: ?boolean,
+  onImageLoad: () => mixed,
 };
 
-const Image = (props: ImageProps): Node => {
-  const { hidden, altText, onImageLoad, ...rest } = props;
+class Image extends Component<ImageProps> {
+  img: ?HTMLImageElement;
 
-  const imgClassNames = [getClassName('bpk-image__img')];
+  static propTypes = {
+    altText: PropTypes.string.isRequired,
+    hidden: PropTypes.bool,
+    onImageLoad: PropTypes.func.isRequired,
+  };
 
-  if (hidden) {
-    imgClassNames.push(getClassName('bpk-image__img--hidden'));
+  static defaultProps = {
+    hidden: false,
+  };
+
+  constructor(props) {
+    super(props);
+    this.img = null;
   }
 
-  return (
-    <img
-      className={imgClassNames.join(' ')}
-      alt={altText}
-      onLoad={onImageLoad}
-      {...rest}
-    />
-  );
-};
+  componentDidMount() {
+    if (this.img && this.img.src && this.img.complete) {
+      if (this.props.onImageLoad) {
+        this.props.onImageLoad();
+      }
+    }
+  }
 
-Image.propTypes = {
-  altText: PropTypes.string.isRequired,
-  hidden: PropTypes.bool,
-  onImageLoad: PropTypes.func.isRequired,
-};
+  setImgRef = el => {
+    this.img = el;
+  };
 
-Image.defaultProps = {
-  hidden: false,
-};
+  render() {
+    const { hidden, altText, onImageLoad, ...rest } = this.props;
 
+    const imgClassNames = [getClassName('bpk-image__img')];
+
+    if (hidden) {
+      imgClassNames.push(getClassName('bpk-image__img--hidden'));
+    }
+
+    return (
+      <img
+        className={imgClassNames.join(' ')}
+        alt={altText}
+        onLoad={onImageLoad}
+        ref={this.setImgRef}
+        {...rest}
+      />
+    );
+  }
+}
+
+// eslint-disable-next-line react/no-multi-comp
 class BpkImage extends Component<BpkImageProps> {
   onImageLoad: () => mixed;
+
   placeholder: ?HTMLElement;
+
   static defaultProps: {};
 
-  constructor(props: BpkImageProps): void {
-    super(props);
-    this.onImageLoad = this.onImageLoad.bind(this);
-  }
-
-  onImageLoad(): void {
+  onImageLoad = (): void => {
     if (this.props.onLoad) {
       this.props.onLoad();
     }
-  }
+  };
 
   render(): Node {
     const {
       width,
       height,
       altText,
+      borderRadiusStyle,
       className,
       inView,
       loading,
@@ -113,6 +137,14 @@ class BpkImage extends Component<BpkImageProps> {
       classNames.push(getClassName('bpk-image--no-background'));
     }
 
+    if (borderRadiusStyle !== BORDER_RADIUS_STYLES.none) {
+      classNames.push(
+        getClassName(
+          `bpk-image--border-radius-${BORDER_RADIUS_STYLES[borderRadiusStyle]}`,
+        ),
+      );
+    }
+
     // wraps a div with maxWidth and maxHeight set iff full-width is no required.
     // This ensures that the css / html do not reserve too much spacing
     // when width 100% is not being used
@@ -124,7 +156,25 @@ class BpkImage extends Component<BpkImageProps> {
           }}
           style={{ height: 0, paddingBottom: aspectRatioPc }}
           className={classNames.join(' ')}
+          suppressHydrationWarning={this.props.suppressHydrationWarning}
         >
+          {/*
+            Image needs to come before the spinner to avoid a problem where
+            some images would not fully render in mobile Safari when running
+            on a slow network.
+
+            The closest to an explanation that I can come up is that putting
+            the image first means it is rendered first so it has priority,
+            which seems to be enough to fix it.
+          */}
+          {inView && (
+            <Image // eslint-disable-line backpack/use-components
+              hidden={loading}
+              altText={altText}
+              onImageLoad={this.onImageLoad}
+              {...rest}
+            />
+          )}
           {loading && (
             <CSSTransition
               classNames={{
@@ -138,24 +188,15 @@ class BpkImage extends Component<BpkImageProps> {
               </div>
             </CSSTransition>
           )}
-          {inView && (
-            <Image
-              hidden={loading}
-              altText={altText}
-              onImageLoad={this.onImageLoad}
-              {...rest}
-            />
+          {typeof window === 'undefined' && (!inView || loading) && (
+            <noscript>
+              <Image // eslint-disable-line backpack/use-components
+                altText={altText}
+                onImageLoad={this.onImageLoad}
+                {...rest}
+              />
+            </noscript>
           )}
-          {typeof window === 'undefined' &&
-            (!inView || loading) && (
-              <noscript>
-                <Image
-                  altText={altText}
-                  onImageLoad={this.onImageLoad}
-                  {...rest}
-                />
-              </noscript>
-            )}
         </div>
       </div>
     );
@@ -167,19 +208,23 @@ BpkImage.propTypes = {
   height: PropTypes.number.isRequired,
   src: PropTypes.string.isRequired,
   width: PropTypes.number.isRequired,
+  borderRadiusStyle: PropTypes.oneOf(Object.keys(BORDER_RADIUS_STYLES)),
   className: PropTypes.string,
   inView: PropTypes.bool,
   loading: PropTypes.bool,
   onLoad: PropTypes.func,
   style: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  suppressHydrationWarning: PropTypes.bool,
 };
 
 BpkImage.defaultProps = {
+  borderRadiusStyle: BORDER_RADIUS_STYLES.none,
   className: null,
   inView: true,
   loading: false,
   onLoad: null,
   style: {},
+  suppressHydrationWarning: false,
 };
 
 export default BpkImage;

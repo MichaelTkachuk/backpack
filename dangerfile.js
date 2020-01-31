@@ -2,7 +2,7 @@
  *
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,12 +20,17 @@
 
 // See http://danger.systems/js if you're not sure what this is.
 
+// @flow
+
 import fs from 'fs';
+
 import { includes } from 'lodash';
-import { danger, fail, warn, message } from 'danger';
-import { props as iosProps } from './packages/bpk-tokens/tokens/base.raw.ios.json';
+import { danger, fail, warn, message, markdown } from 'danger';
+import { commonFileWarnings } from 'danger-plugin-toolbox';
 
 import * as meta from './meta.json';
+
+const getRandomFromArray = arr => arr[Math.floor(Math.random() * arr.length)];
 
 const AVOID_EXACT_WORDS = [
   { word: 'react native', reason: 'Please use React Native with capitals' },
@@ -41,45 +46,78 @@ const createdFiles = danger.git.created_files;
 const modifiedFiles = danger.git.modified_files;
 const fileChanges = [...modifiedFiles, ...createdFiles];
 const declaredTrivial = danger.github.pr.title.includes('#trivial');
-const markdown = fileChanges.filter(path => path.endsWith('md'));
+const markdownChanges = fileChanges.filter(path => path.endsWith('md'));
+
+const thanksGifs = [
+  'https://media.giphy.com/media/KJ1f5iTl4Oo7u/giphy.gif', // T.Hanks
+  'https://media.giphy.com/media/6tHy8UAbv3zgs/giphy.gif', // Spongebob
+  'https://media.giphy.com/media/xULW8v7LtZrgcaGvC0/giphy.gif', // Dog
+  'https://media.giphy.com/media/GghJ32T5oPR8Q/giphy.gif', // Leslie Knope
+  'https://media.giphy.com/media/26AHAw0aMmWwRI4Hm/giphy.gif', // David Mitchell
+  'https://media.giphy.com/media/mbhseRYedlG5W/giphy.gif', // That guy from Who's Line Is It Anyway who looks like Bill Murray
+  'https://media.giphy.com/media/3o6ZsXRBB9E67nUjL2/giphy.gif', // We love you
+  'https://media.giphy.com/media/l3V0sNZ0NGomeurCM/giphy.gif', // Bowie
+  'https://media.giphy.com/media/3rgXBvoeXt3MXlqhO0/giphy.gif', // Amazement
+  'https://media.giphy.com/media/1OnDp7RwgphjG/giphy.gif', // Kumamon
+  'https://media.giphy.com/media/1lk1IcVgqPLkA/giphy.gif', // Cap salute
+];
 
 // Be nice to our neighbours.
 if (isPrExternal) {
-  message('Thanks for the PR 🎉.');
+  markdown(`
+  # Hi ${author}!
+
+  Thanks for the PR 🎉! Contributions like yours help to improve the design system
+  for everybody and we appreciate you taking the effort to create this PR.
+
+  ![Thanks](${getRandomFromArray(thanksGifs)})
+
+  - [ ] Check this if you have read and followed the [contributing guidelines](https://github.com/Skyscanner/backpack/blob/master/CONTRIBUTING.md)
+
+  If you're curious about how we review, please read through the
+  [code review guidelines](https://github.com/Skyscanner/backpack/blob/master/CODE_REVIEW_GUIDELINES.md).
+  `);
 }
 
-// Ensure new web components are extensible by consumers.
-const webComponentIntroduced = createdFiles.some(filePath =>
+// Ensure new components are extensible by consumers.
+const componentIntroduced = createdFiles.some(filePath =>
   filePath.match(/packages\/bpk-component.+\/src\/.+\.js/),
 );
 
-if (webComponentIntroduced) {
+if (componentIntroduced) {
   warn(
-    'It looks like you are introducing a web component. Ensure the component style is extensible via `className`.',
+    'It looks like you are introducing a new component. Ensure the component style is extensible via `className`.',
   );
 }
 
-// Ensure new native components are extensible by consumers.
-const nativeComponentIntroduced = createdFiles.some(filePath =>
-  filePath.match(/native\/packages\/react-native-bpk-component.+\/src\/.+\.js/),
+const componentChangedOrCreated = fileChanges.some(filePath =>
+  filePath.match(/packages\/bpk-component.+\/src\/.+\.js/),
 );
 
-if (nativeComponentIntroduced) {
-  warn(
-    'It looks like you are introducing a native component. Ensure the component style is extensible via `style`.',
-  );
+if (componentChangedOrCreated) {
+  message(`
+  ## Browser support
+
+  Please complete this list of browsers that you've checked this works in.
+
+  - [ ] IE11
+  - [ ] Edge
+  - [ ] Safari (iOS)
+  - [ ] Chrome (Android)
+  - [ ] Chrome (Desktop)
+  - [ ] Firefox (Desktop)
+  `);
 }
 
-// If any of the packages have changed, the changelog should have been updated.
-const changelogModified = includes(modifiedFiles, 'changelog.md');
+// If any of the packages have changed, the UNRELEASED log should have been updated.
+const unreleasedModified = includes(modifiedFiles, 'UNRELEASED.yaml');
 const packagesModified = fileChanges.some(
-  filePath =>
-    (filePath.startsWith('packages/') ||
-      filePath.startsWith('native/packages/')) &&
-    !filePath.startsWith('packages/bpk-docs/'),
+  filePath => filePath.startsWith('packages/') && !filePath.endsWith('.md'),
 );
-if (packagesModified && !changelogModified && !declaredTrivial) {
-  warn("One or more packages have changed, but `changelog.md` wasn't updated.");
+if (packagesModified && !unreleasedModified && !declaredTrivial) {
+  warn(
+    "One or more packages have changed, but `UNRELEASED.yaml` wasn't updated.",
+  );
 }
 
 // If source files have changed, the snapshots should have been updated.
@@ -96,7 +134,7 @@ const snapshotsModified = fileChanges.some(filePath =>
 
 if (componentSourceFilesModified && !snapshotsModified) {
   warn(
-    "Package source files (e.g. `package/packageName/src/packageName.js`) were updated, but snapshots weren't. Have you checked that the tests still pass?",
+    "Package source files (e.g. `packages/package-name/src/Component.js`) were updated, but snapshots weren't. Have you checked that the tests still pass?",
   ); // eslint-disable-line max-len
 }
 
@@ -110,7 +148,7 @@ if (lockFileUpdated) {
 const unlicensedFiles = createdFiles.filter(filePath => {
   // Applies to js, css, scss and sh files that are not located in dist or flow-typed folders.
   if (
-    filePath.match(/\.(js|css|scss|sh)$/) &&
+    filePath.match(/\.(js|scss|sh)$/) &&
     !filePath.includes('dist/') &&
     !filePath.includes('flow-typed/')
   ) {
@@ -129,39 +167,7 @@ if (unlicensedFiles.length > 0) {
   );
 }
 
-// Encourage smaller PRs.
-const bigPRThreshold = 8;
-if (fileChanges.length > bigPRThreshold) {
-  warn(
-    `This PR contains ${fileChanges.length} files (${
-      createdFiles.length
-    } new, ${
-      modifiedFiles.length
-    } modified). Consider splitting it into multiple PRs.`,
-  ); // eslint-disable-line max-len
-}
-
-// iOS tokens should not appear in Android snapshot files
-const androidSnapshotsWithIosTokens = fileChanges.filter(filePath => {
-  if (!filePath.match(/\.android\.js\.snap$/)) {
-    return false;
-  }
-
-  const fileContent = fs.readFileSync(filePath).toString();
-
-  return fileContent.includes(`"fontFamily": ${iosProps.FONT_FAMILY.VALUE},`);
-});
-
-if (androidSnapshotsWithIosTokens.length > 0) {
-  // eslint-disable-next-line max-len
-  fail(
-    `iOS tokens have been found in the following Android snapshots:\n  - ${androidSnapshotsWithIosTokens.join(
-      '\n  - ',
-    )}`,
-  );
-}
-
-markdown.forEach(path => {
+markdownChanges.forEach(path => {
   const fileContent = fs.readFileSync(path);
 
   fileContent
@@ -174,4 +180,9 @@ markdown.forEach(path => {
         }
       });
     });
+});
+
+commonFileWarnings('test.log', {
+  msg:
+    'The build logs contain these warnings (check the build output in Travis for more details):',
 });

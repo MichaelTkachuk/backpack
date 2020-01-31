@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,27 +25,27 @@ import STYLES from './bpk-scrim.scss';
 const getClassName = cssModules(STYLES);
 
 const BpkScrim = props => (
-  /* eslint-disable jsx-a11y/no-static-element-interactions */
-  /* eslint-disable jsx-a11y/click-events-have-key-events */
   <TransitionInitialMount
     appearClassName={getClassName('bpk-scrim--appear')}
     appearActiveClassName={getClassName('bpk-scrim--appear-active')}
     transitionTimeout={200}
   >
     <div
-      className={getClassName('bpk-scrim')}
+      role="presentation"
+      className={getClassName('bpk-scrim', props.dark && 'bpk-scrim--dark')}
       onMouseDown={props.onClose}
       onTouchStart={props.onClose}
     />
   </TransitionInitialMount>
-  /* eslint-enable */
 );
 
 BpkScrim.propTypes = {
+  dark: PropTypes.bool,
   onClose: PropTypes.func,
 };
 
 BpkScrim.defaultProps = {
+  dark: false,
   onClose: null,
 };
 

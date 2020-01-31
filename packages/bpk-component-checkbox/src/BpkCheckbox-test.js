@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@
 
 import React from 'react';
 import renderer from 'react-test-renderer';
+
 import BpkCheckbox from './BpkCheckbox';
 
 describe('BpkCheckbox', () => {
@@ -54,6 +55,15 @@ describe('BpkCheckbox', () => {
   it('should render correctly with white attribute', () => {
     const tree = renderer
       .create(<BpkCheckbox name="checkbox" label="Prefer directs" white />)
+      .toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('should render correctly with valid=false attribute', () => {
+    const tree = renderer
+      .create(
+        <BpkCheckbox name="checkbox" label="Prefer directs" valid={false} />,
+      )
       .toJSON();
     expect(tree).toMatchSnapshot();
   });

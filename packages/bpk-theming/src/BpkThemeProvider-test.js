@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,17 +17,84 @@
  */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import renderer from 'react-test-renderer';
+import { colorWhite } from 'bpk-tokens/tokens/base.es6';
 
 import BpkThemeProvider from './BpkThemeProvider';
+
+const CustomComponentFunction = ({ children, ...rest }) => (
+  <span {...rest}>{children}</span>
+);
+
+CustomComponentFunction.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
+// eslint-disable-next-line
+class CustomComponentClass extends React.Component {
+  render() {
+    const { children, ...rest } = this.props;
+    return <span {...rest}>{children}</span>;
+  }
+}
+
+CustomComponentClass.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 describe('BpkThemeProvider', () => {
   it('should render correctly', () => {
     const tree = renderer
       .create(
         <BpkThemeProvider
-          theme={{ color: 'white' }}
+          theme={{ color: colorWhite }}
           themeAttributes={['color']}
+        >
+          <p>Lorem Ipsum</p>
+        </BpkThemeProvider>,
+      )
+      .toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('should render correctly with custom native component', () => {
+    const tree = renderer
+      .create(
+        <BpkThemeProvider
+          theme={{ color: colorWhite }}
+          themeAttributes={['color']}
+          component="header"
+        >
+          <p>Lorem Ipsum</p>
+        </BpkThemeProvider>,
+      )
+      .toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('should render correctly with custom component function', () => {
+    const tree = renderer
+      .create(
+        <BpkThemeProvider
+          theme={{ color: colorWhite }}
+          themeAttributes={['color']}
+          component={CustomComponentFunction}
+        >
+          <p>Lorem Ipsum</p>
+        </BpkThemeProvider>,
+      )
+      .toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('should render correctly with custom component', () => {
+    const tree = renderer
+      .create(
+        <BpkThemeProvider
+          theme={{ color: colorWhite }}
+          themeAttributes={['color']}
+          component={CustomComponentClass}
         >
           <p>Lorem Ipsum</p>
         </BpkThemeProvider>,
@@ -40,9 +107,24 @@ describe('BpkThemeProvider', () => {
     const tree = renderer
       .create(
         <BpkThemeProvider
-          theme={{ color: 'white' }}
+          theme={{ color: colorWhite }}
           themeAttributes={['color']}
           id="arbitrary"
+        >
+          <p>Lorem Ipsum</p>
+        </BpkThemeProvider>,
+      )
+      .toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('should render correctly with arbitrary user defined style', () => {
+    const tree = renderer
+      .create(
+        <BpkThemeProvider
+          theme={{ color: colorWhite }}
+          themeAttributes={['color']}
+          style={{ content: 'user defined' }}
         >
           <p>Lorem Ipsum</p>
         </BpkThemeProvider>,
@@ -55,7 +137,7 @@ describe('BpkThemeProvider', () => {
     const tree = renderer
       .create(
         <BpkThemeProvider
-          theme={{ color: 'white', background: 'black' }}
+          theme={{ color: colorWhite, background: 'black' }}
           themeAttributes={[['color'], ['background']]}
         >
           <p>Lorem Ipsum</p>
@@ -82,7 +164,7 @@ describe('BpkThemeProvider', () => {
     const tree = renderer
       .create(
         <BpkThemeProvider
-          theme={{ a: 'a', color: 'white' }}
+          theme={{ a: 'a', color: colorWhite }}
           themeAttributes={['color']}
         >
           <p>Lorem Ipsum</p>
@@ -94,6 +176,7 @@ describe('BpkThemeProvider', () => {
 
   it('should warn about missing theme attributes', () => {
     expect(
+      // eslint-disable-next-line react/forbid-foreign-prop-types
       BpkThemeProvider.propTypes
         .themeAttributes(
           {
@@ -111,6 +194,7 @@ describe('BpkThemeProvider', () => {
 
   it('should warn about extraneous theme attributes', () => {
     expect(
+      // eslint-disable-next-line react/forbid-foreign-prop-types
       BpkThemeProvider.propTypes
         .themeAttributes(
           {

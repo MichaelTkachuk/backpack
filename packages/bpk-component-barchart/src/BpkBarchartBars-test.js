@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,13 +16,19 @@
  * limitations under the License.
  */
 
+// TODO: remove this once we update the Chart implementation to accept values
+// other than pixels
+/* eslint-disable backpack/use-tokens */
+
 import React from 'react';
 import { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { scaleLinear, scaleBand } from 'd3-scale';
+
+import data from '../data.json';
+
 import BpkBarchartBars from './BpkBarchartBars';
 import BpkBarchartBar from './BpkBarchartBar';
-import data from '../data.json';
 
 const margin = {
   top: 10,
@@ -169,29 +175,6 @@ describe('BpkBarchartBars', () => {
         BarComponent={BpkBarchartBar}
         padding={0}
         onBarFocus={() => null}
-      />,
-    );
-    expect(toJson(tree)).toMatchSnapshot();
-  });
-
-  it('should render correctly with "onBarTouch" prop', () => {
-    const tree = shallow(
-      <BpkBarchartBars
-        margin={margin}
-        xScale={xScale}
-        yScale={yScale}
-        xScaleDataKey="month"
-        yScaleDataKey="price"
-        maxYValue={50}
-        width={size}
-        height={size}
-        data={prices}
-        getBarLabel={(point, xScaleDataKey, yScaleDataKey) =>
-          `${point[xScaleDataKey]} - ${point[yScaleDataKey]}`
-        }
-        BarComponent={BpkBarchartBar}
-        padding={0}
-        onBarTouch={() => null}
       />,
     );
     expect(toJson(tree)).toMatchSnapshot();

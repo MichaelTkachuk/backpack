@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import { shallow } from 'enzyme';
+
 import BpkCalendarGridTransition, {
   addCalendarGridTransition,
 } from './BpkCalendarGridTransition';
@@ -51,13 +52,13 @@ describe('BpkCalendar', () => {
 
     expect(calendar.state('currentMonth')).toEqual(new Date(Date.UTC(2010, 1)));
     expect(calendar.state('isTransitioning')).toBe(false);
-    expect(calendar.state('transitionValue')).toBe(-294);
+    expect(calendar.state('transitionValue')).toBe('-18.375rem');
 
     // Next month
     calendar.setProps({ month: new Date(Date.UTC(2010, 2)) });
     expect(calendar.state('currentMonth')).toEqual(new Date(Date.UTC(2010, 2)));
     expect(calendar.state('isTransitioning')).toBe(false);
-    expect(calendar.state('transitionValue')).toBe(-294);
+    expect(calendar.state('transitionValue')).toBe('-18.375rem');
   });
 
   it('should transition to the previous month', () => {
@@ -70,13 +71,13 @@ describe('BpkCalendar', () => {
 
     expect(calendar.state('currentMonth')).toEqual(new Date(Date.UTC(2010, 1)));
     expect(calendar.state('isTransitioning')).toBe(false);
-    expect(calendar.state('transitionValue')).toBe(-294);
+    expect(calendar.state('transitionValue')).toBe('-18.375rem');
 
     // Previous month
     calendar.setProps({ month: new Date(Date.UTC(2010, 0)) });
     expect(calendar.state('currentMonth')).toEqual(new Date(Date.UTC(2010, 0)));
     expect(calendar.state('isTransitioning')).toBe(false);
-    expect(calendar.state('transitionValue')).toBe(-294);
+    expect(calendar.state('transitionValue')).toBe('-18.375rem');
   });
 
   it('should jump (without transition) to any other month', () => {
@@ -89,12 +90,12 @@ describe('BpkCalendar', () => {
 
     expect(calendar.state('currentMonth')).toEqual(new Date(Date.UTC(2010, 1)));
     expect(calendar.state('isTransitioning')).toBe(false);
-    expect(calendar.state('transitionValue')).toBe(-294);
+    expect(calendar.state('transitionValue')).toBe('-18.375rem');
 
     // 2 months ahead
     calendar.setProps({ month: new Date(Date.UTC(2010, 3)) });
     expect(calendar.state('currentMonth')).toEqual(new Date(Date.UTC(2010, 3)));
     expect(calendar.state('isTransitioning')).toBe(false);
-    expect(calendar.state('transitionValue')).toBe(-294);
+    expect(calendar.state('transitionValue')).toBe('-18.375rem');
   });
 });

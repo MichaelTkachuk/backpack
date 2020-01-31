@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -566,7 +566,20 @@
   border-collapse: collapse;
   table-layout: fixed;
 
-  @include bpk-border-sm($bpk-color-gray-100, '');
+  @include bpk-border-sm($bpk-color-sky-gray-tint-06, '');
+}
+
+/// Alternate table style.
+/// @require {mixin} bpk-table
+///
+/// @example scss
+///   .selector {
+///     @include bpk-table();
+///     @include bpk-table--alternate();
+///   }
+
+@mixin bpk-table--alternate {
+  @include bpk-border-sm($bpk-color-sky-gray-tint-04, '');
 }
 
 /// Table cell.
@@ -591,9 +604,30 @@
 ///   }
 
 @mixin bpk-table__cell--head {
-  background-color: $bpk-color-gray-50;
+  background-color: $bpk-color-sky-gray-tint-07;
   font-weight: normal;
   text-align: left;
+
+  @include bpk-rtl {
+    text-align: right;
+  }
+}
+
+/// Alternate table head cell. Modifies the bpk-table__cell mixin.
+///
+/// @require {mixin} bpk-table__cell
+///
+/// @example scss
+///   .selector {
+///     @include bpk-table__cell();
+///     @include bpk-table__cell--head-alternate();
+///   }
+
+@mixin bpk-table__cell--head-alternate {
+  background-color: $bpk-color-white;
+  text-align: left;
+
+  @include bpk-text--bold;
 
   @include bpk-rtl {
     text-align: right;
@@ -610,8 +644,8 @@
 @mixin bpk-code {
   display: inline;
   padding: 0 $bpk-spacing-xs;
-  background-color: $bpk-color-gray-50;
-  color: $bpk-color-gray-700;
+  background-color: $bpk-color-sky-gray-tint-07;
+  color: $bpk-color-sky-gray-tint-01;
   text-align: left;
   text-shadow: 0 $bpk-one-pixel-rem $bpk-color-white;
   white-space: nowrap;
@@ -622,6 +656,19 @@
   @include bpk-rtl {
     direction: ltr;
   }
+}
+
+/// Alternate code style suited for display on non-white backgrounds.
+///
+/// @example scss
+///   .selector {
+///     @include bpk-code();
+///     @include bpk-code--alternate();
+///   }
+
+@mixin bpk-code--alternate {
+  background-color: $bpk-color-sky-blue-tint-03;
+  text-shadow: none;
 }
 
 /// Code block. Modifies the bpk-code mixin.
@@ -638,6 +685,7 @@
   display: block;
   margin: 0;
   padding: 0;
+  background-color: transparent;
   white-space: inherit;
   overflow: auto;
   -ms-overflow-style: none;
@@ -657,9 +705,23 @@
 @mixin bpk-code__pre {
   margin: 0 0 $bpk-spacing-sm;
   padding: $bpk-spacing-base;
-  background-color: $bpk-color-gray-50;
+  background-color: $bpk-color-sky-gray-tint-07;
 
   @include bpk-border-radius-xs;
+}
+
+/// Pre (code block wrapper) alternate style.
+///
+/// @example scss
+///   .selector {
+///     @include bpk-code__pre();
+///     @include bpk-code__pre--alternate();
+///   }
+
+@mixin bpk-code__pre--alternate {
+  background-color: transparent;
+
+  @include bpk-border-sm($bpk-color-sky-gray-tint-04);
 }
 
 /// Blockquote.
@@ -672,17 +734,18 @@
 @mixin bpk-blockquote {
   margin: 0 0 $bpk-spacing-sm 0;
   padding: $bpk-spacing-xs $bpk-spacing-xs $bpk-spacing-xs $bpk-spacing-md;
-  color: $bpk-color-gray-500;
+  background-color: $bpk-color-sky-gray-tint-07;
+  color: $bpk-color-sky-gray-tint-02;
 
-  @include bpk-border-left-lg($bpk-color-blue-500);
-  @include bpk-border-left-lg(var(--bpk-blockquote-bar-color, $bpk-color-blue-500));
+  @include bpk-border-left-lg($bpk-color-sky-blue);
+  @include bpk-border-left-lg(var(--bpk-blockquote-bar-color, $bpk-color-sky-blue));
 
   @include bpk-rtl {
     padding: $bpk-spacing-xs $bpk-spacing-md $bpk-spacing-xs $bpk-spacing-xs;
     border-left: 0;
 
-    @include bpk-border-right-lg($bpk-color-blue-500);
-    @include bpk-border-right-lg(var(--bpk-blockquote-bar-color, $bpk-color-blue-500));
+    @include bpk-border-right-lg($bpk-color-sky-blue);
+    @include bpk-border-right-lg(var(--bpk-blockquote-bar-color, $bpk-color-sky-blue));
   }
 
   > *:last-child {
@@ -712,6 +775,7 @@
 ///     @include bpk-content-container();
 ///   }
 
+/* stylelint-disable selector-max-type */
 @mixin bpk-content-container {
   h1,
   h2,
@@ -720,6 +784,7 @@
     @include bpk-content-heading;
   }
 }
+/* stylelint-enable */
 
 /// Content container for bare html. Modifies the bpk-content-container mixin.
 ///
@@ -732,7 +797,7 @@
 ///   }
 
 @mixin bpk-content-container--bare-html {
-  h1 {
+  h1 { /* stylelint-disable-line selector-max-type */
     margin-top: 0;
     margin-bottom: $bpk-spacing-sm;
 
@@ -743,7 +808,7 @@
     }
   }
 
-  h2 {
+  h2 { /* stylelint-disable-line selector-max-type */
     margin-top: 0;
     margin-bottom: $bpk-spacing-sm;
 
@@ -754,7 +819,7 @@
     }
   }
 
-  h3 {
+  h3 { /* stylelint-disable-line selector-max-type */
     margin-top: 0;
     margin-bottom: $bpk-spacing-sm;
 
@@ -766,7 +831,7 @@
     }
   }
 
-  h4 {
+  h4 { /* stylelint-disable-line selector-max-type */
     margin-top: 0;
     margin-bottom: $bpk-spacing-sm;
 
@@ -778,7 +843,7 @@
     }
   }
 
-  h5 {
+  h5 { /* stylelint-disable-line selector-max-type */
     margin-top: 0;
     margin-bottom: $bpk-spacing-sm;
 
@@ -790,7 +855,7 @@
     }
   }
 
-  h6 {
+  h6 { /* stylelint-disable-line selector-max-type */
     margin-top: 0;
     margin-bottom: $bpk-spacing-sm;
 
@@ -802,17 +867,18 @@
     }
   }
 
-  a {
+  a { /* stylelint-disable-line selector-max-type */
     @include bpk-link;
   }
 
-  p {
+  p { /* stylelint-disable-line selector-max-type */
     margin-top: 0;
     margin-bottom: $bpk-spacing-sm;
 
     @include bpk-text-base;
   }
 
+  /* stylelint-disable selector-max-type */
   ul,
   ol {
     @include bpk-list;
@@ -854,5 +920,40 @@
 
   blockquote {
     @include bpk-blockquote;
+  }
+}
+/* stylelint-enable */
+
+/// Content container for bare html with alternate style
+///
+/// @require {mixin} bpk-content-container
+/// @require {mixin} bpk-content-container--bare-html
+///
+/// @example scss
+///   .selector {
+///     @include bpk-content-container();
+///     @include bpk-content-container--bare-html();
+///     @include bpk-content-container--bare-html-alternate();
+///   }
+
+@mixin bpk-content-container--bare-html-alternate {
+  code { /* stylelint-disable-line selector-max-type */
+    @include bpk-code--alternate;
+  }
+
+  pre {
+    @include bpk-code__pre--alternate;
+
+    > code { /* stylelint-disable-line selector-max-type */
+      @include bpk-code--block;
+    }
+  }
+
+  table {
+    @include bpk-table--alternate;
+
+    th { /* stylelint-disable-line selector-max-type */
+      @include bpk-table__cell--head-alternate;
+    }
   }
 }

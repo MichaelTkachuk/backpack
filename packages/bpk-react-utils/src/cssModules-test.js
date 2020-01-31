@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/* @flow strict */
 
 import cssModules from './cssModules';
 
@@ -42,6 +44,24 @@ describe('cssModules', () => {
       expect(getClassName('foo')).toEqual('a');
       expect(getClassName('bar')).toEqual('b');
       expect(getClassName('baz')).toEqual('c');
+    });
+
+    it('should resolve multiple class names', () => {
+      const getClassName = cssModules({
+        foo: 'a',
+      });
+
+      expect(getClassName('foo', 'bar')).toEqual('a bar');
+    });
+
+    it('should ignore values other than strings', () => {
+      const getClassName = cssModules({
+        foo: 'a',
+      });
+
+      expect(getClassName('foo', false, 1, undefined, {}, true, 'bar')).toEqual(
+        'a bar',
+      );
     });
   });
 });

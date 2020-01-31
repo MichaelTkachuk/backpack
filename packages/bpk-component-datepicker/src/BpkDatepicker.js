@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ import React, { Component } from 'react';
 import BpkBreakpoint, { BREAKPOINTS } from 'bpk-component-breakpoint';
 import BpkCalendar, { CustomPropTypes } from 'bpk-component-calendar';
 
-import STYLES from './bpk-datepicker.scss';
+import STYLES from './BpkDatepicker.scss';
 
 const getClassName = cssModules(STYLES);
 
@@ -36,38 +36,35 @@ class BpkDatepicker extends Component {
     super(props);
 
     this.state = {
-      isOpen: false,
+      isOpen: props.isOpen,
     };
-
-    this.onOpen = this.onOpen.bind(this);
-    this.onClose = this.onClose.bind(this);
-    this.handleDateSelect = this.handleDateSelect.bind(this);
   }
 
-  onOpen() {
+  onOpen = () => {
     this.setState({
       isOpen: true,
     });
-  }
+  };
 
-  onClose() {
+  onClose = () => {
     this.setState({
       isOpen: false,
     });
-  }
+  };
 
-  handleDateSelect(dateObj) {
+  handleDateSelect = dateObj => {
     this.setState({
       isOpen: false,
     });
     if (this.props.onDateSelect) {
       this.props.onDateSelect(dateObj);
     }
-  }
+  };
 
   render() {
     const {
       changeMonthLabel,
+      calendarComponent: Calendar,
       closeButtonText,
       date,
       dateModifiers,
@@ -95,6 +92,7 @@ class BpkDatepicker extends Component {
 
     // The following props are not used in render
     delete rest.onDateSelect;
+    delete rest.isOpen;
 
     const inputComponent = (
       <Input
@@ -108,31 +106,32 @@ class BpkDatepicker extends Component {
         onChange={() => null}
         onOpen={this.onOpen}
         isOpen={this.state.isOpen}
+        readOnly
         {...inputProps}
       />
     );
 
-    const calendarComponent = (
-      <BpkCalendar
-        className={getClassName('bpk-datepicker__calendar')}
-        changeMonthLabel={changeMonthLabel}
-        date={date}
-        dateModifiers={dateModifiers}
-        daysOfWeek={daysOfWeek}
-        formatDateFull={formatDateFull}
-        formatMonth={formatMonth}
-        id={`${id}-calendar`}
-        markOutsideDays={markOutsideDays}
-        markToday={markToday}
-        maxDate={maxDate}
-        minDate={minDate}
-        onDateSelect={this.handleDateSelect}
-        onMonthChange={onMonthChange}
-        showWeekendSeparator={showWeekendSeparator}
-        weekStartsOn={weekStartsOn}
-        initiallyFocusedDate={initiallyFocusedDate}
-      />
-    );
+    const calendarProps = {
+      id: `${id}-calendar`,
+      className: getClassName('bpk-datepicker__calendar'),
+      changeMonthLabel,
+      date,
+      dateModifiers,
+      daysOfWeek,
+      formatDateFull,
+      formatMonth,
+      markOutsideDays,
+      markToday,
+      maxDate,
+      minDate,
+      onDateSelect: this.handleDateSelect,
+      onMonthChange,
+      showWeekendSeparator,
+      weekStartsOn,
+      initiallyFocusedDate,
+    };
+
+    const calendar = <Calendar {...calendarProps} />;
 
     return (
       <BpkBreakpoint query={BREAKPOINTS.MOBILE}>
@@ -148,7 +147,7 @@ class BpkDatepicker extends Component {
               closeLabel={closeButtonText}
               getApplicationElement={getApplicationElement}
             >
-              {calendarComponent}
+              {calendar}
             </BpkModal>
           ) : (
             <BpkPopover
@@ -162,7 +161,7 @@ class BpkDatepicker extends Component {
               tabIndex={0}
               {...rest}
             >
-              {calendarComponent}
+              {calendar}
             </BpkPopover>
           )
         }
@@ -182,7 +181,9 @@ BpkDatepicker.propTypes = {
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   getApplicationElement: PropTypes.func.isRequired,
+  weekStartsOn: PropTypes.number.isRequired,
   // Optional
+  calendarComponent: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   date: PropTypes.instanceOf(Date),
   dateModifiers: CustomPropTypes.DateModifiers,
   inputProps: PropTypes.object, // eslint-disable-line react/forbid-prop-types
@@ -193,12 +194,13 @@ BpkDatepicker.propTypes = {
   onDateSelect: PropTypes.func,
   onMonthChange: PropTypes.func,
   showWeekendSeparator: PropTypes.bool,
-  weekStartsOn: PropTypes.number,
   initiallyFocusedDate: PropTypes.instanceOf(Date),
   renderTarget: PropTypes.func,
+  isOpen: PropTypes.bool,
 };
 
 BpkDatepicker.defaultProps = {
+  calendarComponent: BpkCalendar,
   date: null,
   dateModifiers: BpkCalendar.defaultProps.dateModifiers,
   inputProps: {},
@@ -209,9 +211,9 @@ BpkDatepicker.defaultProps = {
   onDateSelect: null,
   onMonthChange: null,
   showWeekendSeparator: BpkCalendar.defaultProps.showWeekendSeparator,
-  weekStartsOn: BpkCalendar.defaultProps.weekStartsOn,
   initiallyFocusedDate: null,
   renderTarget: null,
+  isOpen: false,
 };
 
 export default BpkDatepicker;

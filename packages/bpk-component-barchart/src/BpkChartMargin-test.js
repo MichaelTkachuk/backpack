@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,13 +18,15 @@
 
 import React from 'react';
 import renderer from 'react-test-renderer';
+import { spacingSm } from 'bpk-tokens/tokens/base.es6';
+
 import BpkChartMargin from './BpkChartMargin';
 
 const margin = {
-  top: 10,
-  right: 20,
-  bottom: 30,
-  left: 40,
+  top: spacingSm,
+  right: spacingSm,
+  bottom: spacingSm,
+  left: spacingSm,
 };
 
 describe('BpkChartMargin', () => {

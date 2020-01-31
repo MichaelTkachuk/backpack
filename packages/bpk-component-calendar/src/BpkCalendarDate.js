@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,8 +21,7 @@ import React, { PureComponent } from 'react';
 import { cssModules } from 'bpk-react-utils';
 
 import CustomPropTypes from './custom-proptypes';
-
-import STYLES from './bpk-calendar-date.scss';
+import STYLES from './BpkCalendarDate.scss';
 
 const getClassName = cssModules(STYLES);
 
@@ -31,12 +30,6 @@ const navigatedByMonthNudger = () =>
   document.activeElement.id.indexOf('month_nudger') !== -1;
 
 class BpkCalendarDate extends PureComponent {
-  constructor() {
-    super();
-
-    this.getButtonRef = this.getButtonRef.bind(this);
-  }
-
   componentDidMount() {
     if (!this.props.preventKeyboardFocus && this.props.isFocused) {
       // If we got here by clicking the nudger, don't focus this date
@@ -76,9 +69,9 @@ class BpkCalendarDate extends PureComponent {
     }
   }
 
-  getButtonRef(button) {
+  getButtonRef = button => {
     this.button = button;
-  }
+  };
 
   render() {
     const {
@@ -92,6 +85,7 @@ class BpkCalendarDate extends PureComponent {
       isOutside,
       isToday,
       isKeyboardFocusable,
+      className,
       ...buttonProps
     } = this.props;
     const classNames = [getClassName('bpk-calendar-date')];
@@ -119,6 +113,9 @@ class BpkCalendarDate extends PureComponent {
     if (isToday) {
       classNames.push(getClassName('bpk-calendar-date--today'));
     }
+    if (className) {
+      classNames.push(className);
+    }
 
     delete buttonProps.preventKeyboardFocus;
 
@@ -145,10 +142,11 @@ class BpkCalendarDate extends PureComponent {
   }
 }
 
-BpkCalendarDate.propTypes = {
+export const propTypes = {
   // Required
   date: PropTypes.instanceOf(Date).isRequired,
   // Optional
+  className: PropTypes.string,
   isBlocked: PropTypes.bool,
   isFocused: PropTypes.bool,
   isKeyboardFocusable: PropTypes.bool,
@@ -161,7 +159,10 @@ BpkCalendarDate.propTypes = {
   preventKeyboardFocus: PropTypes.bool,
 };
 
+BpkCalendarDate.propTypes = { ...propTypes };
+
 BpkCalendarDate.defaultProps = {
+  className: null,
   isBlocked: false,
   isFocused: false,
   isKeyboardFocusable: true,

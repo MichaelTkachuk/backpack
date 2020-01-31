@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,14 +16,14 @@
  * limitations under the License.
  */
 
-/* @flow */
+/* @flow strict */
 
 import PropTypes from 'prop-types';
 import debounce from 'lodash.debounce';
 import React, { Component, type Node } from 'react';
-import { cssModules } from 'bpk-react-utils';
+import { cssModules, isRTL } from 'bpk-react-utils';
 
-import STYLES from './bpk-mobile-scroll-container.scss';
+import STYLES from './BpkMobileScrollContainer.scss';
 
 const getClassName = cssModules(STYLES);
 
@@ -39,7 +39,11 @@ const computeScrollBarAwareHeight = (
   return scrollBarVisibile ? `${innerEl.offsetHeight / 16}rem` : 'auto';
 };
 
-const computeScrollIndicatorClassName = (scrollerEl: ?HTMLElement) => {
+const computeScrollIndicatorClassName = (
+  scrollerEl: ?HTMLElement,
+  leadingIndicatorClassName: ?string = null,
+  trailingIndicatorClassName: ?string = null,
+) => {
   if (!scrollerEl) {
     return null;
   }
@@ -47,15 +51,28 @@ const computeScrollIndicatorClassName = (scrollerEl: ?HTMLElement) => {
   const classNames = [];
   const { scrollLeft, scrollWidth, offsetWidth } = scrollerEl;
 
-  if (scrollLeft > 0) {
+  const rtl = isRTL();
+  const scrollValue = rtl ? -scrollLeft : scrollLeft;
+  const showLeadingIndicator = scrollValue > 0;
+  const showTrailingIndicator = scrollValue < scrollWidth - offsetWidth;
+  const showLeftIndicator = rtl ? showTrailingIndicator : showLeadingIndicator;
+  const showRightIndicator = rtl ? showLeadingIndicator : showTrailingIndicator;
+
+  if (showLeftIndicator) {
     classNames.push(
       getClassName('bpk-mobile-scroll-container--left-indicator'),
     );
   }
-  if (scrollLeft < scrollWidth - offsetWidth) {
+  if (showRightIndicator) {
     classNames.push(
       getClassName('bpk-mobile-scroll-container--right-indicator'),
     );
+  }
+  if (showLeadingIndicator && leadingIndicatorClassName) {
+    classNames.push(leadingIndicatorClassName);
+  }
+  if (showTrailingIndicator && trailingIndicatorClassName) {
+    classNames.push(trailingIndicatorClassName);
   }
 
   return classNames;
@@ -65,6 +82,9 @@ type Props = {
   children: Node,
   innerContainerTagName: string,
   className: ?string,
+  leadingIndicatorClassName: ?string,
+  trailingIndicatorClassName: ?string,
+  scrollerRef: ?Function,
   style: ?Object,
 };
 
@@ -75,18 +95,25 @@ type State = {
 
 class BpkMobileScrollContainer extends Component<Props, State> {
   innerEl: ?HTMLElement;
+
   scrollerEl: ?HTMLElement;
 
   static propTypes = {
     children: PropTypes.node.isRequired,
+    scrollerRef: PropTypes.func,
     innerContainerTagName: PropTypes.string,
     className: PropTypes.string,
+    leadingIndicatorClassName: PropTypes.string,
+    trailingIndicatorClassName: PropTypes.string,
     style: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   };
 
   static defaultProps = {
+    scrollerRef: null,
     innerContainerTagName: 'div',
     className: null,
+    leadingIndicatorClassName: null,
+    trailingIndicatorClassName: null,
     style: null,
   };
 
@@ -115,7 +142,11 @@ class BpkMobileScrollContainer extends Component<Props, State> {
   }, 100);
 
   setScrollIndicatorClassName = () => {
-    const classNames = computeScrollIndicatorClassName(this.scrollerEl);
+    const classNames = computeScrollIndicatorClassName(
+      this.scrollerEl,
+      this.props.leadingIndicatorClassName,
+      this.props.trailingIndicatorClassName,
+    );
 
     if (!classNames) {
       return;
@@ -143,8 +174,11 @@ class BpkMobileScrollContainer extends Component<Props, State> {
     const classNames = [getClassName('bpk-mobile-scroll-container')];
     const {
       children,
+      scrollerRef,
       innerContainerTagName,
       className,
+      leadingIndicatorClassName,
+      trailingIndicatorClassName,
       style,
       ...rest
     } = this.props;
@@ -166,6 +200,9 @@ class BpkMobileScrollContainer extends Component<Props, State> {
       >
         <div
           ref={el => {
+            if (scrollerRef) {
+              scrollerRef(el);
+            }
             this.scrollerEl = el;
           }}
           onScroll={this.setScrollIndicatorClassName}

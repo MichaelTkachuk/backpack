@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,10 @@ import renderer from 'react-test-renderer';
 import { mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import * as BREAKPOINTS from 'bpk-tokens/tokens/breakpoints.es6';
+import { spacingSm } from 'bpk-tokens/tokens/base.es6';
+
 import BpkImage from './BpkImage';
+import BORDER_RADIUS_STYLES from './BpkImageBorderRadiusStyles';
 
 describe('BpkImage', () => {
   it('should render correctly', () => {
@@ -46,7 +49,7 @@ describe('BpkImage', () => {
           altText="image description"
           width={816}
           height={544}
-          style={{ width: 500 }}
+          style={{ width: spacingSm }}
           src="./path/to/image.jpg"
         />,
       )
@@ -62,7 +65,7 @@ describe('BpkImage', () => {
           altText="image description"
           width={816}
           height={544}
-          style={{ width: 500 }}
+          style={{ width: spacingSm }}
           className="userland-classname"
           src="./path/to/image.jpg"
         />,
@@ -155,6 +158,22 @@ describe('BpkImage', () => {
           src="./path/to/image_1640.jpg"
           srcSet={srcSet}
           sizes={sizes}
+        />,
+      )
+      .toJSON();
+
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('should apply borderRadius', () => {
+    const tree = renderer
+      .create(
+        <BpkImage
+          altText="image description"
+          width={816}
+          height={544}
+          src="./path/to/image.jpg"
+          borderRadiusStyle={BORDER_RADIUS_STYLES.sm}
         />,
       )
       .toJSON();

@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,11 +18,15 @@
 
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-
 import BpkMobileScrollContainer from 'bpk-component-mobile-scroll-container';
+import BpkText from 'bpk-component-text';
+import { spacingSm } from 'bpk-tokens/tokens/base.es6';
+
 import BpkImage, {
-  /* BpkBackgroundImage, */ withLazyLoading,
+  BpkBackgroundImage,
+  withLazyLoading,
   withLoadingBehavior,
+  BORDER_RADIUS_STYLES,
 } from './index';
 
 const image =
@@ -33,8 +37,12 @@ const LazyLoadedImage = withLazyLoading(BpkImage, documentIfExists);
 const FadingLazyLoadedImage = withLoadingBehavior(
   withLazyLoading(BpkImage, documentIfExists),
 );
-// Unused, will be reinstated when BpkBackgroundImage is.
-// const FadingLazyLoadedBackgroundImage = withLoadingBehavior(withLazyLoading(BpkBackgroundImage, documentIfExists));
+const FadingLazyLoadedBackgroundImage = withLoadingBehavior(
+  withLazyLoading(BpkBackgroundImage, documentIfExists),
+);
+
+const imageWidth = 612;
+const imageHeight = 408;
 
 storiesOf('bpk-component-image', module)
   .add('Default', () => (
@@ -42,8 +50,18 @@ storiesOf('bpk-component-image', module)
       altText="image"
       width={612}
       height={408}
-      style={{ width: 612, height: 408 }}
+      style={{ width: imageWidth, height: imageHeight }}
       src={image}
+    />
+  ))
+  .add('With Border Radius', () => (
+    <BpkImage
+      altText="image"
+      width={612}
+      height={408}
+      style={{ width: imageWidth, height: imageHeight }}
+      src={image}
+      borderRadiusStyle={BORDER_RADIUS_STYLES.sm}
     />
   ))
   .add('Full Width', () => (
@@ -68,7 +86,7 @@ storiesOf('bpk-component-image', module)
       altText="image"
       width={612}
       height={408}
-      style={{ width: 612, height: 408 }}
+      style={{ width: imageWidth, height: imageHeight }}
       src={image}
     />
   ))
@@ -77,7 +95,7 @@ storiesOf('bpk-component-image', module)
       altText="image"
       width={612}
       height={408}
-      style={{ width: 612, height: 408 }}
+      style={{ width: imageWidth, height: imageHeight }}
       src={image}
     />
   ))
@@ -86,7 +104,7 @@ storiesOf('bpk-component-image', module)
       altText="image"
       width={612}
       height={408}
-      style={{ width: 612, height: 408 }}
+      style={{ width: imageWidth, height: imageHeight }}
       src={image}
     />
   ))
@@ -97,66 +115,61 @@ storiesOf('bpk-component-image', module)
           altText="image"
           width={612}
           height={408}
-          style={{ width: 612, height: 408 }}
+          style={{ width: imageWidth, height: imageHeight }}
           src={image}
         />
         <FadingLazyLoadedImage
           altText="image"
           width={612}
           height={408}
-          style={{ width: 612, height: 408 }}
+          style={{ width: imageWidth, height: imageHeight }}
           src={image}
         />
         <FadingLazyLoadedImage
           altText="image"
           width={612}
           height={408}
-          style={{ width: 612, height: 408 }}
+          style={{ width: imageWidth, height: imageHeight }}
           src={image}
         />
       </div>
     </BpkMobileScrollContainer>
+  ))
+  .add('Background Image', () => (
+    <BpkBackgroundImage
+      width={612}
+      height={408}
+      style={{ width: imageWidth, height: imageHeight }}
+      imageStyle={{
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
+        backgroundPosition: '50% 50%',
+      }}
+      src={image}
+    >
+      <div style={{ marginLeft: spacingSm, paddingTop: spacingSm }}>
+        <BpkText tagName="h2" textStyle="lg">
+          Lorem ipsum dolor sit amet
+        </BpkText>
+      </div>
+    </BpkBackgroundImage>
+  ))
+  .add('Background Image with Lazy Loading and Animation', () => (
+    <FadingLazyLoadedBackgroundImage
+      width={612}
+      height={408}
+      style={{ width: imageWidth, height: imageHeight }}
+      imageStyle={{
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
+        backgroundPosition: '50% 50%',
+      }}
+      src={image}
+    >
+      <div style={{ marginLeft: spacingSm, paddingTop: spacingSm }}>
+        <BpkText tagName="h2" textStyle="lg">
+          Lorem ipsum dolor sit amet
+        </BpkText>
+      </div>
+    </FadingLazyLoadedBackgroundImage>
   ));
-
-// Commented out until BpkBackgroundImage is working.
-//
-// .add('Background Image', () => (
-//   <BpkBackgroundImage
-//     style={{
-//       width: '816',
-//       height: '20rem',
-//     }}
-//     imageStyle={{
-//       width: '100%',
-//       height: '100%',
-//       backgroundRepeat: 'no-repeat',
-//       backgroundSize: 'cover',
-//       backgroundPosition: '50% 50%',
-//     }}
-//     src={image}
-//   >
-//     <div style={{ opacity: 0.7, marginLeft: 35, paddingTop: 10 }} >
-//       <BpkText tagName="h2" textStyle="lg" >Lorem ipsum dolor sit amet</BpkText>
-//     </div>
-//   </BpkBackgroundImage >
-// ))
-// .add('Background Image with Lazy Loading and Animation', () => (
-//   <FadingLazyLoadedBackgroundImage
-//     style={{
-//       width: '816',
-//       height: '20rem',
-//     }}
-//     imageStyle={{
-//       width: '100%',
-//       height: '100%',
-//       backgroundRepeat: 'no-repeat',
-//       backgroundSize: 'cover',
-//       backgroundPosition: '50% 50%',
-//     }}
-//     src={image}
-//   >
-//     <div style={{ opacity: 0.7, marginLeft: 35, paddingTop: 10 }} >
-//       <BpkText tagName="h2" textStyle="lg" >Lorem ipsum dolor sit amet</BpkText>
-//     </div>
-//   </FadingLazyLoadedBackgroundImage >
-// ))

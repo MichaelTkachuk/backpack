@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,19 +20,28 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { cssModules } from 'bpk-react-utils';
 
-import STYLES from './bpk-textarea.scss';
+import STYLES from './BpkTextarea.scss';
 
 const getClassName = cssModules(STYLES);
 
 const BpkTextarea = props => {
-  const classNames = [getClassName('bpk-textarea')];
-  const { className, ...rest } = props;
+  const { className, valid, ...rest } = props;
 
-  if (className) {
-    classNames.push(className);
-  }
+  // Explicit check for false primitive value as undefined is
+  // treated as neither valid nor invalid
+  const isInvalid = valid === false;
 
-  return <textarea className={classNames.join(' ')} {...rest} />;
+  return (
+    <textarea
+      className={getClassName(
+        'bpk-textarea',
+        isInvalid && 'bpk-textarea--invalid',
+        className,
+      )}
+      aria-invalid={isInvalid}
+      {...rest}
+    />
+  );
 };
 
 BpkTextarea.propTypes = {
@@ -40,10 +49,12 @@ BpkTextarea.propTypes = {
   name: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   className: PropTypes.string,
+  valid: PropTypes.bool,
 };
 
 BpkTextarea.defaultProps = {
   className: null,
+  valid: null,
 };
 
 export default BpkTextarea;

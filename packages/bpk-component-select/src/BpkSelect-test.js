@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,13 @@
 
 import React from 'react';
 import renderer from 'react-test-renderer';
+
 import BpkSelect from './BpkSelect';
+
+const svgPlaceholder = `data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox%3D'0 0 200 150'%2F%3E`;
+const selectImage = (
+  <img alt="placeholder" className="image-class-name" src={svgPlaceholder} />
+);
 
 describe('BpkSelect', () => {
   it('should render correctly', () => {
@@ -33,8 +39,77 @@ describe('BpkSelect', () => {
           <option value="apples">Apples</option>
           <option value="oranges">Oranges</option>
           <option value="pears">Pears</option>
-          <option value="tomatos" disabled>
-            Tomatos
+          <option value="tomatoes" disabled>
+            Tomatoes
+          </option>
+        </BpkSelect>,
+      )
+      .toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('should render correctly with image', () => {
+    const tree = renderer
+      .create(
+        <BpkSelect
+          id="fruits"
+          name="fruits"
+          value="oranges"
+          image={selectImage}
+          onChange={() => null}
+        >
+          <option value="apples">Apples</option>
+          <option value="oranges">Oranges</option>
+          <option value="pears">Pears</option>
+          <option value="tomatoes" disabled>
+            Tomatoes
+          </option>
+        </BpkSelect>,
+      )
+      .toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('should render correctly with image and custom classes', () => {
+    const tree = renderer
+      .create(
+        <BpkSelect
+          id="fruits"
+          name="fruits"
+          value="oranges"
+          wrapperClassName="wrapperClass--test"
+          image={selectImage}
+          onChange={() => null}
+        >
+          <option value="apples">Apples</option>
+          <option value="oranges">Oranges</option>
+          <option value="pears">Pears</option>
+          <option value="tomatoes" disabled>
+            Tomatoes
+          </option>
+        </BpkSelect>,
+      )
+      .toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('should render correctly with image and "disabled" property', () => {
+    const tree = renderer
+      .create(
+        <BpkSelect
+          id="fruits"
+          name="fruits"
+          value="oranges"
+          wrapperClassName="wrapperClass--test"
+          image={selectImage}
+          disabled
+          onChange={() => null}
+        >
+          <option value="apples">Apples</option>
+          <option value="oranges">Oranges</option>
+          <option value="pears">Pears</option>
+          <option value="tomatoes" disabled>
+            Tomatoes
           </option>
         </BpkSelect>,
       )
@@ -55,8 +130,8 @@ describe('BpkSelect', () => {
           <option value="apples">Apples</option>
           <option value="oranges">Oranges</option>
           <option value="pears">Pears</option>
-          <option value="tomatos" disabled>
-            Tomatos
+          <option value="tomatoes" disabled>
+            Tomatoes
           </option>
         </BpkSelect>,
       )
@@ -77,8 +152,8 @@ describe('BpkSelect', () => {
           <option value="apples">Apples</option>
           <option value="oranges">Oranges</option>
           <option value="pears">Pears</option>
-          <option value="tomatos" disabled>
-            Tomatos
+          <option value="tomatoes" disabled>
+            Tomatoes
           </option>
         </BpkSelect>,
       )
@@ -99,8 +174,8 @@ describe('BpkSelect', () => {
           <option value="apples">Apples</option>
           <option value="oranges">Oranges</option>
           <option value="pears">Pears</option>
-          <option value="tomatos" disabled>
-            Tomatos
+          <option value="tomatoes" disabled>
+            Tomatoes
           </option>
         </BpkSelect>,
       )
@@ -121,8 +196,8 @@ describe('BpkSelect', () => {
           <option value="apples">Apples</option>
           <option value="oranges">Oranges</option>
           <option value="pears">Pears</option>
-          <option value="tomatos" disabled>
-            Tomatos
+          <option value="tomatoes" disabled>
+            Tomatoes
           </option>
         </BpkSelect>,
       )
@@ -143,8 +218,8 @@ describe('BpkSelect', () => {
           <option value="apples">Apples</option>
           <option value="oranges">Oranges</option>
           <option value="pears">Pears</option>
-          <option value="tomatos" disabled>
-            Tomatos
+          <option value="tomatoes" disabled>
+            tomatos
           </option>
         </BpkSelect>,
       )
@@ -165,8 +240,8 @@ describe('BpkSelect', () => {
           <option value="apples">Apples</option>
           <option value="oranges">Oranges</option>
           <option value="pears">Pears</option>
-          <option value="tomatos" disabled>
-            Tomatos
+          <option value="tomatoes" disabled>
+            Tomatoes
           </option>
         </BpkSelect>,
       )
@@ -187,8 +262,8 @@ describe('BpkSelect', () => {
           <option value="apples">Apples</option>
           <option value="oranges">Oranges</option>
           <option value="pears">Pears</option>
-          <option value="tomatos" disabled>
-            Tomatos
+          <option value="tomatoes" disabled>
+            Tomatoes
           </option>
         </BpkSelect>,
       )

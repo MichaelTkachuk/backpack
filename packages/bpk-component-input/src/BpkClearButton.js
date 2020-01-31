@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/* @flow strict */
 
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -22,13 +23,19 @@ import ClearIcon from 'bpk-component-icon/sm/close-circle';
 import { withButtonAlignment } from 'bpk-component-icon';
 import { cssModules } from 'bpk-react-utils';
 
-import STYLES from './bpk-clear-button.scss';
+import STYLES from './BpkClearButton.scss';
 
 const getClassName = cssModules(STYLES);
 
 const ClearButtonIcon = withButtonAlignment(ClearIcon);
 
-const BpkClearButton = props => {
+type Props = {
+  label: string,
+  onClick: (SyntheticInputEvent<HTMLButtonElement>) => mixed,
+  className: ?string,
+};
+
+const BpkClearButton = (props: Props) => {
   const classNames = [getClassName('bpk-clear-button')];
   const { label, onClick, className, ...rest } = props;
 
@@ -45,7 +52,10 @@ const BpkClearButton = props => {
       className={classNames.join(' ')}
       {...rest}
     >
-      <ClearButtonIcon className={getClassName('bpk-clear-button__icon')} />
+      <ClearButtonIcon
+        focusable="false" // prevents focus on IE11
+        className={getClassName('bpk-clear-button__icon')}
+      />
     </button>
   );
 };

@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import renderer from 'react-test-renderer';
+import { spacingSm } from 'bpk-tokens/tokens/base.es6';
 
 import AnimateHeight from './AnimateHeight';
 
@@ -55,7 +56,7 @@ describe('AnimateHeight', () => {
 
     expect(tree.instance().contentElement.style.display).toEqual('none');
 
-    tree.setProps({ height: 100 }).update();
+    tree.setProps({ height: spacingSm }).update();
 
     expect(tree.instance().contentElement.style.display).toEqual('');
   });

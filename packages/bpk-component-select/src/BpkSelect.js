@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,25 +15,44 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/* @flow strict */
 
-import PropTypes from 'prop-types';
+import PropTypes, { type Node } from 'prop-types';
 import React from 'react';
 import { cssModules } from 'bpk-react-utils';
 
-import STYLES from './bpk-select.scss';
+import STYLES from './BpkSelect.scss';
 
 const getClassName = cssModules(STYLES);
 
-const BpkSelect = props => {
-  const classNames = [getClassName('bpk-select')];
+export type Props = {
+  id: string,
+  name: string,
+  value: string,
+  className: ?string,
+  disabled: boolean,
+  docked: boolean,
+  dockedFirst: boolean,
+  dockedLast: boolean,
+  dockedMiddle: boolean,
+  image: ?Node,
+  large: boolean,
+  valid: ?boolean,
+  wrapperClassName: ?string,
+};
+
+const BpkSelect = (props: Props) => {
   const {
-    valid,
-    large,
+    className,
+    disabled,
     docked,
     dockedFirst,
-    dockedMiddle,
     dockedLast,
-    className,
+    dockedMiddle,
+    image,
+    large,
+    valid,
+    wrapperClassName,
     ...rest
   } = props;
 
@@ -41,32 +60,42 @@ const BpkSelect = props => {
   // treated as neither valid nor invalid
   const isInvalid = valid === false;
 
-  if (large) {
-    classNames.push(getClassName('bpk-select--large'));
-  }
-  if (docked) {
-    classNames.push(getClassName('bpk-select--docked'));
-  }
-  if (dockedFirst) {
-    classNames.push(getClassName('bpk-select--docked-first'));
-  }
-  if (dockedMiddle) {
-    classNames.push(getClassName('bpk-select--docked-middle'));
-  }
-  if (dockedLast) {
-    classNames.push(getClassName('bpk-select--docked-last'));
-  }
-  if (className) {
-    classNames.push(className);
-  }
-
-  return (
+  const select = (
     <select
-      className={classNames.join(' ')}
+      className={getClassName(
+        'bpk-select',
+        large && 'bpk-select--large',
+        docked && 'bpk-select--docked',
+        dockedFirst && 'bpk-select--docked-first',
+        dockedMiddle && 'bpk-select--docked-middle',
+        dockedLast && 'bpk-select--docked-last',
+        image && 'bpk-select--with-image',
+        image && large && 'bpk-select--with-image-large',
+        isInvalid && 'bpk-select--invalid',
+        className,
+      )}
+      disabled={disabled}
       aria-invalid={isInvalid}
       {...rest}
     />
   );
+
+  if (image) {
+    return (
+      <div className={getClassName('bpk-select-wrapper', wrapperClassName)}>
+        {React.cloneElement(image, {
+          className: getClassName(
+            'bpk-select-wrapper__image',
+            large && 'bpk-select-wrapper__image--large',
+            disabled && 'bpk-select-wrapper__image--disabled',
+            image.props.className,
+          ),
+        })}
+        {select}
+      </div>
+    );
+  }
+  return select;
 };
 
 BpkSelect.propTypes = {
@@ -74,22 +103,28 @@ BpkSelect.propTypes = {
   name: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   className: PropTypes.string,
-  valid: PropTypes.bool,
-  large: PropTypes.bool,
+  disabled: PropTypes.bool,
   docked: PropTypes.bool,
   dockedFirst: PropTypes.bool,
-  dockedMiddle: PropTypes.bool,
   dockedLast: PropTypes.bool,
+  dockedMiddle: PropTypes.bool,
+  image: PropTypes.node,
+  large: PropTypes.bool,
+  valid: PropTypes.bool,
+  wrapperClassName: PropTypes.string,
 };
 
 BpkSelect.defaultProps = {
   className: null,
-  valid: null,
-  large: false,
   docked: false,
   dockedFirst: false,
-  dockedMiddle: false,
   dockedLast: false,
+  dockedMiddle: false,
+  disabled: false,
+  image: null,
+  large: false,
+  valid: null,
+  wrapperClassName: null,
 };
 
 export default BpkSelect;

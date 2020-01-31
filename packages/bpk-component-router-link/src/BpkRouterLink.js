@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,12 +16,12 @@
  * limitations under the License.
  */
 
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
+import { NavLink } from 'react-router-dom';
 import { cssModules } from 'bpk-react-utils';
-import { Link, PropTypes as RouterPropTypes } from 'react-router';
 
-import STYLES from './bpk-router-link.scss';
+import STYLES from './BpkRouterLink.scss';
 
 const getClassName = cssModules(STYLES);
 
@@ -34,23 +34,20 @@ const BpkRouterLink = props => {
   }
 
   return (
-    <Link
+    <NavLink
       className={classNames.join(' ')}
       activeClassName={getClassName('bpk-router-link--active')}
       to={to}
       {...rest}
     >
       {children}
-    </Link>
+    </NavLink>
   );
 };
 
 BpkRouterLink.propTypes = {
   children: PropTypes.node.isRequired,
-  to: PropTypes.oneOfType([
-    PropTypes.shape(RouterPropTypes.locationShape),
-    PropTypes.string,
-  ]).isRequired,
+  to: PropTypes.oneOfType([PropTypes.object, PropTypes.string]).isRequired,
   className: PropTypes.string,
 };
 

@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,11 +25,11 @@ import STYLES from './stories.scss';
 const getClassName = cssModules(STYLES);
 
 storiesOf('bpk-mixins', module)
-  .add('bpk-icon-sm mixin', () => (
-    <span className={getClassName('bpk-icon-sm__chart')} />
-  ))
   .add('bpk-icon-lg mixin', () => (
     <span className={getClassName('bpk-icon-lg__chart')} />
+  ))
+  .add('bpk-icon-sm mixin', () => (
+    <span className={getClassName('bpk-icon-sm__chart')} />
   ))
   .add('bpk-icon mixin (small)', () => (
     <span className={getClassName('bpk-icon__chart--small')} />

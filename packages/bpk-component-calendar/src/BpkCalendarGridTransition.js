@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,12 +18,11 @@
 
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { cssModules } from 'bpk-react-utils';
+import { cssModules, isRTL } from 'bpk-react-utils';
 
 import {
   getCalendarGridWidth,
   getTransformStyles,
-  getScriptDirection,
   isTransitionEndSupported,
 } from './utils';
 import {
@@ -37,15 +36,14 @@ import {
   isWithinRange,
   getMonthRange,
 } from './date-utils';
-
-import STYLES from './bpk-calendar-grid-transition.scss';
+import STYLES from './BpkCalendarGridTransition.scss';
 
 const getClassName = cssModules(STYLES);
 
 const transitionValues = {
-  previous: 0,
-  current: -getCalendarGridWidth(),
-  next: -2 * getCalendarGridWidth(),
+  previous: '0px',
+  current: getCalendarGridWidth(-1),
+  next: getCalendarGridWidth(-2),
 };
 
 const getFocusedDateForMonth = (month, currentFocusedDate, minDate, maxDate) =>
@@ -73,14 +71,13 @@ class BpkCalendarGridTransition extends Component {
     };
 
     this.isTransitionEndSupported = isTransitionEndSupported();
-    this.onMonthTransitionEnd = this.onMonthTransitionEnd.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
     const hasMonthChanged = !isSameMonth(this.props.month, nextProps.month);
 
     if (hasMonthChanged) {
-      const reverse = getScriptDirection() === 'rtl';
+      const reverse = isRTL();
 
       if (differenceInCalendarMonths(nextProps.month, this.props.month) === 1) {
         // Transition to next month
@@ -128,7 +125,7 @@ class BpkCalendarGridTransition extends Component {
     }
   }
 
-  onMonthTransitionEnd() {
+  onMonthTransitionEnd = () => {
     const { month } = this.props;
 
     this.setState({
@@ -139,67 +136,53 @@ class BpkCalendarGridTransition extends Component {
       currentMonth: month,
       months: [addMonths(month, -1), month, addMonths(month, 1)],
     });
-  }
+  };
 
   render() {
     const { TransitionComponent, className, focusedDate, ...rest } = this.props;
+    const { isTransitioning, transitionValue } = this.state;
 
-    const stripClassNames = [
-      getClassName('bpk-calendar-grid-transition__strip'),
-    ];
-    if (this.state.isTransitioning) {
-      stripClassNames.push(
-        getClassName('bpk-calendar-grid-transition__strip--transitioning'),
-      );
-    }
+    const stripClassNames = getClassName(
+      'bpk-calendar-grid-transition__strip',
+      isTransitioning && 'bpk-calendar-grid-transition__strip--transitioning',
+    );
 
-    const classNames = [getClassName('bpk-calendar-grid-transition')];
-    if (className) {
-      classNames.push(className);
-    }
     const { min, max } = getMonthRange(rest.minDate, rest.maxDate);
 
     return (
-      <div className={classNames.join(' ')}>
+      <div className={getClassName('bpk-calendar-grid-transition', className)}>
         <div
-          className={stripClassNames.join(' ')}
-          style={getTransformStyles(this.state.transitionValue)}
+          className={stripClassNames}
+          style={getTransformStyles(transitionValue)}
           onTransitionEnd={this.onMonthTransitionEnd}
         >
-          {this.state.months.map(
-            (m, index) =>
-              isWithinRange(m, min, max) ? (
-                <TransitionComponent
-                  {...rest}
-                  key={formatIsoMonth(m)}
-                  month={m}
-                  preventKeyboardFocus={
-                    index !== 1 || rest.preventKeyboardFocus
-                  }
-                  isKeyboardFocusable={
-                    !this.state.isTransitioning && index === 1
-                  }
-                  focusedDate={
-                    index === 1
-                      ? focusedDate
-                      : getFocusedDateForMonth(
-                          m,
-                          focusedDate,
-                          rest.minDate,
-                          rest.maxDate,
-                        )
-                  }
-                  aria-hidden={index !== 1}
-                  className={getClassName('bpk-calendar-grid-transition__grid')}
-                />
-              ) : (
-                <div
-                  className={getClassName(
-                    'bpk-calendar-grid-transition__dummy',
-                  )}
-                  key={formatIsoMonth(m)}
-                />
-              ),
+          {this.state.months.map((m, index) =>
+            isWithinRange(m, min, max) ? (
+              <TransitionComponent
+                {...rest}
+                key={formatIsoMonth(m)}
+                month={m}
+                preventKeyboardFocus={index !== 1 || rest.preventKeyboardFocus}
+                isKeyboardFocusable={!isTransitioning && index === 1}
+                focusedDate={
+                  index === 1
+                    ? focusedDate
+                    : getFocusedDateForMonth(
+                        m,
+                        focusedDate,
+                        rest.minDate,
+                        rest.maxDate,
+                      )
+                }
+                aria-hidden={index !== 1}
+                className={getClassName('bpk-calendar-grid-transition__grid')}
+              />
+            ) : (
+              <div
+                className={getClassName('bpk-calendar-grid-transition__dummy')}
+                key={formatIsoMonth(m)}
+              />
+            ),
           )}
         </div>
       </div>

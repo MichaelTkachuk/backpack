@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@
 
 import React from 'react';
 import renderer from 'react-test-renderer';
+
 import BpkButton from './BpkButton';
 
 describe('BpkButton', () => {
@@ -68,6 +69,13 @@ describe('BpkButton', () => {
     expect(tree).toMatchSnapshot();
   });
 
+  it('should render correctly with an "outline" attribute', () => {
+    const tree = renderer
+      .create(<BpkButton outline>My button</BpkButton>)
+      .toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
   it('should render correctly with an "iconOnly" attribute', () => {
     const tree = renderer
       .create(<BpkButton iconOnly>My button</BpkButton>)
@@ -101,6 +109,50 @@ describe('BpkButton', () => {
     const tree = renderer
       .create(
         <BpkButton large secondary className="">
+          My button
+        </BpkButton>,
+      )
+      .toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('should render correctly with "blank" attribute', () => {
+    const tree = renderer
+      .create(
+        <BpkButton href="#" blank>
+          My button
+        </BpkButton>,
+      )
+      .toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('should render correctly with "rel" attribute', () => {
+    const tree = renderer
+      .create(
+        <BpkButton href="#" rel="rel-attr">
+          My button
+        </BpkButton>,
+      )
+      .toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('should render correctly with "blank" and "rel" attributes', () => {
+    const tree = renderer
+      .create(
+        <BpkButton href="#" blank rel="rel-overwrite">
+          My button
+        </BpkButton>,
+      )
+      .toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('should render correctly with "disabled" and "href" attributes', () => {
+    const tree = renderer
+      .create(
+        <BpkButton href="#" disabled>
           My button
         </BpkButton>,
       )

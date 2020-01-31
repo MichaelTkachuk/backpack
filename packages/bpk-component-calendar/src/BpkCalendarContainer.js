@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,9 +18,10 @@
 
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { isRTL } from 'bpk-react-utils';
+
 import BpkCalendarNav from './BpkCalendarNav';
-import BpkCalendarGrid from './BpkCalendarGrid';
-import { addCalendarGridTransition } from './BpkCalendarGridTransition';
+import { BpkCalendarGridWithTransition } from './BpkCalendarGrid';
 import BpkCalendarGridHeader from './BpkCalendarGridHeader';
 import BpkCalendarDate from './BpkCalendarDate';
 import composeCalendar from './composeCalendar';
@@ -35,9 +36,6 @@ import {
   startOfDay,
   startOfMonth,
 } from './date-utils';
-import { getScriptDirection } from './utils';
-
-const TransitioningBpkCalendarGrid = addCalendarGridTransition(BpkCalendarGrid);
 
 const focusedDateHasChanged = (currentProps, nextProps) => {
   const rawNextSelectedDate = nextProps.selectedDate || nextProps.date;
@@ -86,11 +84,6 @@ const withCalendarState = Calendar => {
           maxDate,
         ),
       };
-
-      this.handleDateSelect = this.handleDateSelect.bind(this);
-      this.handleDateFocus = this.handleDateFocus.bind(this);
-      this.handleDateKeyDown = this.handleDateKeyDown.bind(this);
-      this.handleMonthChange = this.handleMonthChange.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -106,7 +99,7 @@ const withCalendarState = Calendar => {
       }
     }
 
-    handleDateFocus(event, { date, source }) {
+    handleDateFocus = (event, { date, source }) => {
       const { onMonthChange } = this.props;
       const focusedDate = dateToBoundaries(
         date,
@@ -126,9 +119,9 @@ const withCalendarState = Calendar => {
           }
         },
       );
-    }
+    };
 
-    handleDateSelect(date) {
+    handleDateSelect = date => {
       const { onDateSelect } = this.props;
       const keyboardFocusState = { preventKeyboardFocus: false };
 
@@ -143,9 +136,9 @@ const withCalendarState = Calendar => {
       } else {
         this.setState(keyboardFocusState);
       }
-    }
+    };
 
-    handleMonthChange(event, { month, source }) {
+    handleMonthChange = (event, { month, source }) => {
       this.handleDateFocus(event, {
         date: setMonthYear(
           this.state.focusedDate,
@@ -154,11 +147,11 @@ const withCalendarState = Calendar => {
         ),
         source,
       });
-    }
+    };
 
-    handleDateKeyDown(event) {
+    handleDateKeyDown = event => {
       event.persist();
-      const reverse = getScriptDirection() === 'rtl' ? -1 : 1;
+      const reverse = isRTL() ? -1 : 1;
       const { focusedDate } = this.state;
       const source = 'GRID';
       let preventDefault = true;
@@ -220,7 +213,7 @@ const withCalendarState = Calendar => {
       if (preventDefault) {
         event.preventDefault();
       }
-    }
+    };
 
     render() {
       const {
@@ -297,7 +290,7 @@ export default withCalendarState(
   composeCalendar(
     BpkCalendarNav,
     BpkCalendarGridHeader,
-    TransitioningBpkCalendarGrid,
+    BpkCalendarGridWithTransition,
     BpkCalendarDate,
   ),
 );

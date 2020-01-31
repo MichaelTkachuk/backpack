@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -52,7 +52,7 @@
 ///   }
 
 @mixin bpk-grid__container--debug {
-  background-color: $bpk-color-gray-50;
+  background-color: $bpk-color-sky-gray-tint-07;
 }
 
 /// Container will use the width of the parent element. Modifies the bpk-grid__container mixin.

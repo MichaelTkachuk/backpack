@@ -6,6 +6,7 @@ exports[`BpkTooltipPortal should render correctly 1`] = `
   isOpen={false}
   onClose={[Function]}
   onOpen={[Function]}
+  renderTarget={null}
   style={null}
   target={
     <div>
@@ -40,6 +41,7 @@ exports[`BpkTooltipPortal should render correctly with a custom portal className
   isOpen={false}
   onClose={[Function]}
   onOpen={[Function]}
+  renderTarget={null}
   style={null}
   target={
     <div>
@@ -74,6 +76,7 @@ exports[`BpkTooltipPortal should render correctly with a custom tooltip classNam
   isOpen={false}
   onClose={[Function]}
   onOpen={[Function]}
+  renderTarget={null}
   style={null}
   target={
     <div>
@@ -108,9 +111,10 @@ exports[`BpkTooltipPortal should render correctly with custom portal style 1`] =
   isOpen={false}
   onClose={[Function]}
   onOpen={[Function]}
+  renderTarget={null}
   style={
     Object {
-      "color": "red",
+      "color": "rgb(209, 67, 91)",
     }
   }
   target={

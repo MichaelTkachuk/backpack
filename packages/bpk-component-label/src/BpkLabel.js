@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,13 +15,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/* @flow */
+/* @flow strict */
 
 import PropTypes, { type Node } from 'prop-types';
 import React from 'react';
 import { cssModules } from 'bpk-react-utils';
 
-import STYLES from './bpk-label.scss';
+import STYLES from './BpkLabel.scss';
 
 const getClassName = cssModules(STYLES);
 
@@ -29,13 +29,23 @@ export type Props = {
   children: Node,
   className: ?string,
   disabled: boolean,
+  valid: ?boolean,
   required: boolean,
   white: boolean,
 };
 
 const BpkLabel = (props: Props) => {
-  const { children, required, white, disabled, className, ...rest } = props;
+  const {
+    children,
+    required,
+    white,
+    disabled,
+    valid,
+    className,
+    ...rest
+  } = props;
   const classNames = [getClassName('bpk-label')];
+  const invalid = valid === false;
 
   if (white) {
     classNames.push(getClassName('bpk-label--white'));
@@ -43,13 +53,14 @@ const BpkLabel = (props: Props) => {
   if (disabled) {
     classNames.push(getClassName('bpk-label--disabled'));
   }
+  if (invalid) {
+    classNames.push(getClassName('bpk-label--invalid'));
+  }
   if (className) {
     classNames.push(className);
   }
 
   return (
-    // The BpkFieldset component addresses the issue of enforcing `htmlFor`
-    // eslint-disable-next-line jsx-a11y/label-has-for
     <label className={classNames.join(' ')} {...rest}>
       {children}
       {required && (
@@ -63,6 +74,7 @@ BpkLabel.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
   disabled: PropTypes.bool,
+  valid: PropTypes.bool,
   required: PropTypes.bool,
   white: PropTypes.bool,
 };
@@ -70,6 +82,7 @@ BpkLabel.propTypes = {
 BpkLabel.defaultProps = {
   className: null,
   disabled: false,
+  valid: null,
   required: false,
   white: false,
 };

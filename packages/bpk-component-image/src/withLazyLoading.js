@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,11 +15,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/* @flow */
+/* @flow strict */
 
 import React, { type Node, type ComponentType } from 'react';
 import PropTypes from 'prop-types';
 import { wrapDisplayName } from 'bpk-react-utils';
+import throttle from 'lodash/throttle';
 
 type WithLazyLoadingProps = {
   className: ?string,
@@ -39,12 +40,19 @@ export default function withLazyLoading(
     WithLazyLoadingState,
   > {
     checkInView: () => void;
+
     element: ?HTMLElement;
+
     isInViewPort: () => boolean;
+
     placeholderReference: string;
+
     removeEventListeners: () => void;
+
     setInView: () => void;
+
     state: WithLazyLoadingState;
+
     supportsPassiveEvents: () => boolean;
 
     static defaultProps: {};
@@ -52,11 +60,6 @@ export default function withLazyLoading(
     constructor(): void {
       super();
 
-      this.setInView = this.setInView.bind(this);
-      this.removeEventListeners = this.removeEventListeners.bind(this);
-      this.checkInView = this.checkInView.bind(this);
-      this.isInViewPort = this.isInViewPort.bind(this);
-      this.supportsPassiveEvents = this.supportsPassiveEvents.bind(this);
       this.state = {
         inView: false,
       };
@@ -64,7 +67,6 @@ export default function withLazyLoading(
 
     componentDidMount(): void {
       documentRef.addEventListener('scroll', this.checkInView, {
-        capture: true,
         ...this.getPassiveArgs(),
       });
       documentRef.addEventListener('resize', this.checkInView);
@@ -79,40 +81,40 @@ export default function withLazyLoading(
       this.removeEventListeners();
     }
 
-    setInView(): void {
-      this.setState((): {} => ({
+    setInView = (): void => {
+      this.setState(() => ({
         inView: true,
       }));
       this.removeEventListeners();
+    };
+
+    getPassiveArgs(): { capture: boolean } {
+      return this.supportsPassiveEvents()
+        ? { capture: true, passive: true }
+        : { capture: true };
     }
 
-    getPassiveArgs(): {} {
-      return this.supportsPassiveEvents() ? { passive: true } : {};
-    }
-
-    removeEventListeners(): void {
+    removeEventListeners = (): void => {
       documentRef.removeEventListener('scroll', this.checkInView, {
-        capture: true,
         ...this.getPassiveArgs(),
       });
       documentRef.removeEventListener('resize', this.checkInView);
       documentRef.removeEventListener('orientationchange', this.checkInView);
       documentRef.removeEventListener('fullscreenchange', this.checkInView);
-    }
+    };
 
-    checkInView(): void {
+    checkInView = throttle(() => {
       if (this.isInViewPort()) {
         this.setInView();
       }
-    }
+    }, 250);
 
     // This function is taken from modernizr
     // See https://github.com/modernizr/modernizr
     // eslint-disable-next-line
-    supportsPassiveEvents(): boolean {
+    supportsPassiveEvents = (): boolean => {
       let supportsPassiveOption = false;
       try {
-        // $FlowFixMe
         const opts = Object.defineProperty({}, 'passive', {
           // eslint-disable-next-line getter-return
           get() {
@@ -126,9 +128,9 @@ export default function withLazyLoading(
         return false;
       }
       return supportsPassiveOption;
-    }
+    };
 
-    isInViewPort(): boolean {
+    isInViewPort = (): boolean => {
       if (!this.element) return false;
       const rect = this.element.getBoundingClientRect();
 
@@ -147,7 +149,7 @@ export default function withLazyLoading(
         rect.top < viewPortHeight &&
         rect.left < viewPortWidth
       );
-    }
+    };
 
     render(): Node {
       const { style, className, ...rest } = this.props;

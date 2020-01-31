@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,18 +16,7 @@
  * limitations under the License.
  */
 
-const DIRECTIONS = {
-  LTR: 'ltr',
-  RTL: 'rtl',
-};
-
-const getDirection = () =>
-  (
-    (typeof document !== 'undefined' && document.documentElement.dir) ||
-    DIRECTIONS.LTR
-  ).toLowerCase();
-
-const isRTL = () => getDirection() === DIRECTIONS.RTL;
+import { isRTL } from 'bpk-react-utils';
 
 const rtlConditionalValue = (ltrValue, rtlValue) =>
   isRTL() ? rtlValue : ltrValue;

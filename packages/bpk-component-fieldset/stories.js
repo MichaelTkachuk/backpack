@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/* @flow */
+/* @flow strict */
 
 import PropTypes from 'prop-types';
 import React, { cloneElement, Component } from 'react';
@@ -26,8 +26,8 @@ import BpkInput, { INPUT_TYPES } from 'bpk-component-input';
 
 import BpkFieldset, {
   type BpkFieldsetProps,
-  BpkFieldsetPropTypes,
-  BpkFieldsetDefaultPropTypes,
+  propTypes,
+  defaultProps,
 } from './index';
 
 type Props = {
@@ -42,13 +42,13 @@ type State = {
 
 class FieldsetContainer extends Component<Props, State> {
   static propTypes = {
-    ...BpkFieldsetPropTypes,
+    ...propTypes,
     validValue: PropTypes.oneOfType([PropTypes.string, PropTypes.bool])
       .isRequired,
   };
 
   static defaultProps = {
-    ...BpkFieldsetDefaultPropTypes,
+    ...defaultProps,
     isCheckbox: false,
   };
 
@@ -108,7 +108,7 @@ storiesOf('bpk-component-fieldset', module)
       <BpkInput
         id="name_input"
         name="name"
-        type={INPUT_TYPES.TEXT}
+        type={INPUT_TYPES.text}
         placeholder="e.g. Joe Bloggs"
         value=""
       />
@@ -124,7 +124,7 @@ storiesOf('bpk-component-fieldset', module)
       <BpkInput
         id="name_input"
         name="name"
-        type={INPUT_TYPES.TEXT}
+        type={INPUT_TYPES.text}
         placeholder="e.g. Joe Bloggs"
         value=""
       />
@@ -171,7 +171,7 @@ storiesOf('bpk-component-fieldset', module)
       <BpkInput
         id="required_name_input"
         name="name"
-        type={INPUT_TYPES.TEXT}
+        type={INPUT_TYPES.text}
         placeholder="e.g. Joe Bloggs"
         value=""
       />
@@ -219,7 +219,7 @@ storiesOf('bpk-component-fieldset', module)
       <BpkInput
         id="name_input"
         name="name"
-        type={INPUT_TYPES.TEXT}
+        type={INPUT_TYPES.text}
         placeholder="e.g. Joe Bloggs"
         value=""
       />

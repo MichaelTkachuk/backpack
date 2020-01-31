@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2017 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,13 +16,17 @@
  * limitations under the License.
  */
 
-/* @flow */
+/* @flow strict */
 
 import React from 'react';
 import PropTypes from 'prop-types';
 import { cssModules } from 'bpk-react-utils';
 import BpkCloseButton from 'bpk-component-close-button';
-import BpkModal, { type BpkModalProps } from 'bpk-component-modal';
+import BpkModal, {
+  type BpkModalProps,
+  propTypes as modalPropTypes,
+  defaultProps as modalDefaultProps,
+} from 'bpk-component-modal';
 
 import STYLES from './BpkDialog.scss';
 import { onClosePropType } from './customPropTypes';
@@ -66,17 +70,17 @@ const {
   closeOnScrimClick,
   closeOnEscPressed,
   fullScreenOnMobile,
-  ...modalPropTypes
-} = BpkModal.propTypes;
+  ...newModalPropTypes
+} = modalPropTypes;
 
 BpkDialog.propTypes = {
-  ...modalPropTypes,
+  ...newModalPropTypes,
   onClose: onClosePropType,
   dismissible: PropTypes.bool,
 };
 
 BpkDialog.defaultProps = {
-  ...BpkModal.defaultProps,
+  ...modalDefaultProps,
   onClose: null,
   dismissible: true,
 };

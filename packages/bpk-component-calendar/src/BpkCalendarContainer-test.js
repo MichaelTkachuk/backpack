@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,8 +19,10 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import { mount } from 'enzyme';
-import BpkCalendarContainer from './BpkCalendarContainer';
+
 import { weekDays, formatDateFull, formatMonth } from '../test-utils';
+
+import BpkCalendarContainer from './BpkCalendarContainer';
 import { addDays } from './date-utils';
 
 const createNodeMock = () => ({
@@ -35,6 +37,7 @@ describe('BpkCalendarContainer', () => {
           formatMonth={formatMonth}
           formatDateFull={formatDateFull}
           daysOfWeek={weekDays}
+          weekStartsOn={1}
           changeMonthLabel="Change month"
           id="myCalendar"
           minDate={new Date(2010, 1, 15)}
@@ -54,6 +57,7 @@ describe('BpkCalendarContainer', () => {
           formatMonth={formatMonth}
           formatDateFull={formatDateFull}
           daysOfWeek={weekDays}
+          weekStartsOn={1}
           changeMonthLabel="Change month"
           id="myCalendar"
           minDate={new Date(2010, 1, 15)}
@@ -72,6 +76,7 @@ describe('BpkCalendarContainer', () => {
         formatMonth={formatMonth}
         formatDateFull={formatDateFull}
         daysOfWeek={weekDays}
+        weekStartsOn={1}
         changeMonthLabel="Change month"
         id="myCalendar"
         minDate={new Date(2010, 1, 15)}
@@ -100,6 +105,7 @@ describe('BpkCalendarContainer', () => {
         formatMonth={formatMonth}
         formatDateFull={formatDateFull}
         daysOfWeek={weekDays}
+        weekStartsOn={1}
         changeMonthLabel="Change month"
         id="myCalendar"
         minDate={new Date(2010, 1, 15)}
@@ -129,6 +135,7 @@ describe('BpkCalendarContainer', () => {
         formatMonth={formatMonth}
         formatDateFull={formatDateFull}
         daysOfWeek={weekDays}
+        weekStartsOn={1}
         changeMonthLabel="Change month"
         id="myCalendar"
         minDate={new Date(2010, 1, 15)}
@@ -158,6 +165,7 @@ describe('BpkCalendarContainer', () => {
         formatMonth={formatMonth}
         formatDateFull={formatDateFull}
         daysOfWeek={weekDays}
+        weekStartsOn={1}
         changeMonthLabel="Change month"
         id="myCalendar"
         minDate={new Date(2010, 1, 15)}
@@ -234,6 +242,7 @@ describe('BpkCalendarContainer', () => {
         formatMonth={formatMonth}
         formatDateFull={formatDateFull}
         daysOfWeek={weekDays}
+        weekStartsOn={1}
         changeMonthLabel="Change month"
         id="myCalendar"
         minDate={new Date(2010, 1, 1)}

@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,9 +16,9 @@
  * limitations under the License.
  */
 
-/* @flow */
+/* @flow strict */
 
-import Popper from 'popper.js';
+import Popper from '@skyscanner/popper.js';
 import PropTypes from 'prop-types';
 import React, { Component, type Node } from 'react';
 import focusStore from 'a11y-focus-store';
@@ -26,46 +26,56 @@ import focusScope from 'a11y-focus-scope';
 import { Portal, cssModules } from 'bpk-react-utils';
 
 import STYLES from './BpkPopover.scss';
-import BpkPopover, { type Props as PopoverProps } from './BpkPopover';
+import BpkPopover, {
+  propTypes as popoverPropTypes,
+  defaultProps as popoverDefaultProps,
+  type Props as PopoverProps,
+} from './BpkPopover';
 import { ARROW_ID } from './constants';
 
 const getClassName = cssModules(STYLES);
 
 export type Props = {
   ...$Exact<PopoverProps>,
-  target: (() => HTMLElement) | Node,
+  target: (() => ?HTMLElement) | Node,
   isOpen: boolean,
   placement: ?('top' | 'right' | 'bottom' | 'left'),
   portalStyle: ?Object,
   portalClassName: ?string,
-  renderTarget: ?() => HTMLElement,
+  renderTarget: ?() => ?HTMLElement,
   popperModifiers: ?Object,
+};
+
+export const propTypes = {
+  ...popoverPropTypes,
+  target: PropTypes.oneOfType([PropTypes.func, PropTypes.node]).isRequired,
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  placement: PropTypes.oneOf(['top', 'right', 'bottom', 'left']),
+  portalStyle: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  portalClassName: PropTypes.string,
+  renderTarget: PropTypes.func,
+  popperModifiers: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+};
+
+export const defaultProps = {
+  ...popoverDefaultProps,
+  placement: 'bottom',
+  portalStyle: null,
+  portalClassName: null,
+  renderTarget: null,
+  popperModifiers: null,
 };
 
 class BpkPopoverPortal extends Component<Props> {
   popper: ?Popper;
+
   previousTargetElement: ?HTMLElement;
 
-  static propTypes = {
-    ...BpkPopover.propTypes,
-    target: PropTypes.oneOfType([PropTypes.func, PropTypes.node]).isRequired,
-    isOpen: PropTypes.bool.isRequired,
-    onClose: PropTypes.func.isRequired,
-    placement: PropTypes.oneOf(['top', 'right', 'bottom', 'left']),
-    portalStyle: PropTypes.object, // eslint-disable-line react/forbid-prop-types
-    portalClassName: PropTypes.string,
-    renderTarget: PropTypes.func,
-    popperModifiers: PropTypes.object, // eslint-disable-line react/forbid-prop-types
-  };
+  static propTypes = propTypes;
 
-  static defaultProps = {
-    ...BpkPopover.defaultProps,
-    placement: 'bottom',
-    portalStyle: null,
-    portalClassName: null,
-    renderTarget: null,
-    popperModifiers: null,
-  };
+  static defaultProps = defaultProps;
+
   constructor() {
     super();
 
@@ -103,6 +113,8 @@ class BpkPopoverPortal extends Component<Props> {
       this.popper = null;
     }
 
+    // Note that GPU acceleration should be disabled otherwise Popper will use `translate3d`
+    // which can cause blurriness in Safari and Chrome.
     if (!this.popper) {
       this.popper = new Popper(targetElement, popoverElement, {
         placement: this.props.placement,
@@ -115,6 +127,9 @@ class BpkPopoverPortal extends Component<Props> {
         },
         modifiers: {
           ...this.props.popperModifiers,
+          computeStyle: {
+            gpuAcceleration: false,
+          },
           arrow: {
             element: `#${ARROW_ID}`,
           },

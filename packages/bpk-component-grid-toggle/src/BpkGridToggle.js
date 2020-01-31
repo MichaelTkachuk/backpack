@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,10 +19,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { cssModules } from 'bpk-react-utils';
-
 import { BpkButtonLink } from 'bpk-component-link';
 
-import STYLES from './bpk-grid-toggle.scss';
+import STYLES from './BpkGridToggle.scss';
 
 const getClassName = cssModules(STYLES);
 
@@ -31,9 +30,6 @@ const GRID_CLASS_NAME = getClassName('bpk-vertical-grid--on');
 class BpkGridToggle extends React.Component {
   constructor(props) {
     super(props);
-
-    this.toggleGrid = this.toggleGrid.bind(this);
-    this.handleKeyDown = this.handleKeyDown.bind(this);
 
     this.state = {
       gridEnabled: false,
@@ -51,13 +47,13 @@ class BpkGridToggle extends React.Component {
     document.removeEventListener('keydown', this.handleKeyDown);
   }
 
-  handleKeyDown(e) {
+  handleKeyDown = e => {
     if (e.ctrlKey && e.metaKey && e.key.toLowerCase() === 'g') {
       this.toggleGrid(e);
     }
-  }
+  };
 
-  toggleGrid(e) {
+  toggleGrid = e => {
     e.preventDefault();
 
     document
@@ -67,7 +63,7 @@ class BpkGridToggle extends React.Component {
     this.setState(state => ({
       gridEnabled: !state.gridEnabled,
     }));
-  }
+  };
 
   render() {
     const { className } = this.props;

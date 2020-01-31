@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,15 +16,17 @@
  * limitations under the License.
  */
 
-/* @flow */
+/* @flow strict */
 
 import PropTypes from 'prop-types';
 import React, { type Element } from 'react';
 import { withScrim } from 'bpk-scrim-utils';
 import { Portal, cssModules } from 'bpk-react-utils';
 
-import STYLES from './bpk-modal.scss';
+import STYLES from './BpkModal.scss';
 import BpkModalDialog, {
+  propTypes as modalDialogPropTypes,
+  defaultProps as modalDialogDefaultProps,
   type Props as ModalDialogProps,
 } from './BpkModalDialog';
 import { modalOnClosePropType } from './customPropTypes';
@@ -44,6 +46,7 @@ export type Props = {
   // diff will suffice for now.
   ...$Exact<$Diff<ModalDialogProps, ScrimProps>>,
   isOpen: boolean,
+  isIphone: boolean,
   closeOnScrimClick: boolean,
   closeOnEscPressed: boolean,
   renderTarget: ?() => ?HTMLElement,
@@ -54,6 +57,7 @@ const BpkModal = (props: Props) => {
   const {
     isOpen,
     onClose,
+    isIphone,
     target,
     renderTarget,
     fullScreenOnMobile,
@@ -65,7 +69,7 @@ const BpkModal = (props: Props) => {
 
   const containerClass = [getClassName('bpk-modal__container')];
 
-  if (fullScreen) {
+  if (fullScreen || isIphone) {
     containerClass.push(getClassName('bpk-modal__container--full-screen'));
   } else if (fullScreenOnMobile) {
     containerClass.push(
@@ -87,21 +91,19 @@ const BpkModal = (props: Props) => {
         fullScreen={fullScreen}
         closeOnScrimClick={closeOnScrimClick}
         containerClassName={containerClass.join(' ')}
+        isIphone={isIphone}
         {...rest}
       />
     </Portal>
   );
 };
 
-const {
-  isIphone,
-  dialogRef,
-  ...modalDialogPropTypes
-} = BpkModalDialog.propTypes;
+const { dialogRef, ...newModalDialogPropTypes } = modalDialogPropTypes;
 
-BpkModal.propTypes = {
-  ...modalDialogPropTypes,
+export const propTypes = {
+  ...newModalDialogPropTypes,
   onClose: modalOnClosePropType,
+  isIphone: PropTypes.bool,
   isOpen: PropTypes.bool.isRequired,
   renderTarget: PropTypes.func,
   target: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
@@ -109,12 +111,18 @@ BpkModal.propTypes = {
   closeOnEscPressed: PropTypes.bool,
 };
 
-BpkModal.defaultProps = {
-  ...BpkModalDialog.defaultProps,
+export const defaultProps = {
+  ...modalDialogDefaultProps,
   renderTarget: null,
   target: null,
+  isIphone: /iPhone/i.test(
+    typeof window !== 'undefined' ? window.navigator.platform : '',
+  ),
   closeOnScrimClick: true,
   closeOnEscPressed: true,
 };
+
+BpkModal.propTypes = { ...propTypes };
+BpkModal.defaultProps = { ...defaultProps };
 
 export default BpkModal;

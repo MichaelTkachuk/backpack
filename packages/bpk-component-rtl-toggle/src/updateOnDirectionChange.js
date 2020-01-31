@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,18 +17,12 @@
  */
 
 import React, { Component } from 'react';
-
 import { wrapDisplayName } from 'bpk-react-utils';
 
 import { getHtmlElement, DIRECTION_CHANGE_EVENT } from './utils';
 
 const updateOnDirectionChange = EnhancedComponent => {
   class UpdateOnDirectionChange extends Component {
-    constructor() {
-      super();
-      this.onDirectionChange = this.onDirectionChange.bind(this);
-    }
-
     componentDidMount() {
       getHtmlElement().addEventListener(
         DIRECTION_CHANGE_EVENT,
@@ -45,9 +39,9 @@ const updateOnDirectionChange = EnhancedComponent => {
       );
     }
 
-    onDirectionChange() {
+    onDirectionChange = () => {
       this.forceUpdate();
-    }
+    };
 
     render() {
       return <EnhancedComponent {...this.props} />;

@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,21 +18,29 @@
 
 import React from 'react';
 import { Column } from 'react-virtualized';
+
 import BpkDataTableColumn from './BpkDataTableColumn';
 import bpkHeaderRenderer from './bpkHeaderRenderer';
 
-const defaultProps = { label: 'Name', dataKey: 'name', width: 100 };
+const defaultProps = {
+  label: 'Name',
+  dataKey: 'name',
+  width: 12, // eslint-disable-line backpack/use-tokens
+};
 
 describe('BpkDataTableColumn', () => {
   it('has the same propTypes as react-virtualized Column', () => {
+    // eslint-disable-next-line react/forbid-foreign-prop-types
     expect(BpkDataTableColumn.propTypes).toEqual(Column.propTypes);
   });
+
   it('has the same defaultProps as react-virtualized Column, with the exception of headerRenderer', () => {
     expect(BpkDataTableColumn.defaultProps).toEqual({
       ...Column.defaultProps,
       headerRenderer: bpkHeaderRenderer,
     });
   });
+
   describe('toColumn', () => {
     const toColumn = (props = {}) =>
       BpkDataTableColumn.toColumn(
@@ -43,14 +51,17 @@ describe('BpkDataTableColumn', () => {
       const { type } = toColumn();
       expect(type).toBe(Column);
     });
+
     it('sets a default className', () => {
       const { props } = toColumn();
       expect(props.className).toBe('bpk-data-table-column');
     });
+
     it('adds additional classNames', () => {
       const { props } = toColumn({ className: 'custom-class-name' });
       expect(props.className).toBe('bpk-data-table-column custom-class-name');
     });
+
     it('passess all additional props', () => {
       const additionalProps = { something: 1, somethingFn: () => true };
       const { props } = toColumn(additionalProps);

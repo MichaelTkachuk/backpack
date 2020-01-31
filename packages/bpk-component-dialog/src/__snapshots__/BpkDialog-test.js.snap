@@ -7,10 +7,10 @@ exports[`BpkDialog should render correctly in the given target if renderTarget i
   <div>
     <div
       class="bpk-scrim-content bpk-modal__container"
-      data-reactroot=""
     >
       <div
         class="bpk-scrim"
+        role="presentation"
       />
       <section
         aria-labelledby="bpk-modal-heading-my-modal"
@@ -20,7 +20,7 @@ exports[`BpkDialog should render correctly in the given target if renderTarget i
         tabindex="-1"
       >
         <div
-          class="bpk-modal__content"
+          class="bpk-modal__content bpk-modal__content--padded"
         >
           <button
             aria-label="Close"
@@ -31,6 +31,7 @@ exports[`BpkDialog should render correctly in the given target if renderTarget i
             <svg
               class="bpk-close-button__icon"
               height="18"
+              style="width: 1.125rem; height: 1.125rem;"
               viewBox="0 0 24 24"
               width="18"
               xmlns="http://www.w3.org/2000/svg"
@@ -40,9 +41,7 @@ exports[`BpkDialog should render correctly in the given target if renderTarget i
               />
             </svg>
           </button>
-          <!-- react-text: 8 -->
           Dialog content inside a custom target
-          <!-- /react-text -->
         </div>
       </section>
     </div>
@@ -57,10 +56,10 @@ exports[`BpkDialog should render correctly when it is not dismissible 2`] = `
   <div>
     <div
       class="bpk-scrim-content bpk-modal__container"
-      data-reactroot=""
     >
       <div
         class="bpk-scrim"
+        role="presentation"
       />
       <section
         aria-labelledby="bpk-modal-heading-my-modal"
@@ -70,11 +69,9 @@ exports[`BpkDialog should render correctly when it is not dismissible 2`] = `
         tabindex="-1"
       >
         <div
-          class="bpk-modal__content"
+          class="bpk-modal__content bpk-modal__content--padded"
         >
-          <!-- react-text: 5 -->
           Dialog content inside a custom target
-          <!-- /react-text -->
         </div>
       </section>
     </div>

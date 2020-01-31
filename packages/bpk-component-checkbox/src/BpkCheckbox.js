@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { cssModules } from 'bpk-react-utils';
 import { spacingSm } from 'bpk-tokens/tokens/base.es6';
-
 import Tick from 'bpk-component-icon/sm/tick';
 
 import STYLES from './BpkCheckbox.scss';
@@ -38,8 +37,13 @@ const BpkCheckbox = props => {
     white,
     className,
     smallLabel,
+    valid,
     ...rest
   } = props;
+
+  // Explicit check for false primitive value as undefined is
+  // treated as neither valid nor invalid
+  const isInvalid = valid === false;
 
   if (white) {
     classNames.push(getClassName('bpk-checkbox--white'));
@@ -50,14 +54,13 @@ const BpkCheckbox = props => {
   if (smallLabel) {
     labelClassNames.push(getClassName('bpk-checkbox__label--small'));
   }
+  if (isInvalid) {
+    classNames.push(getClassName('bpk-checkbox--invalid'));
+  }
   if (className) {
     classNames.push(className);
   }
 
-  // This is awkward because the label-has-for rule enforces an 'id' / 'for' pairing
-  // when it's not really necessary for nested inputs.
-  // See https://github.com/evcohen/eslint-plugin-jsx-a11y/issues/51.
-  /* eslint-disable jsx-a11y/label-has-for */
   return (
     <label className={classNames.join(' ')}>
       <input
@@ -65,13 +68,15 @@ const BpkCheckbox = props => {
         className={getClassName('bpk-checkbox__input')}
         name={name}
         disabled={disabled}
+        aria-label={label}
+        aria-invalid={isInvalid}
         {...rest}
       />
       <Tick
         className={getClassName('bpk-checkbox__icon')}
         style={{ width: spacingSm, height: spacingSm }}
       />
-      <span className={labelClassNames.join(' ')}>
+      <span className={labelClassNames.join(' ')} aria-hidden="true">
         {label}
         {required && (
           <span className={getClassName('bpk-checkbox__asterisk')}>*</span>
@@ -79,7 +84,6 @@ const BpkCheckbox = props => {
       </span>
     </label>
   );
-  /* eslint-enable */
 };
 
 BpkCheckbox.propTypes = {
@@ -90,6 +94,7 @@ BpkCheckbox.propTypes = {
   white: PropTypes.bool,
   className: PropTypes.string,
   smallLabel: PropTypes.bool,
+  valid: PropTypes.bool,
 };
 
 BpkCheckbox.defaultProps = {
@@ -98,6 +103,7 @@ BpkCheckbox.defaultProps = {
   white: false,
   className: null,
   smallLabel: false,
+  valid: null,
 };
 
 export default BpkCheckbox;

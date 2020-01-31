@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,13 +19,24 @@
 /* eslint-disable react/prop-types */
 
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import BpkButton from 'bpk-component-button';
 import addMonths from 'date-fns/add_months';
+import {
+  colorWhite,
+  colorPanjin,
+  colorSkyGrayTint06,
+  colorSkyGrayTint04,
+  colorMonteverde,
+} from 'bpk-tokens/tokens/base.es6';
+
 import { withButtonAlignment, withRtlSupport } from '../bpk-component-icon';
 import SmallLongArrowRightIcon from '../bpk-component-icon/sm/long-arrow-right';
 import SmallLongArrowLeftIcon from '../bpk-component-icon/sm/long-arrow-left';
+
 import { dateToBoundaries, startOfDay, addDays } from './src/date-utils';
 import { formatMonth, formatDateFull, weekDays } from './test-utils';
+
 import {
   BpkCalendarGrid,
   BpkCalendarGridHeader,
@@ -92,15 +103,16 @@ const MyCalendarNav = ({ month, onMonthChange, direction }) => (
           onMonthChange(event, { month: addMonths(month, -1), source: 'PREV' })
         }
       >
-        <LeftIcon fill="white" />
-      </BpkButton>&nbsp;
+        <LeftIcon fill={colorWhite} />
+      </BpkButton>
+      &nbsp;
       <BpkButton
         iconOnly
         onClick={event =>
           onMonthChange(event, { month: addMonths(month, 1), source: 'NEXT' })
         }
       >
-        <RightIcon fill="white" />
+        <RightIcon fill={colorWhite} />
       </BpkButton>
     </div>
   </div>
@@ -110,16 +122,16 @@ const MyCalendarDate = props => {
   const cx = {
     textAlign: 'center',
     fontSize: '0.8em',
-    color: props.isOutside || props.isBlocked ? 'lightgrey' : 'inherit',
-    backgroundColor: props.isSelected ? '#eee' : 'inherit',
+    color: props.isOutside || props.isBlocked ? colorSkyGrayTint06 : 'inherit',
+    backgroundColor: props.isSelected ? colorSkyGrayTint04 : 'inherit',
   };
   const priceCx = {
-    color: 'rgb(255, 84, 82)',
+    color: colorPanjin,
   };
   const day = props.date.getDate();
   const price = props.prices[day - 1];
   if (price < 100) {
-    priceCx.color = 'rgb(0, 215, 117)';
+    priceCx.color = colorMonteverde;
   }
   return (
     <div style={cx}>
@@ -150,18 +162,16 @@ const MyReturnCalendar = withCalendarState(
 );
 
 class MonthViewCalendar extends Component {
-  constructor() {
-    super();
-
-    this.minDate = startOfDay(new Date());
-    this.maxDate = startOfDay(addMonths(new Date(), 12));
+  constructor(props) {
+    super(props);
     this.state = {
-      departDate: startOfDay(addDays(new Date(), 1)),
-      returnDate: startOfDay(addDays(new Date(), 4)),
+      departDate: props.departureDate,
+      returnDate: props.returnDate,
     };
   }
 
   render() {
+    const { maxDate, minDate, ...rest } = this.props;
     return (
       <div style={{ display: 'flex', justifyContent: 'space-around' }}>
         <MyDepartCalendar
@@ -173,21 +183,22 @@ class MonthViewCalendar extends Component {
           date={this.state.departDate}
           fixedWidth={false}
           onDateSelect={departDate => {
-            this.setState({
+            this.setState(prevState => ({
               departDate,
               returnDate: dateToBoundaries(
-                this.state.returnDate,
+                prevState.returnDate,
                 departDate,
-                this.maxDate,
+                maxDate,
               ),
-            });
+            }));
           }}
+          {...rest}
         />
         <div
           style={{
             flexShrink: 1,
             margin: '0 2rem',
-            borderRight: '1px solid #e6e4eb',
+            borderRight: `1px solid ${colorSkyGrayTint06}`,
           }}
         />
         <MyReturnCalendar
@@ -199,19 +210,35 @@ class MonthViewCalendar extends Component {
           date={this.state.returnDate}
           fixedWidth={false}
           onDateSelect={returnDate => {
-            this.setState({
+            this.setState(prevState => ({
               returnDate,
               departDate: dateToBoundaries(
-                this.state.departDate,
-                this.minDate,
+                prevState.departDate,
+                minDate,
                 returnDate,
               ),
-            });
+            }));
           }}
+          {...rest}
         />
       </div>
     );
   }
 }
+
+MonthViewCalendar.propTypes = {
+  minDate: PropTypes.instanceOf(Date),
+  maxDate: PropTypes.instanceOf(Date),
+  departureDate: PropTypes.instanceOf(Date),
+  returnDate: PropTypes.instanceOf(Date),
+  weekStartsOn: PropTypes.number.isRequired,
+};
+
+MonthViewCalendar.defaultProps = {
+  minDate: startOfDay(new Date()),
+  maxDate: startOfDay(addMonths(new Date(), 12)),
+  departureDate: startOfDay(addDays(new Date(), 1)),
+  returnDate: startOfDay(addDays(new Date(), 4)),
+};
 
 export default MonthViewCalendar;

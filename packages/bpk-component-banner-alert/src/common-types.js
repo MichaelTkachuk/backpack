@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2017 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,9 +15,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/* @flow */
+/* @flow strict */
 import PropTypes from 'prop-types';
-import { type Node } from 'react';
+import { type Node, type StatelessFunctionalComponent } from 'react';
 
 export const ALERT_TYPES = {
   SUCCESS: 'success',
@@ -35,6 +35,7 @@ export type CommonProps = {
   animateOnLeave: boolean,
   show: boolean,
   bannerClassName: ?string,
+  icon: ?StatelessFunctionalComponent<any>,
 };
 
 export type OnExpandToggleHandler = ?(boolean) => void;
@@ -53,6 +54,7 @@ export const COMMON_PROP_TYPES = {
   animateOnLeave: PropTypes.bool,
   show: PropTypes.bool,
   bannerClassName: PropTypes.string,
+  icon: PropTypes.func,
 };
 
 export const COMMON_DEFAULT_PROPS = {
@@ -60,4 +62,5 @@ export const COMMON_DEFAULT_PROPS = {
   animateOnLeave: false,
   show: true,
   bannerClassName: null,
+  icon: null,
 };

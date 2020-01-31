@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@
 
 import React from 'react';
 import renderer from 'react-test-renderer';
+
 import BpkHorizontalNav from './BpkHorizontalNav';
 
 describe('BpkHorizontalNav', () => {
@@ -32,6 +33,28 @@ describe('BpkHorizontalNav', () => {
     const tree = renderer
       .create(
         <BpkHorizontalNav className="my-custom-class-name">
+          My nav content.
+        </BpkHorizontalNav>,
+      )
+      .toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('should render correctly with custom "leadingScrollIndicatorClassName" prop', () => {
+    const tree = renderer
+      .create(
+        <BpkHorizontalNav leadingScrollIndicatorClassName="my-custom-class-name">
+          My nav content.
+        </BpkHorizontalNav>,
+      )
+      .toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('should render correctly with custom "trailingScrollIndicatorClassName" prop', () => {
+    const tree = renderer
+      .create(
+        <BpkHorizontalNav trailingScrollIndicatorClassName="my-custom-class-name">
           My nav content.
         </BpkHorizontalNav>,
       )

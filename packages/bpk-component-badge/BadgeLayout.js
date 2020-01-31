@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,12 +16,15 @@
  * limitations under the License.
  */
 
+/* @flow strict */
+
 import PropTypes from 'prop-types';
-import React, { Children } from 'react';
+import React, { type Node, Children } from 'react';
 import { cssModules } from 'bpk-react-utils';
 
+import STYLES from './BpkBadgeLayout.scss';
+
 import { BADGE_TYPES } from './index';
-import STYLES from './badge-layout.scss';
 
 const getClassName = cssModules(STYLES);
 
@@ -31,7 +34,13 @@ const LIGHT_BADGES = [
   BADGE_TYPES.outline,
 ];
 
-const BadgeLayout = ({ docked, children }) => {
+export type Props = {
+  docked: ?string,
+  children: Node,
+};
+
+const BadgeLayout = (props: Props) => {
+  const { docked, children } = props;
   const classNames = [getClassName('bpk-badge-layout__container')];
 
   if (
@@ -45,12 +54,12 @@ const BadgeLayout = ({ docked, children }) => {
 };
 
 BadgeLayout.propTypes = {
-  docked: PropTypes.bool,
+  docked: PropTypes.string,
   children: PropTypes.node.isRequired,
 };
 
 BadgeLayout.defaultProps = {
-  docked: false,
+  docked: null,
 };
 
 export default BadgeLayout;

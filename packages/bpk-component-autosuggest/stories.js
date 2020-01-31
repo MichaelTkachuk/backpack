@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,9 +19,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-
 import { withRtlSupport } from 'bpk-component-icon';
 import FlightIcon from 'bpk-component-icon/lg/flight';
+
 import BpkAutosuggest, { BpkAutosuggestSuggestion } from './index';
 
 const BpkFlightIcon = withRtlSupport(FlightIcon);
@@ -102,33 +102,25 @@ class AutosuggestExample extends React.Component {
       value: '',
       suggestions: [],
     };
-
-    this.onChange = this.onChange.bind(this);
-    this.onSuggestionsFetchRequested = this.onSuggestionsFetchRequested.bind(
-      this,
-    );
-    this.onSuggestionsClearRequested = this.onSuggestionsClearRequested.bind(
-      this,
-    );
   }
 
-  onChange(e, { newValue }) {
+  onChange = (e, { newValue }) => {
     this.setState({
       value: newValue,
     });
-  }
+  };
 
-  onSuggestionsFetchRequested({ value }) {
+  onSuggestionsFetchRequested = ({ value }) => {
     this.setState({
       suggestions: getSuggestions(value),
     });
-  }
+  };
 
-  onSuggestionsClearRequested() {
+  onSuggestionsClearRequested = () => {
     this.setState({
       suggestions: [],
     });
-  }
+  };
 
   render() {
     const { value, suggestions } = this.state;
@@ -226,4 +218,16 @@ storiesOf('bpk-component-autosuggest', module)
         />
       )}
     />
+  ))
+  .add('Small input', () => (
+    <div style={{ width: '80px' }}>
+      <AutosuggestExample
+        renderSuggestion={suggestion => (
+          <BpkAutosuggestSuggestion
+            value={getSuggestionValue(suggestion)}
+            indent={suggestion.indent}
+          />
+        )}
+      />
+    </div>
   ));

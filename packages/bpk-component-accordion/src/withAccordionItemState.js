@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@
 
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-
 import { wrapDisplayName } from 'bpk-react-utils';
 
 const withAccordionItemState = ComposedComponent => {
@@ -29,18 +28,16 @@ const withAccordionItemState = ComposedComponent => {
       this.state = {
         expanded: props.initiallyExpanded,
       };
-
-      this.onClick = this.onClick.bind(this);
     }
 
-    onClick() {
+    onClick = () => {
       this.setState(
         prevState => ({
           expanded: !prevState.expanded,
         }),
-        this.props.onClick,
+        this.props.onClick || (() => {}),
       );
-    }
+    };
 
     render() {
       const { initiallyExpanded, expanded, onClick, ...rest } = this.props;

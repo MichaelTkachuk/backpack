@@ -2,7 +2,7 @@
  * 
  * Backpack - Skyscanner's Design System
  * 
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,12 +19,12 @@
  */
 
 module.exports = {
-  breakpointMobile: "32.25rem",
-  breakpointTablet: "50.25rem",
   breakpointDesktop: "71.25rem",
+  breakpointMobile: "32.25rem",
+  breakpointQueryAboveMobile: "(min-width: 32.3125rem)",
+  breakpointQueryAboveTablet: "(min-width: 50.3125rem)",
   breakpointQueryMobile: "(max-width: 32.25rem)",
   breakpointQueryTablet: "(max-width: 50.25rem)",
   breakpointQueryTabletOnly: "(min-width: 32.3125rem) and (max-width: 50.25rem)",
-  breakpointQueryAboveMobile: "(min-width: 32.3125rem)",
-  breakpointQueryAboveTablet: "(min-width: 50.3125rem)"
+  breakpointTablet: "50.25rem"
 };

@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,10 +32,10 @@ const BpkChartMargin = props => {
 BpkChartMargin.propTypes = {
   children: PropTypes.node.isRequired,
   margin: PropTypes.shape({
-    top: PropTypes.number,
-    bottom: PropTypes.number,
-    left: PropTypes.number,
-    right: PropTypes.number,
+    top: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    bottom: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    left: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    right: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   }).isRequired,
 };
 

@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,10 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { cssModules } from 'bpk-react-utils';
+import areRangesOverlapping from 'date-fns/are_ranges_overlapping';
+import dateMin from 'date-fns/min';
+import dateMax from 'date-fns/max';
+import startOfDay from 'date-fns/start_of_day';
 
 import {
   getDay,
@@ -31,7 +35,10 @@ import {
   isWithinRange,
 } from './date-utils';
 import CustomPropTypes from './custom-proptypes';
-import STYLES from './bpk-calendar-grid.scss';
+// TODO: Move this to `Week.scss`
+// This should be using its own css file as `BpkCalendarGrid` is also importing `BpkCalendarGrid.scss`
+// and the order of css imports can break the component.
+import STYLES from './BpkCalendarGrid.scss';
 
 const getClassName = cssModules(STYLES);
 
@@ -44,6 +51,10 @@ const shallowEqualProps = (props1, props2, propList) => {
   }
   return true;
 };
+
+function or(total, bool) {
+  return total || bool;
+}
 
 /*
   Week - table row containing a week full of DateContainer components
@@ -64,6 +75,7 @@ class Week extends Component {
       'showWeekendSeparator',
       'weekStartsOn',
       'dates',
+      'cellClassName',
     ];
 
     if (!shallowEqualProps(this.props, nextProps, shallowProps)) {
@@ -98,6 +110,59 @@ class Week extends Component {
       return true;
     }
 
+    const selectionStartChanged = !isSameDay(
+      this.props.selectionStart,
+      nextProps.selectionStart,
+    );
+    const selectionEndChanged = !isSameDay(
+      this.props.selectionEnd,
+      nextProps.selectionEnd,
+    );
+
+    if (selectionStartChanged || selectionEndChanged) {
+      const firstDate = startOfDay(nextProps.dates[0]).getTime() - 1;
+      const lastDate =
+        startOfDay(nextProps.dates[nextProps.dates.length - 1]).getTime() + 1;
+      if (
+        areRangesOverlapping(
+          this.props.selectionStart,
+          this.props.selectionEnd,
+          firstDate,
+          lastDate,
+        ) ||
+        areRangesOverlapping(
+          nextProps.selectionStart,
+          nextProps.selectionEnd,
+          firstDate,
+          lastDate,
+        )
+      ) {
+        if (
+          selectionStartChanged &&
+          areRangesOverlapping(
+            dateMin(this.props.selectionStart, nextProps.selectionStart),
+            dateMax(this.props.selectionStart, nextProps.selectionStart),
+            firstDate,
+            lastDate,
+          )
+        ) {
+          return true;
+        }
+
+        if (
+          selectionEndChanged &&
+          areRangesOverlapping(
+            dateMin(this.props.selectionEnd, nextProps.selectionEnd),
+            dateMax(this.props.selectionEnd, nextProps.selectionEnd),
+            firstDate,
+            lastDate,
+          )
+        ) {
+          return true;
+        }
+      }
+    }
+
     return false;
   }
 
@@ -119,15 +184,31 @@ class Week extends Component {
       preventKeyboardFocus,
       selectedDate,
       showWeekendSeparator,
+      ignoreOutsideDate,
+      dateProps,
     } = this.props;
 
     const firstDayOfWeekendIndex = getFirstDayOfWeekend(daysOfWeek);
     const lastDayOfWeekendIndex = getLastDayOfWeekend(daysOfWeek);
 
+    if (ignoreOutsideDate) {
+      const daysOutside = this.props.dates.map(date =>
+        isSameMonth(date, month),
+      );
+
+      const shouldRender = daysOutside.reduce(or);
+
+      if (!shouldRender) {
+        return null;
+      }
+    }
+
     return (
       <tr className={getClassName('bpk-calendar-grid__week')}>
         {this.props.dates.map(date => (
           <DateContainer
+            className={this.props.cellClassName}
+            isEmptyCell={!isSameMonth(date, month) && ignoreOutsideDate}
             key={date.getDate()}
             weekendStart={
               showWeekendSeparator && firstDayOfWeekendIndex === getDay(date)
@@ -153,6 +234,7 @@ class Week extends Component {
               }
               isOutside={markOutsideDays && !isSameMonth(date, month)}
               isToday={markToday && isToday(date)}
+              {...dateProps}
             />
           </DateContainer>
         ))}
@@ -177,18 +259,28 @@ Week.propTypes = {
   focusedDate: PropTypes.instanceOf(Date),
   maxDate: PropTypes.instanceOf(Date),
   minDate: PropTypes.instanceOf(Date),
+  cellClassName: PropTypes.string,
   onDateClick: PropTypes.func,
   onDateKeyDown: PropTypes.func,
   selectedDate: PropTypes.instanceOf(Date),
+  selectionEnd: PropTypes.instanceOf(Date),
+  selectionStart: PropTypes.instanceOf(Date),
+  ignoreOutsideDate: PropTypes.bool,
+  dateProps: PropTypes.object, // eslint-disable-line react/forbid-prop-types
 };
 
 Week.defaultProps = {
+  cellClassName: null,
   focusedDate: null,
   maxDate: null,
   minDate: null,
   onDateClick: null,
   onDateKeyDown: null,
   selectedDate: null,
+  selectionEnd: null,
+  selectionStart: null,
+  ignoreOutsideDate: false,
+  dateProps: null,
 };
 
 /*
@@ -203,14 +295,27 @@ const DateContainer = props => {
   if (props.weekendEnd) {
     classNames.push(getClassName('bpk-calendar-grid__date--weekend-end'));
   }
+  if (props.className) {
+    classNames.push(props.className);
+  }
 
-  return <td className={classNames.join(' ')}>{props.children}</td>;
+  return (
+    <td aria-hidden={props.isEmptyCell} className={classNames.join(' ')}>
+      {props.children}
+    </td>
+  );
 };
 
 DateContainer.propTypes = {
   children: PropTypes.element.isRequired,
   weekendStart: PropTypes.bool.isRequired,
   weekendEnd: PropTypes.bool.isRequired,
+  isEmptyCell: PropTypes.bool.isRequired,
+  className: PropTypes.string,
+};
+
+DateContainer.defaultProps = {
+  className: null,
 };
 
 export default Week;

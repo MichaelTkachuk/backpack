@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,9 @@
  * limitations under the License.
  */
 
+import punycode from 'punycode';
+import fs from 'fs';
+
 import del from 'del';
 import _ from 'lodash';
 import gulp from 'gulp';
@@ -28,10 +31,11 @@ import merge from 'merge-stream';
 import tinycolor from 'tinycolor2';
 import tokens from 'bpk-tokens/tokens/base.raw.json';
 import iconfont from 'gulp-iconfont';
-import punycode from 'punycode';
-import fs from 'fs';
+
 import svg2react from './tasks/svg2react';
 import svg2datauri, { sassMap, svg2sassvar } from './tasks/svg2datauri';
+import getIconFontMetadataProvider from './tasks/getIconFontMetadataProvider';
+import metadata from './tasks/metadata';
 
 const remToPx = value => {
   let parsed = null;
@@ -171,7 +175,7 @@ gulp.task('icons-common', () =>
     .pipe(gulp.dest('src/icons')),
 );
 
-gulp.task('icons-sm', ['icons-common'], () => {
+gulp.task('icons-sm', () => {
   const svgs = gulp.src('src/icons/**/*.svg').pipe(chmod(0o644));
 
   const styleAttribute = `style="width:${smallIconSize};height:${smallIconSize}"`;
@@ -232,7 +236,7 @@ gulp.task('icons-sm', ['icons-common'], () => {
   return merge(react, datauri, rawDatauri);
 });
 
-gulp.task('icons-lg', ['icons-common'], () => {
+gulp.task('icons-lg', () => {
   const svgs = gulp.src('src/icons/**/*.svg').pipe(chmod(0o644));
 
   const styleAttribute = `style="width:${largeIconSize};height:${largeIconSize}"`;
@@ -293,31 +297,48 @@ gulp.task('icons-lg', ['icons-common'], () => {
   return merge(react, datauri, rawDatauri);
 });
 
-gulp.task('icons-font', ['icons-common'], () => {
-  const generateFont = gulp
-    .src('src/icons/**/*.svg')
-    .pipe(chmod(0o644))
-    .pipe(
-      iconfont({
-        fontName: 'BpkIcon', // required
-        prependUnicode: false,
-        formats: ['ttf', 'eot', 'woff'], // default, 'woff2' and 'svg' are available
-        /**
-         * Normalize and fontHeight(>1000) are needed in order to have all the glyphs rendered
-         * correctly, for more info go to the npm package docs
-         * https://www.npmjs.com/package/gulp-iconfont
-         */
-        normalize: true,
-        fontHeight: 1001,
-        timestamp: 1436442578, // A static timestamp to prevent changes showing up in git, backpack's first commit!
-      }),
-    );
+gulp.task('icons-font', () => {
+  /* We generate two copies of the exact same font here because when we
+   * integrate both the React Native Icon and iOS Icon in the same iOS
+   * app the underlying names in the font have to be different to
+   * prevent UIKit from refusing to load either font. Setting a
+   * different name for the `fontName` parameter of `iconFont`
+   * ensures this happens. Simply having a different name on
+   * disk is not enough as UIKit uses the name at index 1 in
+   * the name table of the font for uniqueness.
+   */
+  const generateFont = (name = 'BpkIcon') =>
+    gulp
+      .src('src/icons/**/*.svg')
+      .pipe(chmod(0o644))
+      .pipe(
+        iconfont({
+          metadataProvider: getIconFontMetadataProvider(
+            'tasks/codepoints.json',
+          ),
+          fontName: name,
+          formats: ['ttf', 'eot', 'woff'],
+          /**
+           * Normalize and fontHeight(>1000) are needed in order to have all the glyphs rendered
+           * correctly, for more info go to the npm package docs
+           * https://www.npmjs.com/package/gulp-iconfont
+           */
+          normalize: true,
+          fontHeight: 1001,
+          timestamp: 1436442578, // A static timestamp to prevent changes showing up in git, backpack's first commit!
+        }),
+      );
 
-  const saveFont = generateFont.pipe(clone()).pipe(gulp.dest('dist/font'));
+  const fontStream = generateFont();
+  const saveFonts = [
+    fontStream.pipe(clone()).pipe(gulp.dest('dist/font')),
+    generateFont('BpkIconIOS')
+      .pipe(clone())
+      .pipe(gulp.dest('dist/font')),
+  ];
 
-  const saveMapping = generateFont.on('glyphs', glyphs => {
+  const saveMapping = fontStream.on('glyphs', glyphs => {
     const baseDir = 'dist/font';
-    // Og all the glyphs generate a key value pair with name and code
     const mapping = glyphs.reduce((acc, glyph) => {
       // use punycode to get the text representation of the unicode
       acc[glyph.name] = punycode.ucs2
@@ -326,29 +347,42 @@ gulp.task('icons-font', ['icons-common'], () => {
         .join('');
       return acc;
     }, {});
-    /**
-     * Create font base folder folder
-     * This is a SYNC operation, it'll block the event loop
-     * being this a cli tool, we can safely have sync operations
-     */
+
     if (!fs.existsSync(baseDir)) {
       fs.mkdirSync(baseDir);
     }
-    // Create a wirable stream to a json file
+
     const mappingStream = fs.createWriteStream(`${baseDir}/iconMapping.json`, {
       flags: 'w',
     });
+
     mappingStream.write(JSON.stringify(mapping, null, 4));
     mappingStream.end();
   });
 
-  return merge(saveFont, saveMapping);
+  return merge(...saveFonts, saveMapping);
 });
 
-gulp.task('default', [
-  'elements',
-  'spinners',
-  'icons-sm',
-  'icons-lg',
-  'icons-font',
-]);
+gulp.task('copy-svgs', () =>
+  gulp
+    .src('src/**/*.svg')
+    .pipe(clone())
+    .pipe(gulp.dest('dist/svgs')),
+);
+
+gulp.task('create-metadata', () =>
+  gulp
+    .src('src/icons/*.svg')
+    .pipe(metadata())
+    .pipe(gulp.dest('dist')),
+);
+
+const allIcons = gulp.series(
+  'icons-common',
+  gulp.parallel('icons-sm', 'icons-lg', 'icons-font', 'copy-svgs'),
+);
+
+gulp.task(
+  'default',
+  gulp.parallel('elements', 'spinners', allIcons, 'create-metadata'),
+);

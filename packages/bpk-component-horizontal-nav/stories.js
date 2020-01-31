@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,16 +16,22 @@
  * limitations under the License.
  */
 
-import React from 'react';
+import React, { Fragment } from 'react';
 import { storiesOf } from '@storybook/react';
+import { cssModules } from 'bpk-react-utils';
 import {
   spacingXs,
   spacingSm,
   onePixelRem,
-  colorGray100,
+  colorSkyGrayTint06,
 } from 'bpk-tokens/tokens/base.es6';
+import BpkText from 'bpk-component-text';
+
+import STYLES from './stories.scss';
 
 import BpkHorizontalNav, { BpkHorizontalNavItem } from './index';
+
+const getClassName = cssModules(STYLES);
 
 const Separator = () => (
   <span
@@ -38,7 +44,7 @@ const Separator = () => (
         display: 'flex',
         height: '100%',
         paddingRight: onePixelRem,
-        backgroundColor: colorGray100,
+        backgroundColor: colorSkyGrayTint06,
       }}
     />
   </span>
@@ -47,6 +53,37 @@ const Separator = () => (
 storiesOf('bpk-component-horizontal-nav', module)
   .add('Example', () => (
     <BpkHorizontalNav>
+      <BpkHorizontalNavItem>Flights</BpkHorizontalNavItem>
+      <BpkHorizontalNavItem selected>Hotels</BpkHorizontalNavItem>
+      <BpkHorizontalNavItem>Car hire</BpkHorizontalNavItem>
+    </BpkHorizontalNav>
+  ))
+  .add('Scroll to selected element', () => (
+    <Fragment>
+      <BpkText>
+        Note - this story works best when viewing the storybook frame alone
+      </BpkText>
+      <div
+        className={getClassName('bpk-horizontal-nav-stories__narrow-container')}
+      >
+        <BpkHorizontalNav autoScrollToSelected>
+          <BpkHorizontalNavItem>Flights</BpkHorizontalNavItem>
+          <BpkHorizontalNavItem>Hotels</BpkHorizontalNavItem>
+          <BpkHorizontalNavItem selected>Car hire</BpkHorizontalNavItem>
+        </BpkHorizontalNav>
+      </div>
+    </Fragment>
+  ))
+  .add('Using custom scroll colors', () => (
+    <BpkHorizontalNav
+      className={getClassName('bpk-horizontal-nav-custom-scrollers')}
+      leadingScrollIndicatorClassName={getClassName(
+        'bpk-horizontal-nav-custom-scrollers--leading',
+      )}
+      trailingScrollIndicatorClassName={getClassName(
+        'bpk-horizontal-nav-custom-scrollers--trailing',
+      )}
+    >
       <BpkHorizontalNavItem>Flights</BpkHorizontalNavItem>
       <BpkHorizontalNavItem selected>Hotels</BpkHorizontalNavItem>
       <BpkHorizontalNavItem>Car hire</BpkHorizontalNavItem>
@@ -78,6 +115,13 @@ storiesOf('bpk-component-horizontal-nav', module)
       <BpkHorizontalNavItem>Flights</BpkHorizontalNavItem>
       <BpkHorizontalNavItem>Hotels</BpkHorizontalNavItem>
       <BpkHorizontalNavItem selected>Car hire</BpkHorizontalNavItem>
+    </BpkHorizontalNav>
+  ))
+  .add('Disabled item', () => (
+    <BpkHorizontalNav>
+      <BpkHorizontalNavItem>Flights</BpkHorizontalNavItem>
+      <BpkHorizontalNavItem>Hotels</BpkHorizontalNavItem>
+      <BpkHorizontalNavItem disabled>Car hire</BpkHorizontalNavItem>
     </BpkHorizontalNav>
   ))
   .add('Separators', () => (

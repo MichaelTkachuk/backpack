@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,10 +16,14 @@
  * limitations under the License.
  */
 
+import {
+  unstable_renderSubtreeIntoContainer, // eslint-disable-line camelcase
+  unmountComponentAtNode,
+  findDOMNode,
+} from 'react-dom';
+import { Component } from 'react';
 import assign from 'object-assign';
 import PropTypes from 'prop-types';
-import { Component } from 'react';
-import { render, unmountComponentAtNode, findDOMNode } from 'react-dom';
 
 const KEYCODES = {
   ESCAPE: 27,
@@ -195,9 +199,9 @@ class Portal extends Component {
       this.portalElement.className = this.props.className;
     }
 
-    this.renderPortal();
-
-    this.props.onOpen(this.portalElement, this.getTargetElement());
+    this.renderPortal(() => {
+      this.props.onOpen(this.portalElement, this.getTargetElement());
+    });
   }
 
   close() {
@@ -206,7 +210,11 @@ class Portal extends Component {
     }
 
     unmountComponentAtNode(this.portalElement);
-    this.getRenderTarget().removeChild(this.portalElement);
+
+    const renderTarget = this.getRenderTarget();
+    if (renderTarget) {
+      renderTarget.removeChild(this.portalElement);
+    }
 
     document.removeEventListener('touchstart', this.onDocumentMouseDown);
     document.removeEventListener('touchmove', this.onDocumentMouseMove);
@@ -237,17 +245,25 @@ class Portal extends Component {
     return supportsPassiveOption;
   }
 
-  renderPortal() {
+  renderPortal(cb = () => {}) {
     // If the `target` prop is null, it's fine that there is no targetElement
     // Otherwise, if a `target` is provided, we don't render if we cannot find the respective element
     const missesExpectedTarget = this.props.target && !this.getTargetElement();
 
     if (this.portalElement && !missesExpectedTarget) {
-      render(this.props.children, this.portalElement, () => {
-        if (this.props.isOpen) {
-          this.props.onRender(this.portalElement, this.getTargetElement());
-        }
-      });
+      unstable_renderSubtreeIntoContainer(
+        this,
+        this.props.children,
+        this.portalElement,
+        () => {
+          if (this.props.isOpen) {
+            this.props.onRender(this.portalElement, this.getTargetElement());
+          }
+          cb();
+        },
+      );
+    } else {
+      setImmediate(cb);
     }
   }
 

@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,15 +20,19 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { cssModules } from 'bpk-react-utils';
 
-import STYLES from './bpk-table.scss';
+import STYLES from './BpkTable.scss';
 
 const getClassName = cssModules(STYLES);
 
 const BpkTable = props => {
   const classNames = [getClassName('bpk-table')];
-  const { children, className, ...rest } = props;
+  const { children, className, alternate, ...rest } = props;
   if (className) {
     classNames.push(className);
+  }
+
+  if (alternate) {
+    classNames.push(getClassName('bpk-table--alternate'));
   }
 
   return (
@@ -41,10 +45,12 @@ const BpkTable = props => {
 BpkTable.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
+  alternate: PropTypes.bool,
 };
 
 BpkTable.defaultProps = {
   className: null,
+  alternate: false,
 };
 
 export default BpkTable;

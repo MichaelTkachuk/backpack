@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,10 @@
  * limitations under the License.
  */
 
+/* @flow strict */
+
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { type Node } from 'react';
 import { cssModules } from 'bpk-react-utils';
 
 import STYLES from './BpkText.scss';
@@ -31,7 +33,15 @@ TEXT_STYLES.forEach(textStyle => {
   classes[textStyle] = getClassName(`bpk-text--${textStyle}`);
 });
 
-const BpkText = props => {
+type Props = {
+  children: Node,
+  textStyle: 'xs' | 'sm' | 'base' | 'lg' | 'xl' | 'xxl',
+  tagName: 'span' | 'p' | 'text' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6',
+  className: ?string,
+  bold: boolean,
+};
+
+const BpkText = (props: Props) => {
   const {
     bold,
     className,
@@ -59,7 +69,17 @@ const BpkText = props => {
 BpkText.propTypes = {
   children: PropTypes.node.isRequired,
   textStyle: PropTypes.oneOf(TEXT_STYLES),
-  tagName: PropTypes.oneOf(['span', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6']),
+  tagName: PropTypes.oneOf([
+    'span',
+    'p',
+    'text',
+    'h1',
+    'h2',
+    'h3',
+    'h4',
+    'h5',
+    'h6',
+  ]),
   className: PropTypes.string,
   bold: PropTypes.bool,
 };

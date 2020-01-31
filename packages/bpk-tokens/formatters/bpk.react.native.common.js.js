@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,24 +17,32 @@
  */
 
 import _ from 'lodash';
+
+import sortTokens from './sort-tokens';
+import adjustTypography from './adjust-typography';
 import { blockComment } from './license-header';
 import valueTemplate from './react-native-value-template';
 
 export const tokenTemplate = ({ name, value, type }) =>
-  `  ${_.camelCase(name)}: ${valueTemplate(value, type)}`;
+  `${_.camelCase(name)}: ${valueTemplate(value, type)}`;
 
-export default json => {
-  const props = _.map(_.toPairs(json.props), x => x[1]);
+const bpkReactNativeCommon = (result, platform = 'other') => {
+  const { props } = sortTokens(result.toJS());
 
-  const lastLine = `${tokenTemplate(_.last(props))}`;
-  const singleTokens = _.map(_.take(props, props.length - 1), prop =>
-    tokenTemplate(prop),
-  ).join(',\n');
   const source = `
 module.exports = {
-${singleTokens},
-${lastLine}
+  ${_.map(props, prop => tokenTemplate(adjustTypography(prop, platform))).join(
+    ',\n  ',
+  )}
 };`;
 
   return [blockComment, source].join('\n');
 };
+
+export default bpkReactNativeCommon;
+
+export const bpkReactNativeCommonJsAndroid = result =>
+  bpkReactNativeCommon(result, 'androidRn');
+
+export const bpkReactNativeCommonJsIos = result =>
+  bpkReactNativeCommon(result, 'iosRn');

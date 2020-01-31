@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,22 +17,19 @@
  */
 
 import _ from 'lodash';
+
+import sortTokens from './sort-tokens';
 import { blockComment } from './license-header';
 
 export const tokenTemplate = ({ name, value }) =>
-  `  ${_.camelCase(name)}: "${value.replace(/"/g, '\\"')}"`;
+  `${_.camelCase(name)}: "${value.replace(/"/g, '\\"')}"`;
 
-export default json => {
-  const props = _.map(_.toPairs(json.props), x => x[1]);
+export default result => {
+  const { props } = sortTokens(result.toJS());
 
-  const lastLine = `${tokenTemplate(_.last(props))}`;
-  const singleTokens = _.map(_.take(props, props.length - 1), prop =>
-    tokenTemplate(prop),
-  ).join(',\n');
   const source = `
 module.exports = {
-${singleTokens},
-${lastLine}
+  ${_.map(props, prop => tokenTemplate(prop)).join(',\n  ')}
 };`;
 
   return [blockComment, source].join('\n');

@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -106,22 +106,36 @@ const checkBpkDependencies = (packageFile, correctVersions) => {
   }
 };
 
+const getLatestProductionVersion = version => {
+  if (version.includes('-alpha')) {
+    return version.split('-alpha')[0];
+  }
+  if (version.includes('-beta')) {
+    return version.split('-beta')[0];
+  }
+  return version;
+};
+
 const getBpkPackageVersions = packageFiles =>
   packageFiles.reduce((acc, pkg) => {
     if (pkg === '' || !pkg.includes('bpk-')) {
       return acc;
     }
     const pfContent = JSON.parse(fs.readFileSync(pkg));
-    acc[pfContent.name] = pfContent.version;
+    const latestVersion = getLatestProductionVersion(pfContent.version);
+    acc[pfContent.name] = latestVersion;
     return acc;
   }, {});
 
 console.log('Checking Backpack cross dependencies...');
 console.log('');
 
-let packageFiles = execSync('find . -name package.json | grep -v node_modules')
+let packageFiles = execSync(
+  'find packages -name package.json | grep -v node_modules',
+)
   .toString()
   .split('\n');
+
 packageFiles = packageFiles.filter(s => s !== '');
 const bpkPackageVersions = getBpkPackageVersions(packageFiles);
 

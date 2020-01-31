@@ -4,6 +4,7 @@
     "./base/borders.json",
     "./base/box-shadows.json",
     "./base/buttons.json",
+    "./base/carousel-indicator-dots.json",
     "./base/colors.json",
     "./base/spacing.json",
     "./base/touchables.json",

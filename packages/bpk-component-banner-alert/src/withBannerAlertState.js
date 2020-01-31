@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,11 +15,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/* @flow */
+/* @flow strict */
 
 import React, { type Node, type ComponentType, Component } from 'react';
 import PropTypes from 'prop-types';
-
 import { wrapDisplayName } from 'bpk-react-utils';
 
 import {
@@ -118,12 +117,15 @@ const withBannerAlertState = (WrappedComponent: ComponentType<any>) => {
     }
 
     onExpandToggle = () => {
-      const expanded = !this.state.expanded;
-      this.setState({ expanded });
+      this.setState(prevState => {
+        const expanded = !prevState.expanded;
 
-      if (this.props.onExpandToggle) {
-        this.props.onExpandToggle(expanded);
-      }
+        if (this.props.onExpandToggle) {
+          this.props.onExpandToggle(expanded);
+        }
+
+        return { expanded };
+      });
     };
 
     onDismiss = () => {

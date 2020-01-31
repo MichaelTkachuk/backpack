@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,32 +21,41 @@ import {
   calendarDaySpacing,
 } from 'bpk-tokens/tokens/base.es6';
 
-const remToPx = value => {
-  let parsed = null;
+const CSS_UNIT_REGEX = /(^[+-]?(?:\d*\.)?\d+)(.+)/i;
 
-  if (/rem$/.test(value)) {
-    parsed = parseFloat(value.replace(/rem/, '')) * 16;
+const splitToken = value => {
+  const match = value.match(CSS_UNIT_REGEX);
+  if (!match) {
+    throw new Error(
+      `Invalid token value. Expecting a valid css unit, got ${value}`,
+    );
   }
-
-  return parsed || null;
+  const [_, val, unit] = match; // eslint-disable-line no-unused-vars
+  return [parseFloat(val), unit];
 };
 
-export const getCalendarGridWidth = () =>
-  7 * (remToPx(calendarDaySize) + remToPx(calendarDaySpacing));
+export const getCalendarGridWidth = (multiplier = 1) => {
+  const [sizeValue, sizeUnit] = splitToken(calendarDaySize);
+  const [spacingValue, spacingUnit] = splitToken(calendarDaySpacing);
+
+  if (sizeUnit !== spacingUnit) {
+    throw new Error(
+      `'calendarDaySize' and 'calendarDaySpacing' must use the same unit. Got ${sizeUnit} and ${spacingUnit}`,
+    );
+  }
+
+  const width = multiplier * (7 * (sizeValue + spacingValue));
+  return `${width}${sizeUnit}`;
+};
 
 export const getTransformStyles = transformValue => {
-  const transform = `translateX(${transformValue}px)`;
+  const transform = `translateX(${transformValue})`;
   return {
     transform,
     msTransform: transform,
     MozTransform: transform,
     WebkitTransform: transform,
   };
-};
-
-export const getScriptDirection = () => {
-  const html = document.querySelector('html');
-  return window.getComputedStyle(html, null).getPropertyValue('direction');
 };
 
 export const isTransitionEndSupported = () =>

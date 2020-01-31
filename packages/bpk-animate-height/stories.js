@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ import BpkButton from 'bpk-component-button';
 import { storiesOf } from '@storybook/react';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { text } from '@storybook/addon-knobs';
 
 import AnimateHeight from './index';
 
@@ -30,11 +31,9 @@ class AnimateHeightContainer extends Component {
     this.state = {
       height: this.props.fromHeight,
     };
-
-    this.onClick = this.onClick.bind(this);
   }
 
-  onClick() {
+  onClick = () => {
     this.setState(prevState => {
       const height =
         prevState.height !== this.props.fromHeight
@@ -43,7 +42,7 @@ class AnimateHeightContainer extends Component {
 
       return { height };
     });
-  }
+  };
 
   render() {
     const { fromHeight, toHeight, ...rest } = this.props;
@@ -51,7 +50,9 @@ class AnimateHeightContainer extends Component {
       <div>
         <AnimateHeight {...rest} height={this.state.height} />
         <br />
-        <BpkButton onClick={this.onClick}>Toggle height!</BpkButton>
+        <BpkButton onClick={this.onClick}>
+          {text('Button copy', 'Toggle height!')}
+        </BpkButton>
       </div>
     );
   }
@@ -66,8 +67,11 @@ AnimateHeightContainer.propTypes = {
 
 storiesOf('bpk-animate-height', module).add('Example', () => (
   <AnimateHeightContainer fromHeight="auto" toHeight={0} duration={300}>
-    Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo
-    ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis
-    parturient montes, nascetur ridiculus mus.
+    {text(
+      'Copy',
+      `Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo
+ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis
+parturient montes, nascetur ridiculus mus.`,
+    )}
   </AnimateHeightContainer>
 ));

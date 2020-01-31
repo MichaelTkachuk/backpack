@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,15 +22,23 @@
   margin-bottom: 2rem;
 
   &__stub {
+    display: flex;
     padding: 1rem;
-    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 
   &__small {
-    color: $bpk-color-gray-500;
+    color: $bpk-color-sky-gray-tint-02;
 
     @include bpk-text;
     @include bpk-text--sm;
+  }
+
+  &__logo {
+    width: 4rem;
+    height: 2rem;
   }
 
   &__price {
@@ -39,10 +47,17 @@
     @include bpk-text--bold;
   }
 
-  &__main {
+  &__flight-overview {
     display: flex;
     margin-bottom: 1rem;
     align-items: center;
+    flex: 1;
+  }
+
+  &__main {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
   }
 
   &__from {

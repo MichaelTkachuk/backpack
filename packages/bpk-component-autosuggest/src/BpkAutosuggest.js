@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,11 +16,12 @@
  * limitations under the License.
  */
 
+import React from 'react';
+import BpkInput from 'bpk-component-input';
 import Autosuggest from 'react-autosuggest';
 import { cssModules } from 'bpk-react-utils';
-import BpkInput from 'bpk-component-input';
 
-import STYLES from './bpk-autosuggest.scss';
+import STYLES from './BpkAutosuggest.scss';
 
 const getClassName = cssModules(STYLES);
 
@@ -48,6 +49,22 @@ Autosuggest.defaultProps.theme = {
   sectionTitle: getClassName('bpk-autosuggest__section-title'),
 };
 
-Autosuggest.defaultProps.renderInputComponent = BpkInput;
+Autosuggest.defaultProps.renderInputComponent = inputProps => {
+  const { ref, inputRef, autoComplete = 'off', ...rest } = inputProps;
+
+  return (
+    <BpkInput
+      inputRef={element => {
+        ref(element);
+
+        if (typeof inputRef === 'function') {
+          inputRef(element);
+        }
+      }}
+      autoComplete={autoComplete}
+      {...rest}
+    />
+  );
+};
 
 export default Autosuggest;

@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,13 +31,26 @@
 ///   }
 
 @mixin bpk-badge {
-  display: inline-block;
+  display: inline-flex;
   padding: $bpk-badge-padding-y $bpk-badge-padding-x;
-  background-color: $bpk-badge-background-color;
+  align-items: center;
+  color: $bpk-font-color-base;
 
+  @include bpk-themeable-property(background-color, --bpk-badge-background-color, $bpk-badge-background-color);
   @include bpk-border-radius-xs;
   @include bpk-text;
   @include bpk-text--sm;
+
+  // // HACK: Icons have an inline style attribute setting the height and width.
+  // // so the only way to override this in CSS is to use !important.
+  > svg {
+    /* stylelint-disable declaration-no-important */
+    width: 16 * $bpk-one-pixel-rem !important;
+    height: 16 * $bpk-one-pixel-rem !important;
+    /* stylelint-enable declaration-no-important */
+    margin-top: $bpk-one-pixel-rem * 2;
+    margin-bottom: $bpk-one-pixel-rem * 2;
+  }
 }
 /// Centered badge. Modifies the bpk-badge mixin.
 ///
@@ -116,7 +129,7 @@
 ///   }
 
 @mixin bpk-badge--success {
-  background-color: $bpk-color-green-500;
+  @include bpk-themeable-property(background-color, --bpk-badge-success-background-color, $bpk-color-monteverde);
 }
 
 /// Destructive badge. Modifies the bpk-badge mixin.
@@ -130,8 +143,9 @@
 ///   }
 
 @mixin bpk-badge--destructive {
-  background-color: $bpk-color-red-500;
   color: $bpk-color-white;
+
+  @include bpk-themeable-property(background-color, --bpk-badge-destructive-background-color, $bpk-color-panjin);
 }
 
 /// Light badge. Modifies the bpk-badge mixin.
@@ -145,7 +159,7 @@
 ///   }
 
 @mixin bpk-badge--light {
-  background-color: $bpk-color-gray-50;
+  background-color: $bpk-color-sky-gray-tint-07;
 }
 
 /// Inverse badge. Modifies the bpk-badge mixin.

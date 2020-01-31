@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@
 
 import React from 'react';
 import renderer from 'react-test-renderer';
+
 import BpkBarchartBar from './BpkBarchartBar';
 
 describe('BpkBarchartBar', () => {
@@ -56,22 +57,6 @@ describe('BpkBarchartBar', () => {
           height={100}
           label="Bar"
           onHover={() => null}
-        />,
-      )
-      .toJSON();
-    expect(tree).toMatchSnapshot();
-  });
-
-  it('should render with an onTouch handler', () => {
-    const tree = renderer
-      .create(
-        <BpkBarchartBar
-          x={10}
-          y={10}
-          width={20}
-          height={100}
-          label="Bar"
-          onTouch={() => null}
         />,
       )
       .toJSON();

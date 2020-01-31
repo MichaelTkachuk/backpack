@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,19 +18,20 @@
 
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-
 import { colors } from 'bpk-tokens/tokens/base.es6';
+
 import BpkButton from '../bpk-component-button';
 import { BpkList, BpkListItem } from '../bpk-component-list';
 
 import { sm, lg } from './all';
+import SmallLongArrowRightIcon from './sm/long-arrow-right';
+import LargeLongArrowRightIcon from './lg/long-arrow-right';
+
 import {
   withButtonAlignment,
   withLargeButtonAlignment,
   withRtlSupport,
 } from './index';
-import SmallLongArrowRightIcon from './sm/long-arrow-right';
-import LargeLongArrowRightIcon from './lg/long-arrow-right';
 
 const AlignedSmallLongArrowRightIcon = withButtonAlignment(
   SmallLongArrowRightIcon,
@@ -49,7 +50,7 @@ storiesOf('bpk-component-icon', module)
         const Icon = sm[icon];
         return (
           <BpkListItem key={icon}>
-            <Icon fill={colors.colorGray700} /> <span>{icon}</span>
+            <Icon fill={colors.colorSkyGrayTint01} /> <span>{icon}</span>
           </BpkListItem>
         );
       })}
@@ -61,7 +62,7 @@ storiesOf('bpk-component-icon', module)
         const Icon = lg[icon];
         return (
           <BpkListItem key={icon}>
-            <Icon fill={colors.colorGray700} /> <span>{icon}</span>
+            <Icon fill={colors.colorSkyGrayTint01} /> <span>{icon}</span>
           </BpkListItem>
         );
       })}

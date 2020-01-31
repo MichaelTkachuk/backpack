@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/* @flow */
+/* @flow strict */
 
 import PropTypes from 'prop-types';
 import React, { cloneElement, type Element } from 'react';
@@ -23,7 +23,7 @@ import BpkLabel from 'bpk-component-label';
 import BpkFormValidation from 'bpk-component-form-validation';
 import { cssModules } from 'bpk-react-utils';
 
-import STYLES from './bpk-fieldset.scss';
+import STYLES from './BpkFieldset.scss';
 
 const getClassName = cssModules(STYLES);
 
@@ -60,15 +60,25 @@ const BpkFieldset = (props: Props) => {
     return null;
   }
 
+  let childId: string = children.props.id;
+  if (
+    // $FlowFixMe
+    children.props.inputProps &&
+    children.props.inputProps.id &&
+    typeof children.props.inputProps.id === 'string'
+  ) {
+    childId = children.props.inputProps.id;
+  }
+
   const classNames = [getClassName('bpk-fieldset')];
-  const validationMessageId = `${children.props.id}_validation_message`;
-  const descriptionId = `${children.props.id}_description`;
+  const validationMessageId = `${childId}_validation_message`;
+  const descriptionId = `${childId}_description`;
+
+  const isValid = isCheckbox ? valid : children.props.valid;
 
   // Explicit check for false primitive value as undefined is
   // treated as neither valid nor invalid
-  const isInvalid = isCheckbox
-    ? valid === false
-    : children.props.valid === false;
+  const isInvalid = isValid === false;
 
   const childrenProps: {
     required?: boolean,
@@ -100,9 +110,10 @@ const BpkFieldset = (props: Props) => {
     <fieldset className={classNames.join(' ')} {...rest}>
       {!isCheckbox && (
         <BpkLabel
-          htmlFor={children.props.id}
+          htmlFor={childId}
           required={required}
           disabled={disabled}
+          valid={isValid}
         >
           {label}
         </BpkLabel>
@@ -116,7 +127,7 @@ const BpkFieldset = (props: Props) => {
           {description}
         </span>
       )}
-      {validationMessage && (
+      {!disabled && validationMessage && (
         <BpkFormValidation
           id={validationMessageId}
           expanded={isInvalid}
@@ -143,7 +154,7 @@ const labelPropType = (
   return false;
 };
 
-export const BpkFieldsetPropTypes = {
+export const propTypes = {
   children: PropTypes.element.isRequired,
   label: labelPropType,
   disabled: PropTypes.bool,
@@ -156,9 +167,7 @@ export const BpkFieldsetPropTypes = {
   description: PropTypes.string,
 };
 
-BpkFieldset.propTypes = BpkFieldsetPropTypes;
-
-export const BpkFieldsetDefaultPropTypes = {
+export const defaultProps = {
   label: null,
   disabled: false,
   valid: null,
@@ -169,6 +178,8 @@ export const BpkFieldsetDefaultPropTypes = {
   validationProps: {},
   description: null,
 };
-BpkFieldset.defaultProps = BpkFieldsetDefaultPropTypes;
+
+BpkFieldset.propTypes = { ...propTypes };
+BpkFieldset.defaultProps = { ...defaultProps };
 
 export default BpkFieldset;

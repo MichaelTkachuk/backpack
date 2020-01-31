@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,10 +16,11 @@
  * limitations under the License.
  */
 
-/* @flow */
+/* @flow strict */
 
 import React from 'react';
 import renderer from 'react-test-renderer';
+import { BpkNavigationBarButtonLink } from 'bpk-component-navigation-bar';
 
 import BpkModalDialog from './BpkModalDialog';
 
@@ -30,12 +31,10 @@ describe('BpkModalDialog', () => {
         <BpkModalDialog
           id="my-modal"
           title="Modal title"
-          onClose={jest.fn()}
           closeLabel="Close"
           dialogRef={jest.fn()}
+          onClose={jest.fn()}
           isIphone={false}
-          fullScreenOnMobile
-          fullScreen={false}
         >
           Modal content
         </BpkModalDialog>,
@@ -49,14 +48,12 @@ describe('BpkModalDialog', () => {
       .create(
         <BpkModalDialog
           id="my-modal"
-          className="my-classname"
           title="Modal title"
-          onClose={jest.fn()}
           closeLabel="Close"
           dialogRef={jest.fn()}
+          onClose={jest.fn()}
           isIphone={false}
-          fullScreenOnMobile
-          fullScreen={false}
+          className="my-classname"
         >
           Modal content
         </BpkModalDialog>,
@@ -70,15 +67,12 @@ describe('BpkModalDialog', () => {
       .create(
         <BpkModalDialog
           id="my-modal"
-          className="my-classname"
-          wide
           title="Modal title"
-          onClose={jest.fn()}
           closeLabel="Close"
           dialogRef={jest.fn()}
+          onClose={jest.fn()}
           isIphone={false}
-          fullScreenOnMobile
-          fullScreen={false}
+          wide
         >
           Modal content
         </BpkModalDialog>,
@@ -92,15 +86,11 @@ describe('BpkModalDialog', () => {
       .create(
         <BpkModalDialog
           id="my-modal"
-          className="my-classname"
-          closeText="Dismiss"
           title="Modal title"
-          onClose={jest.fn()}
-          closeLabel="Close"
           dialogRef={jest.fn()}
+          onClose={jest.fn()}
           isIphone={false}
-          fullScreenOnMobile
-          fullScreen={false}
+          closeText="Dismiss"
         >
           Modal content
         </BpkModalDialog>,
@@ -115,12 +105,10 @@ describe('BpkModalDialog', () => {
         <BpkModalDialog
           id="my-modal"
           title="Modal title"
-          onClose={jest.fn()}
           closeLabel="Close"
           dialogRef={jest.fn()}
+          onClose={jest.fn()}
           isIphone
-          fullScreenOnMobile
-          fullScreen={false}
         >
           Modal content
         </BpkModalDialog>,
@@ -135,12 +123,11 @@ describe('BpkModalDialog', () => {
         <BpkModalDialog
           id="my-modal"
           title="Modal title"
-          onClose={jest.fn()}
           closeLabel="Close"
           dialogRef={jest.fn()}
-          fullScreenOnMobile={false}
-          fullScreen={false}
+          onClose={jest.fn()}
           isIphone={false}
+          fullScreenOnMobile={false}
         >
           Modal content
         </BpkModalDialog>,
@@ -155,12 +142,77 @@ describe('BpkModalDialog', () => {
         <BpkModalDialog
           id="my-modal"
           title="Modal title"
-          onClose={jest.fn()}
           closeLabel="Close"
           dialogRef={jest.fn()}
-          fullScreenOnMobile={false}
-          fullScreen
+          onClose={jest.fn()}
           isIphone={false}
+          fullScreen
+        >
+          Modal content
+        </BpkModalDialog>,
+      )
+      .toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('should render correctly with no padding', () => {
+    const tree = renderer
+      .create(
+        <BpkModalDialog
+          id="my-modal"
+          title="Modal title"
+          closeLabel="Close"
+          dialogRef={jest.fn()}
+          onClose={jest.fn()}
+          isIphone={false}
+          padded={false}
+        >
+          Modal content
+        </BpkModalDialog>,
+      )
+      .toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('should render correctly with a custom content classname', () => {
+    const tree = renderer
+      .create(
+        <BpkModalDialog
+          id="my-modal"
+          title="Modal title"
+          closeLabel="Close"
+          dialogRef={jest.fn()}
+          onClose={jest.fn()}
+          isIphone={false}
+          contentClassName="my-classname"
+        >
+          Modal content
+        </BpkModalDialog>,
+      )
+      .toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('should render correctly with an accessory view', () => {
+    const tree = renderer
+      .create(
+        <BpkModalDialog
+          id="my-modal"
+          title="Modal title"
+          closeLabel="Close"
+          dialogRef={jest.fn()}
+          onClose={jest.fn()}
+          isIphone={false}
+          contentClassName="my-classname"
+          accessoryView={
+            <BpkNavigationBarButtonLink
+              label="Close"
+              onClick={jest.fn()}
+              className="bpk-modal__leading-button"
+            >
+              <div>Testing</div>
+            </BpkNavigationBarButtonLink>
+          }
         >
           Modal content
         </BpkModalDialog>,

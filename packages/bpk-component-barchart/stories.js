@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,18 +24,17 @@ import BpkText from 'bpk-component-text';
 import { updateOnDirectionChange } from 'bpk-component-rtl-toggle';
 import { lineHeightSm } from 'bpk-tokens/tokens/base.es6';
 import { scaleLinear, scaleBand } from 'd3-scale';
+
 import { remToPx } from './src/utils';
+import { ORIENTATION_X, ORIENTATION_Y } from './src/orientation';
+import { withSelectedState } from './hocs';
+import STYLES from './stories.scss';
 
 import BpkBarchart, {
   BpkChartGridLines,
   BpkChartAxis,
   BpkChartMargin,
 } from './index';
-
-import { ORIENTATION_X, ORIENTATION_Y } from './src/orientation';
-import { withSelectedState } from './hocs';
-
-import STYLES from './stories.scss';
 
 const getClassName = cssModules(STYLES);
 
@@ -52,8 +51,8 @@ const data = require('./data');
 
 const margin = {
   top: 0,
-  left: 40,
-  bottom: 40,
+  left: 40, // eslint-disable-line backpack/use-tokens
+  bottom: 40, // eslint-disable-line backpack/use-tokens
   right: 0,
 };
 
@@ -141,6 +140,28 @@ storiesOf('bpk-component-barchart', module)
       }}
       xAxisLabel="Month"
       yAxisLabel="Average Price (£)"
+    />
+  ))
+  .add('Using custom scroll colors', () => (
+    <RtlBarchart
+      initialWidth={500}
+      initialHeight={300}
+      data={data.prices}
+      xScaleDataKey="month"
+      yScaleDataKey="price"
+      style={{
+        maxWidth: '580px',
+        minWidth: '400px',
+      }}
+      xAxisLabel="Month"
+      yAxisLabel="Average Price (£)"
+      className={getClassName('bpk-barchart-custom-scrollers')}
+      leadingScrollIndicatorClassName={getClassName(
+        'bpk-barchart-custom-scrollers--leading',
+      )}
+      trailingScrollIndicatorClassName={getClassName(
+        'bpk-barchart-custom-scrollers--trailing',
+      )}
     />
   ))
   .add('Default disabled data table', () => (
@@ -258,4 +279,34 @@ storiesOf('bpk-component-barchart', module)
       yAxisLabel="Average Price (£)"
       showGridlines
     />
+  ))
+  .add('Custom yAxisDomain', () => (
+    <div>
+      <Heading>Domain (0 - 800)</Heading>
+      <RtlBarchart
+        initialWidth={500}
+        initialHeight={300}
+        data={data.prices}
+        xScaleDataKey="month"
+        yScaleDataKey="price"
+        style={{
+          maxWidth: '580px',
+        }}
+        showGridlines
+        yAxisDomain={[0, 800]}
+      />
+      <Heading>Domain (300 - null)</Heading>
+      <RtlBarchart
+        initialWidth={500}
+        initialHeight={300}
+        data={data.prices}
+        xScaleDataKey="month"
+        yScaleDataKey="price"
+        style={{
+          maxWidth: '580px',
+        }}
+        showGridlines
+        yAxisDomain={[300, null]}
+      />
+    </div>
   ));

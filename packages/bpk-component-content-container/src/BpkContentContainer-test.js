@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@
 
 import React from 'react';
 import renderer from 'react-test-renderer';
+
 import BpkContentContainer from './BpkContentContainer';
 
 describe('BpkContentContainer', () => {
@@ -42,6 +43,40 @@ describe('BpkContentContainer', () => {
     const tree = renderer
       .create(
         <BpkContentContainer bareHtml>
+          <h1>Heading</h1>
+          <p>My paragraph.</p>
+          <ul>
+            <li>Item 1</li>
+            <li>Item 2</li>
+            <li>Item 3</li>
+          </ul>
+        </BpkContentContainer>,
+      )
+      .toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('should render correctly with a "bareHtml" and "alternate" attributes', () => {
+    const tree = renderer
+      .create(
+        <BpkContentContainer bareHtml alternate>
+          <h1>Heading</h1>
+          <p>My paragraph.</p>
+          <ul>
+            <li>Item 1</li>
+            <li>Item 2</li>
+            <li>Item 3</li>
+          </ul>
+        </BpkContentContainer>,
+      )
+      .toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('should render correctly with a custom "className" attribute ', () => {
+    const tree = renderer
+      .create(
+        <BpkContentContainer className="my-test-class">
           <h1>Heading</h1>
           <p>My paragraph.</p>
           <ul>

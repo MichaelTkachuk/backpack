@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import React from 'react';
 import { cssModules } from 'bpk-react-utils';
 
 import CustomPropTypes from './custom-proptypes';
-import STYLES from './bpk-calendar.scss';
+import STYLES from './BpkCalendar.scss';
 
 const getClassName = cssModules(STYLES);
 
@@ -51,6 +51,12 @@ const composeCalendar = (Nav, GridHeader, Grid, CalendarDate) => {
       showWeekendSeparator,
       weekStartsOn,
       fixedWidth,
+      gridClassName,
+      navProps,
+      headerProps,
+      gridProps,
+      dateProps,
+      weekDayKey,
     } = props;
 
     if (className) {
@@ -73,6 +79,9 @@ const composeCalendar = (Nav, GridHeader, Grid, CalendarDate) => {
     if (!GridHeader && Nav) {
       gridClasses.push(getClassName('bpk-calendar__grid'));
     }
+    if (gridClassName) {
+      gridClasses.push(gridClassName);
+    }
 
     return (
       <div className={classNames.join(' ')}>
@@ -85,6 +94,7 @@ const composeCalendar = (Nav, GridHeader, Grid, CalendarDate) => {
             minDate={minDate}
             month={month}
             onMonthChange={onMonthChange}
+            {...navProps}
           />
         )}
         {GridHeader && (
@@ -92,7 +102,9 @@ const composeCalendar = (Nav, GridHeader, Grid, CalendarDate) => {
             daysOfWeek={daysOfWeek}
             showWeekendSeparator={showWeekendSeparator}
             weekStartsOn={weekStartsOn}
+            weekDayKey={weekDayKey}
             className={headerClasses.join(' ')}
+            {...headerProps}
           />
         )}
         <Grid
@@ -114,6 +126,8 @@ const composeCalendar = (Nav, GridHeader, Grid, CalendarDate) => {
           markOutsideDays={markOutsideDays}
           selectedDate={selectedDate}
           className={gridClasses.join(' ')}
+          dateProps={dateProps}
+          {...gridProps}
         />
       </div>
     );
@@ -121,7 +135,7 @@ const composeCalendar = (Nav, GridHeader, Grid, CalendarDate) => {
 
   BpkCalendar.propTypes = {
     // Required
-    changeMonthLabel: PropTypes.string.isRequired,
+    changeMonthLabel: Nav ? PropTypes.string.isRequired : PropTypes.string,
     daysOfWeek: CustomPropTypes.DaysOfWeek.isRequired,
     formatDateFull: PropTypes.func.isRequired,
     formatMonth: PropTypes.func.isRequired,
@@ -129,6 +143,7 @@ const composeCalendar = (Nav, GridHeader, Grid, CalendarDate) => {
     maxDate: PropTypes.instanceOf(Date).isRequired,
     minDate: PropTypes.instanceOf(Date).isRequired,
     month: PropTypes.instanceOf(Date).isRequired,
+    weekStartsOn: PropTypes.number.isRequired,
     // Optional
     className: PropTypes.string,
     dateModifiers: CustomPropTypes.DateModifiers,
@@ -142,10 +157,18 @@ const composeCalendar = (Nav, GridHeader, Grid, CalendarDate) => {
     preventKeyboardFocus: PropTypes.bool,
     selectedDate: PropTypes.instanceOf(Date),
     showWeekendSeparator: PropTypes.bool,
-    weekStartsOn: PropTypes.number,
+    gridClassName: PropTypes.string,
+    weekDayKey: PropTypes.string,
+    /* eslint-disable react/forbid-prop-types */
+    navProps: PropTypes.object,
+    headerProps: PropTypes.object,
+    gridProps: PropTypes.object,
+    dateProps: PropTypes.object,
+    /* eslint-enable */
   };
 
   BpkCalendar.defaultProps = {
+    changeMonthLabel: null,
     className: null,
     dateModifiers: {},
     fixedWidth: true,
@@ -158,7 +181,12 @@ const composeCalendar = (Nav, GridHeader, Grid, CalendarDate) => {
     preventKeyboardFocus: false,
     selectedDate: null,
     showWeekendSeparator: true,
-    weekStartsOn: 1,
+    gridClassName: null,
+    weekDayKey: 'nameAbbr',
+    navProps: null,
+    headerProps: null,
+    gridProps: null,
+    dateProps: null,
   };
 
   return BpkCalendar;

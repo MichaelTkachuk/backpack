@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,11 +19,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { cssModules } from 'bpk-react-utils';
+
 import themeAttributes, {
   linkAlternateThemeAttributes,
 } from './themeAttributes';
-
-import STYLES from './bpk-link.scss';
+import STYLES from './BpkLink.scss';
 
 const getClassName = cssModules(STYLES);
 
@@ -34,13 +34,16 @@ const BpkLink = props => {
     href,
     onClick,
     blank,
+    rel: propRel,
     white,
     alternate,
     ...rest
   } = props;
 
   const classNames = [getClassName('bpk-link')];
+
   const target = blank ? '_blank' : null;
+  const rel = blank ? propRel || 'noopener noreferrer' : propRel;
 
   if (white || alternate) {
     classNames.push(getClassName('bpk-link--alternate'));
@@ -55,6 +58,7 @@ const BpkLink = props => {
       href={href}
       onClick={onClick}
       target={target}
+      rel={rel}
       {...rest}
     >
       {children}
@@ -71,6 +75,7 @@ BpkLink.propTypes = {
   className: PropTypes.string,
   onClick: PropTypes.func,
   blank: PropTypes.bool,
+  rel: PropTypes.string,
   alternate: PropTypes.bool,
   // DEPRECATED
   white: PropTypes.bool,
@@ -80,6 +85,7 @@ BpkLink.defaultProps = {
   className: null,
   onClick: null,
   blank: false,
+  rel: null,
   alternate: false,
   // DEPRECATED
   white: false,

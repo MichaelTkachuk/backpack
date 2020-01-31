@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,9 @@
 
 import _ from 'lodash';
 import tinycolor from 'tinycolor2';
+
+import sortTokens from './sort-tokens';
+import { adjustTypographyAndroid } from './adjust-typography';
 import { xmlComment } from './license-header';
 
 const tagName = type => (type === 'color' ? 'color' : 'property');
@@ -57,8 +60,13 @@ export const tokenTemplate = ({ name, value, type, category }) =>
     type,
   )}</${tagName(type)}>`; // eslint-disable-line max-len
 
-export default json => {
-  const singleTokens = _.map(json.props, tokenTemplate).join('\n');
+export default result => {
+  const { props } = sortTokens(result.toJS());
+
+  const singleTokens = _.map(props, prop =>
+    tokenTemplate(adjustTypographyAndroid(prop)),
+  ).join('\n');
+
   const source = `<?xml version="1.0" encoding="utf-8"?>
 ${xmlComment}
 <resources>

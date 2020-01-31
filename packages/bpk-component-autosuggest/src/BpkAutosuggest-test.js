@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@
 import React from 'react';
 import ReactTestUtils from 'react-dom/test-utils';
 import renderer from 'react-test-renderer';
+
 import BpkAutosuggest from './BpkAutosuggest';
 
 const suggestions = ['Edinburgh', 'Glasgow', 'London'];
@@ -26,7 +27,12 @@ const onSuggestionsFetchRequested = () => null;
 const onSuggestionsClearRequested = () => null;
 const getSuggestionValue = suggestion => suggestion;
 const renderSuggestion = suggestion => <span>{suggestion}</span>;
-const inputProps = { value: 'Edinburgh', onChange: () => null };
+const inputProps = {
+  id: 'origin',
+  name: 'Origin',
+  value: 'Edinburgh',
+  onChange: () => null,
+};
 
 describe('BpkAutosuggest', () => {
   it('should render correctly', () => {
@@ -64,11 +70,28 @@ describe('BpkAutosuggest', () => {
 
   it('should set the input reference', () => {
     let inputRef;
-    const storeAutosuggestReference = autosuggest => {
-      if (autosuggest !== null) {
-        inputRef = autosuggest.input;
-      }
+
+    const storeAutosuggestReference = ref => {
+      inputRef = ref;
     };
+
+    const tree = ReactTestUtils.renderIntoDocument(
+      <BpkAutosuggest
+        suggestions={suggestions}
+        onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+        onSuggestionsClearRequested={onSuggestionsClearRequested}
+        getSuggestionValue={getSuggestionValue}
+        renderSuggestion={renderSuggestion}
+        inputProps={{ inputRef: storeAutosuggestReference, ...inputProps }}
+      />,
+    );
+
+    const input = ReactTestUtils.findRenderedDOMComponentWithTag(tree, 'input');
+
+    expect(input).toEqual(inputRef);
+  });
+
+  it('should default autocomplete to off', () => {
     const tree = ReactTestUtils.renderIntoDocument(
       <BpkAutosuggest
         suggestions={suggestions}
@@ -77,10 +100,26 @@ describe('BpkAutosuggest', () => {
         getSuggestionValue={getSuggestionValue}
         renderSuggestion={renderSuggestion}
         inputProps={inputProps}
-        ref={storeAutosuggestReference}
       />,
     );
+
     const input = ReactTestUtils.findRenderedDOMComponentWithTag(tree, 'input');
-    expect(input).toEqual(inputRef);
+    expect(input.autocomplete).toEqual('off');
+  });
+
+  it('should allow a consumer to override autocomplete', () => {
+    const tree = ReactTestUtils.renderIntoDocument(
+      <BpkAutosuggest
+        suggestions={suggestions}
+        onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+        onSuggestionsClearRequested={onSuggestionsClearRequested}
+        getSuggestionValue={getSuggestionValue}
+        renderSuggestion={renderSuggestion}
+        inputProps={{ autoComplete: 'on', ...inputProps }}
+      />,
+    );
+
+    const input = ReactTestUtils.findRenderedDOMComponentWithTag(tree, 'input');
+    expect(input.autocomplete).toEqual('on');
   });
 });

@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,9 +18,15 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { memoize } from 'lodash';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-
+import {
+  colorSagano,
+  colorBagan,
+  colorPetra,
+  colorSkyGray,
+} from 'bpk-tokens/tokens/base.es6';
 import {
   weekDays,
   formatMonth,
@@ -33,6 +39,15 @@ import {
   addDays,
   startOfDay,
 } from 'bpk-component-calendar/src/date-utils';
+import {
+  BpkCalendarNav,
+  BpkCalendarGridHeader,
+  BpkCalendarGridWithTransition,
+  BpkCalendarDate,
+  withCalendarState,
+  composeCalendar,
+} from 'bpk-component-calendar';
+
 import BpkDatepicker from './index';
 
 const formatDate = date => format(date, 'DD/MM/YYYY');
@@ -65,6 +80,7 @@ class CalendarContainer extends Component {
       date: props.date,
     };
   }
+
   render() {
     return (
       <div id="datepicker-element">
@@ -96,6 +112,30 @@ CalendarContainer.defaultProps = {
   date: null,
 };
 
+const getBackgroundForDate = memoize(
+  () => [colorSagano, colorBagan, colorPetra][parseInt(Math.random() * 3, 10)],
+);
+
+const ColoredCalendarDate = props => {
+  let style = {};
+
+  if (!props.isFocused && !props.isOutside && !props.isBlocked) {
+    style = {
+      backgroundColor: getBackgroundForDate(props.date.getTime()), // stylelint-disable
+      color: colorSkyGray,
+    };
+  }
+
+  return <BpkCalendarDate {...props} style={style} />;
+};
+
+ColoredCalendarDate.propTypes = {
+  isFocused: PropTypes.bool.isRequired,
+  isOutside: PropTypes.bool.isRequired,
+  isBlocked: PropTypes.bool.isRequired,
+  date: PropTypes.object.isRequired, // eslint-disable-line
+};
+
 class ReturnDatepicker extends Component {
   constructor() {
     super();
@@ -116,6 +156,7 @@ class ReturnDatepicker extends Component {
             id="depart"
             closeButtonText="Close"
             daysOfWeek={weekDays}
+            weekStartsOn={1}
             changeMonthLabel="Change month"
             title="Departure date"
             getApplicationElement={() =>
@@ -128,14 +169,14 @@ class ReturnDatepicker extends Component {
             inputProps={inputProps}
             date={this.state.departDate}
             onDateSelect={departDate => {
-              this.setState({
+              this.setState(prevState => ({
                 departDate,
                 returnDate: dateToBoundaries(
-                  this.state.returnDate,
+                  prevState.returnDate,
                   departDate,
                   this.maxDate,
                 ),
-              });
+              }));
               action('Selected departure date')(departDate);
             }}
             onMonthChange={action('Changed month')}
@@ -144,6 +185,7 @@ class ReturnDatepicker extends Component {
             id="return"
             closeButtonText="Close"
             daysOfWeek={weekDays}
+            weekStartsOn={1}
             changeMonthLabel="Change month"
             title="Return date"
             getApplicationElement={() =>
@@ -156,14 +198,14 @@ class ReturnDatepicker extends Component {
             inputProps={inputProps}
             date={this.state.returnDate}
             onDateSelect={returnDate => {
-              this.setState({
+              this.setState(prevState => ({
                 returnDate,
                 departDate: dateToBoundaries(
-                  this.state.departDate,
+                  prevState.departDate,
                   this.minDate,
                   returnDate,
                 ),
-              });
+              }));
               action('Selected return date')(returnDate);
             }}
             onMonthChange={action('Changed month')}
@@ -182,6 +224,7 @@ storiesOf('bpk-component-datepicker', module)
         id="myDatepicker"
         closeButtonText="Close"
         daysOfWeek={weekDays}
+        weekStartsOn={1}
         changeMonthLabel="Change month"
         title="Departure date"
         formatDate={formatDate}
@@ -191,12 +234,30 @@ storiesOf('bpk-component-datepicker', module)
       />
     </div>
   ))
+  .add('Open on first render', () => (
+    <div id="application-element">
+      <CalendarContainer
+        id="myDatepicker"
+        closeButtonText="Close"
+        daysOfWeek={weekDays}
+        weekStartsOn={1}
+        changeMonthLabel="Change month"
+        title="Departure date"
+        formatDate={formatDate}
+        formatMonth={formatMonth}
+        formatDateFull={formatDateFull}
+        date={new Date()}
+        isOpen
+      />
+    </div>
+  ))
   .add('Min date in the past', () => (
     <div id="application-element">
       <CalendarContainer
         id="myDatepicker"
         closeButtonText="Close"
         daysOfWeek={weekDays}
+        weekStartsOn={1}
         changeMonthLabel="Change month"
         title="Departure date"
         formatDate={formatDate}
@@ -213,6 +274,7 @@ storiesOf('bpk-component-datepicker', module)
         id="myDatepicker"
         closeButtonText="Close"
         daysOfWeek={weekDays}
+        weekStartsOn={1}
         changeMonthLabel="Change month"
         title="Departure date"
         formatDate={formatDate}
@@ -227,6 +289,7 @@ storiesOf('bpk-component-datepicker', module)
         id="myDatepicker"
         closeButtonText="Close"
         daysOfWeek={weekDays}
+        weekStartsOn={1}
         changeMonthLabel="Change month"
         title="Departure date"
         formatDate={formatDate}
@@ -236,4 +299,31 @@ storiesOf('bpk-component-datepicker', module)
       />
     </div>
   ))
-  .add('Depart & Return', () => <ReturnDatepicker />);
+  .add('Depart & Return', () => <ReturnDatepicker />)
+  .add('Custon calendar component', () => {
+    const CalendarWithColoredDates = withCalendarState(
+      composeCalendar(
+        BpkCalendarNav,
+        BpkCalendarGridHeader,
+        BpkCalendarGridWithTransition,
+        ColoredCalendarDate,
+      ),
+    );
+
+    return (
+      <div id="application-element">
+        <CalendarContainer
+          id="myDatepicker"
+          closeButtonText="Close"
+          daysOfWeek={weekDays}
+          weekStartsOn={1}
+          changeMonthLabel="Change month"
+          title="Departure date"
+          formatDate={formatDate}
+          formatMonth={formatMonth}
+          formatDateFull={formatDateFull}
+          calendarComponent={CalendarWithColoredDates}
+        />
+      </div>
+    );
+  });

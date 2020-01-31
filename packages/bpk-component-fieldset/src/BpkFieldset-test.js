@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/* @flow */
+/* @flow strict */
 
 import React from 'react';
 import renderer from 'react-test-renderer';
@@ -23,7 +23,7 @@ import BpkSelect from 'bpk-component-select';
 import BpkCheckbox from 'bpk-component-checkbox';
 import BpkInput, { INPUT_TYPES } from 'bpk-component-input';
 
-import BpkFieldset from './BpkFieldset';
+import BpkFieldset, { propTypes } from './BpkFieldset';
 
 describe('BpkFieldset', () => {
   it('should render correctly with input component', () => {
@@ -33,7 +33,7 @@ describe('BpkFieldset', () => {
           <BpkInput
             id="name_input"
             name="name"
-            type={INPUT_TYPES.TEXT}
+            type={INPUT_TYPES.text}
             placeholder="e.g. Joe Bloggs"
             value=""
           />
@@ -54,7 +54,7 @@ describe('BpkFieldset', () => {
           <BpkInput
             id="name_input"
             name="name"
-            type={INPUT_TYPES.TEXT}
+            type={INPUT_TYPES.text}
             placeholder="e.g. Joe Bloggs"
             value=""
             valid
@@ -72,7 +72,7 @@ describe('BpkFieldset', () => {
           <BpkInput
             id="name_input"
             name="name"
-            type={INPUT_TYPES.TEXT}
+            type={INPUT_TYPES.text}
             placeholder="e.g. Joe Bloggs"
             value=""
             valid
@@ -90,10 +90,56 @@ describe('BpkFieldset', () => {
           <BpkInput
             id="name_input"
             name="name"
-            type={INPUT_TYPES.TEXT}
+            type={INPUT_TYPES.text}
             placeholder="e.g. Joe Bloggs"
             value=""
             valid={false}
+          />
+        </BpkFieldset>,
+      )
+      .toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('should render correctly when disabled with input component and "valid" attribute', () => {
+    const tree = renderer
+      .create(
+        <BpkFieldset
+          disabled
+          label="Name"
+          validationMessage="Please enter a name"
+        >
+          <BpkInput
+            id="name_input"
+            name="name"
+            type={INPUT_TYPES.text}
+            placeholder="e.g. Joe Bloggs"
+            value=""
+            valid
+            disabled
+          />
+        </BpkFieldset>,
+      )
+      .toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('should render correctly when disabled with input component and "valid" attribute equal to false', () => {
+    const tree = renderer
+      .create(
+        <BpkFieldset
+          disabled
+          label="Name"
+          validationMessage="Please enter a name"
+        >
+          <BpkInput
+            id="name_input"
+            name="name"
+            type={INPUT_TYPES.text}
+            placeholder="e.g. Joe Bloggs"
+            value=""
+            valid={false}
+            disabled
           />
         </BpkFieldset>,
       )
@@ -108,7 +154,7 @@ describe('BpkFieldset', () => {
           <BpkInput
             id="name_input"
             name="name"
-            type={INPUT_TYPES.TEXT}
+            type={INPUT_TYPES.text}
             placeholder="e.g. Joe Bloggs"
             value=""
             disabled
@@ -130,7 +176,7 @@ describe('BpkFieldset', () => {
           <BpkInput
             id="name_input"
             name="name"
-            type={INPUT_TYPES.TEXT}
+            type={INPUT_TYPES.text}
             placeholder="e.g. Joe Bloggs"
             value=""
           />
@@ -220,14 +266,14 @@ describe('BpkFieldset', () => {
   });
 
   it('should reject label property when label is omitted', () => {
-    expect(BpkFieldset.propTypes.label({}, 'label').toString()).toEqual(
+    expect(propTypes.label({}, 'label').toString()).toEqual(
       'Error: `label` is required when `isCheckbox` is false.',
     ); // eslint-disable-line max-len
   });
 
   it('should accept no label property when label is omitted but isCheckbox is included', () => {
-    expect(
-      BpkFieldset.propTypes.label({ isCheckbox: true }, 'label').toString(),
-    ).toEqual('false');
+    expect(propTypes.label({ isCheckbox: true }, 'label').toString()).toEqual(
+      'false',
+    );
   });
 });

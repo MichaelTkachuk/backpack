@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,8 +21,10 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import { mount } from 'enzyme';
 import isWeekend from 'date-fns/is_weekend';
+import { colorMonteverde, colorPanjin } from 'bpk-tokens/tokens/base.es6';
 
 import { weekDays, formatDateFull, formatMonth } from '../test-utils';
+
 import BpkCalendarGrid from './BpkCalendarGrid';
 import BpkCalendarDate from './BpkCalendarDate';
 
@@ -85,14 +87,14 @@ describe('BpkCalendarGrid', () => {
   it('should render correctly with a custom date component', () => {
     const MyCustomDate = props => {
       const cx = {
-        backgroundColor: 'rgb(255, 84, 82)',
+        backgroundColor: colorPanjin,
         width: '50%',
         height: '50%',
         borderRadius: '5rem',
         margin: '25%',
       };
       if (isWeekend(props.date)) {
-        cx.backgroundColor = 'rgb(0, 215, 117)';
+        cx.backgroundColor = colorMonteverde;
       }
       return <div style={cx} />;
     };
@@ -146,5 +148,23 @@ describe('BpkCalendarGrid', () => {
       .simulate('click');
     expect(onDateClick.mock.calls.length).toBe(2);
     expect(onDateClick.mock.calls[1][0]).toEqual(new Date(2016, 9, 6));
+  });
+
+  it('should render correctly with "weekDayKey" attribute set to nameNarrow', () => {
+    const tree = renderer
+      .create(
+        <BpkCalendarGrid
+          month={new Date('2016-10')}
+          formatMonth={formatMonth}
+          formatDateFull={formatDateFull}
+          DateComponent={BpkCalendarDate}
+          daysOfWeek={weekDays}
+          weekStartsOn={0}
+          showWeekendSeparator={false}
+          weekDayKey="nameNarrow"
+        />,
+      )
+      .toJSON();
+    expect(tree).toMatchSnapshot();
   });
 });

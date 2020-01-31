@@ -16,42 +16,71 @@
  * limitations under the License.
  */
 
-import { themeAttributes as accordionThemeAttributes } from './../packages/bpk-component-accordion';
-import { themeAttributes as barchartThemeAttributes } from './../packages/bpk-component-barchart';
-import { themeAttributes as blockquoteThemeAttributes } from './../packages/bpk-component-blockquote';
+/* @flow */
+
+import { themeAttributes as accordionThemeAttributes } from '../packages/bpk-component-accordion';
+import { themeAttributes as badgeThemeAttributes } from '../packages/bpk-component-badge';
+import { themeAttributes as bannerAlertThemeAttributes } from '../packages/bpk-component-banner-alert';
+import { themeAttributes as barchartThemeAttributes } from '../packages/bpk-component-barchart';
+import { themeAttributes as blockquoteThemeAttributes } from '../packages/bpk-component-blockquote';
 import {
+  buttonThemeAttributes,
   primaryThemeAttributes,
   secondaryThemeAttributes,
-} from './../packages/bpk-component-button';
-import { themeAttributes as calendarThemeAttributes } from './../packages/bpk-component-calendar';
-import { themeAttributes as checkboxThemeAttributes } from './../packages/bpk-component-checkbox';
-import { themeAttributes as datepickerThemeAttributes } from './../packages/bpk-component-datepicker';
-import { themeAttributes as drawerThemeAttributes } from './../packages/bpk-component-drawer';
-import { themeAttributes as horizontalNavThemeAttributes } from './../packages/bpk-component-horizontal-nav';
+  featuredThemeAttributes,
+  destructiveThemeAttributes,
+} from '../packages/bpk-component-button';
+import { themeAttributes as calendarThemeAttributes } from '../packages/bpk-component-calendar';
+import { themeAttributes as checkboxThemeAttributes } from '../packages/bpk-component-checkbox';
+import { themeAttributes as datepickerThemeAttributes } from '../packages/bpk-component-datepicker';
+import { themeAttributes as drawerThemeAttributes } from '../packages/bpk-component-drawer';
+import { themeAttributes as fieldsetThemeAttributes } from '../packages/bpk-component-fieldset';
+import { themeAttributes as formValidationThemeAttributes } from '../packages/bpk-component-form-validation';
+import { themeAttributes as horizontalNavThemeAttributes } from '../packages/bpk-component-horizontal-nav';
+import { themeAttributes as inputThemeAttributes } from '../packages/bpk-component-input';
 import {
   linkAlternateThemeAttributes,
   themeAttributes as linkThemeAttributes,
-} from './../packages/bpk-component-link';
-import { themeAttributes as modalThemeAttributes } from './../packages/bpk-component-modal';
-import { themeAttributes as nudgerThemeAttributes } from './../packages/bpk-component-nudger';
-import { themeAttributes as paginationThemeAttributes } from './../packages/bpk-component-pagination';
-import { themeAttributes as popoverThemeAttributes } from './../packages/bpk-component-popover';
-import { themeAttributes as progressThemeAttributes } from './../packages/bpk-component-progress';
-import { themeAttributes as radioThemeAttributes } from './../packages/bpk-component-radio';
-import { themeAttributes as sliderThemeAttributes } from './../packages/bpk-component-slider';
-import { themeAttributes as spinnerThemeAttributes } from './../packages/bpk-component-spinner';
+} from '../packages/bpk-component-link';
+import {
+  primaryMarkerThemeAttributes,
+  secondaryMarkerThemeAttributes,
+} from '../packages/bpk-component-map';
+import { themeAttributes as modalThemeAttributes } from '../packages/bpk-component-modal';
+import { themeAttributes as nudgerThemeAttributes } from '../packages/bpk-component-nudger';
+import { themeAttributes as paginationThemeAttributes } from '../packages/bpk-component-pagination';
+import { themeAttributes as popoverThemeAttributes } from '../packages/bpk-component-popover';
+import { themeAttributes as progressThemeAttributes } from '../packages/bpk-component-progress';
+import { themeAttributes as radioThemeAttributes } from '../packages/bpk-component-radio';
+import { themeAttributes as ratingThemeAttributes } from '../packages/bpk-component-rating';
+import { themeAttributes as selectThemeAttributes } from '../packages/bpk-component-select';
+import { themeAttributes as sliderThemeAttributes } from '../packages/bpk-component-slider';
+import { themeAttributes as spinnerThemeAttributes } from '../packages/bpk-component-spinner';
+import { themeAttributes as starRatingThemeAttributes } from '../packages/bpk-component-star-rating';
+import { themeAttributes as textareaThemeAttributes } from '../packages/bpk-component-textarea';
+import { themeAttributes as navigationBarThemeAttributes } from '../packages/bpk-component-navigation-bar';
+
+const storybookAttributes = ['primaryColor', 'themeName', 'logoFillColor'];
 
 export default [
   ...accordionThemeAttributes,
+  ...badgeThemeAttributes,
+  ...bannerAlertThemeAttributes,
   ...barchartThemeAttributes,
   ...blockquoteThemeAttributes,
+  ...buttonThemeAttributes,
   ...primaryThemeAttributes,
   ...secondaryThemeAttributes,
+  ...featuredThemeAttributes,
+  ...destructiveThemeAttributes,
   ...calendarThemeAttributes,
   ...checkboxThemeAttributes,
   ...datepickerThemeAttributes,
   ...drawerThemeAttributes,
+  ...fieldsetThemeAttributes,
+  ...formValidationThemeAttributes,
   ...horizontalNavThemeAttributes,
+  ...inputThemeAttributes,
   ...linkThemeAttributes,
   ...linkAlternateThemeAttributes,
   ...modalThemeAttributes,
@@ -60,6 +89,14 @@ export default [
   ...popoverThemeAttributes,
   ...progressThemeAttributes,
   ...radioThemeAttributes,
+  ...ratingThemeAttributes,
+  ...selectThemeAttributes,
   ...sliderThemeAttributes,
   ...spinnerThemeAttributes,
+  ...starRatingThemeAttributes,
+  ...textareaThemeAttributes,
+  ...navigationBarThemeAttributes,
+  ...primaryMarkerThemeAttributes,
+  ...secondaryMarkerThemeAttributes,
+  ...storybookAttributes,
 ];

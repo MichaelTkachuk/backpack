@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,8 +22,7 @@ import { Portal, cssModules } from 'bpk-react-utils';
 import { withScrim } from 'bpk-scrim-utils';
 
 import BpkDrawerContent from './BpkDrawerContent';
-
-import STYLES from './bpk-drawer.scss';
+import STYLES from './BpkDrawer.scss';
 
 const getClassName = cssModules(STYLES);
 
@@ -36,9 +35,6 @@ class BpkDrawer extends Component {
     this.state = {
       isDrawerShown: true,
     };
-
-    this.onCloseAnimationComplete = this.onCloseAnimationComplete.bind(this);
-    this.hide = this.hide.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -47,13 +43,13 @@ class BpkDrawer extends Component {
     }
   }
 
-  onCloseAnimationComplete() {
+  onCloseAnimationComplete = () => {
     this.props.onClose();
-  }
+  };
 
-  hide() {
+  hide = () => {
     this.setState({ isDrawerShown: false });
-  }
+  };
 
   render() {
     const { isOpen, onClose, target, renderTarget, ...rest } = this.props;

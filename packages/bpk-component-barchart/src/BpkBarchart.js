@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,7 +38,7 @@ import {
   applyMarginRTLTransform,
 } from './RTLtransforms';
 import { ORIENTATION_X, ORIENTATION_Y } from './orientation';
-import STYLES from './bpk-barchart.scss';
+import STYLES from './BpkBarchart.scss';
 
 const getClassName = cssModules(STYLES);
 
@@ -66,7 +66,6 @@ class BpkBarchart extends Component {
     this.xScale = scaleBand();
     this.yScale = scaleLinear();
 
-    this.updateDimensions = this.updateDimensions.bind(this);
     this.onWindowResize = debounce(this.updateDimensions, 100);
   }
 
@@ -79,7 +78,7 @@ class BpkBarchart extends Component {
     window.removeEventListener('resize', this.onWindowResize);
   }
 
-  updateDimensions() {
+  updateDimensions = () => {
     if (!this.svgEl) {
       return;
     }
@@ -87,11 +86,13 @@ class BpkBarchart extends Component {
     const { width, height } = this.svgEl.getBoundingClientRect();
 
     this.setState({ width, height });
-  }
+  };
 
   render() {
     const {
       className,
+      leadingScrollIndicatorClassName,
+      trailingScrollIndicatorClassName,
       data,
       initialWidth,
       initialHeight,
@@ -108,10 +109,10 @@ class BpkBarchart extends Component {
       yAxisLabel,
       yAxisTickValue,
       yAxisNumTicks,
+      yAxisDomain,
       onBarClick,
       onBarHover,
       onBarFocus,
-      onBarTouch,
       getBarLabel,
       getBarSelection,
       BarComponent,
@@ -143,10 +144,13 @@ class BpkBarchart extends Component {
     this.xScale.rangeRound([0, width]);
     this.xScale.domain(transformedData.map(d => d[xScaleDataKey]));
     this.yScale.rangeRound([height, 0]);
-    this.yScale.domain([0, maxYValue]);
+    this.yScale.domain([yAxisDomain[0] || 0, yAxisDomain[1] || maxYValue]);
 
     return (
-      <BpkMobileScrollContainer>
+      <BpkMobileScrollContainer
+        leadingIndicatorClassName={leadingScrollIndicatorClassName}
+        trailingIndicatorClassName={trailingScrollIndicatorClassName}
+      >
         {!disableDataTable && (
           <BpkChartDataTable
             data={data}
@@ -211,7 +215,6 @@ class BpkBarchart extends Component {
               onBarClick={onBarClick}
               onBarHover={onBarHover}
               onBarFocus={onBarFocus}
-              onBarTouch={onBarTouch}
               getBarLabel={getBarLabel}
               getBarSelection={getBarSelection}
               BarComponent={BarComponent}
@@ -233,6 +236,8 @@ BpkBarchart.propTypes = {
   initialHeight: PropTypes.number.isRequired,
 
   className: PropTypes.string,
+  leadingScrollIndicatorClassName: PropTypes.string,
+  trailingScrollIndicatorClassName: PropTypes.string,
   outlierPercentage: PropTypes.number,
   showGridlines: PropTypes.bool,
   xAxisMargin: PropTypes.number,
@@ -242,10 +247,10 @@ BpkBarchart.propTypes = {
   yAxisMargin: PropTypes.number,
   yAxisTickValue: PropTypes.func,
   yAxisNumTicks: PropTypes.number,
+  yAxisDomain: PropTypes.arrayOf(PropTypes.number),
   onBarClick: PropTypes.func,
   onBarHover: PropTypes.func,
   onBarFocus: PropTypes.func,
-  onBarTouch: PropTypes.func,
   getBarLabel: PropTypes.func,
   getBarSelection: PropTypes.func,
   BarComponent: PropTypes.func,
@@ -255,6 +260,8 @@ BpkBarchart.propTypes = {
 BpkBarchart.defaultProps = {
   data: null,
   className: null,
+  leadingScrollIndicatorClassName: null,
+  trailingScrollIndicatorClassName: null,
   outlierPercentage: null,
   showGridlines: false,
   xAxisMargin: 2 * (lineHeight + spacing),
@@ -264,10 +271,10 @@ BpkBarchart.defaultProps = {
   yAxisMargin: 4 * lineHeight + spacing,
   yAxisTickValue: identity,
   yAxisNumTicks: null,
+  yAxisDomain: [null, null],
   onBarClick: null,
   onBarHover: null,
   onBarFocus: null,
-  onBarTouch: null,
   getBarLabel: (point, xScaleDataKey, yScaleDataKey) =>
     `${point[xScaleDataKey]} - ${point[yScaleDataKey]}`,
   getBarSelection: () => false,

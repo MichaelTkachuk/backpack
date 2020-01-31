@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,11 +15,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/* @flow strict */
 
-import BpkInput, { INPUT_TYPES as TYPES } from './src/BpkInput';
-import CLEAR_BUTTON_MODES from './src/clearButtonModes';
+import BpkInput from './src/BpkInput';
 import withOpenEvents from './src/withOpenEvents';
+import {
+  propTypes,
+  defaultProps,
+  CLEAR_BUTTON_MODES,
+  INPUT_TYPES as TYPES,
+  type Props,
+} from './src/common-types';
+import themeAttributes from './src/themeAttributes';
 
 export default BpkInput;
-export const INPUT_TYPES = TYPES;
-export { withOpenEvents, CLEAR_BUTTON_MODES };
+
+// TODO: Remove these in the next major
+const DEPRECATED_INPUT_TYPES = {
+  TEXT: 'text',
+  EMAIL: 'email',
+  NUMBER: 'number',
+  PASSWORD: 'password',
+  TEL: 'tel',
+};
+
+export type BpkInputProps = Props;
+export const INPUT_TYPES = { ...DEPRECATED_INPUT_TYPES, ...TYPES };
+export {
+  propTypes,
+  defaultProps,
+  withOpenEvents,
+  CLEAR_BUTTON_MODES,
+  themeAttributes,
+};

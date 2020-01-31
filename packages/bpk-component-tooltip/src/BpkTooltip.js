@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-/* @flow */
+/* @flow strict */
 
 import PropTypes from 'prop-types';
 import React, { type Node } from 'react';
@@ -74,16 +74,19 @@ const BpkTooltip = (props: TooltipProps) => {
   );
 };
 
-BpkTooltip.propTypes = {
+export const propTypes = {
   id: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
   padded: PropTypes.bool,
 };
 
-BpkTooltip.defaultProps = {
+export const defaultProps = {
   className: null,
   padded: true,
 };
+
+BpkTooltip.propTypes = { ...propTypes };
+BpkTooltip.defaultProps = { ...defaultProps };
 
 export default BpkTooltip;

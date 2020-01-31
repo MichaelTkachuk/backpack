@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-/* @flow */
+/* @flow strict */
 
 import PropTypes from 'prop-types';
 import React, { Component, type Node } from 'react';
@@ -26,9 +26,13 @@ import { storiesOf } from '@storybook/react';
 import BpkText from 'bpk-component-text';
 import BpkContentContainer from 'bpk-component-content-container';
 
-import BpkPopover, { type BpkPopoverProps as PopoverProps } from './index';
-
 import STYLES from './stories.scss';
+
+import BpkPopover, {
+  bpkPopoverPortalPropTypes,
+  bpkPopoverPortalDefaultProps,
+  type BpkPopoverProps as PopoverProps,
+} from './index';
 
 const getClassName = cssModules(STYLES);
 
@@ -38,8 +42,17 @@ const Paragraph = withDefaultProps(BpkText, {
   className: getClassName('bpk-popover-paragraph'),
 });
 
+type IgnoredPopoverProps = {
+  children: Node,
+  closeButtonText: string,
+  isOpen: boolean,
+  label: string,
+  onClose: (event: SyntheticEvent<>, props: { source: string }) => mixed,
+  target: (() => ?HTMLElement) | Node,
+};
+
 type Props = {
-  ...$Diff<PopoverProps, { children: Node }>,
+  ...$Diff<PopoverProps, IgnoredPopoverProps>,
   id: string,
   changeProps: boolean,
   targetFunction: ?() => ?HTMLElement,
@@ -53,12 +66,16 @@ type State = {
 
 class PopoverContainer extends Component<Props, State> {
   static propTypes = {
+    ...bpkPopoverPortalPropTypes,
+    className: PropTypes.string,
     id: PropTypes.string.isRequired,
     changeProps: PropTypes.bool,
     targetFunction: PropTypes.func,
   };
 
   static defaultProps = {
+    ...bpkPopoverPortalDefaultProps,
+    className: null,
     changeProps: false,
     targetFunction: null,
   };

@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,78 +15,99 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/* @flow strict */
 
+import React, { Component, type Node } from 'react';
 import PropTypes from 'prop-types';
-import React from 'react';
 import { cssModules } from 'bpk-react-utils';
 
-import STYLES from './bpk-horizontal-nav-item.scss';
+import STYLES from './BpkHorizontalNavItem.scss';
 
 const getClassName = cssModules(STYLES);
 
-const BpkHorizontalNavItem = props => {
-  const classNames = [getClassName('bpk-horizontal-nav__item')];
-  const innerClassNames = [getClassName('bpk-horizontal-nav__link')];
-  const { children, className, selected, spaceAround, href, ...rest } = props;
-
-  // Outer classNames
-  if (spaceAround) {
-    classNames.push(getClassName('bpk-horizontal-nav__item--space-around'));
-  }
-
-  // Inner classNames
-  if (selected) {
-    innerClassNames.push(getClassName('bpk-horizontal-nav__link--selected'));
-  }
-  if (className) {
-    innerClassNames.push(className);
-  }
-
-  const clickableElement = href ? (
-    <a
-      href={href}
-      className={innerClassNames.join(' ')}
-      aria-disabled={selected}
-      {...rest}
-    >
-      {children}
-    </a>
-  ) : (
-    <button
-      type="button"
-      className={innerClassNames.join(' ')}
-      disabled={selected}
-      {...rest}
-    >
-      {children}
-    </button>
-  );
-
-  return (
-    <li
-      role="tab"
-      aria-selected={selected ? 'true' : 'false'}
-      className={classNames.join(' ')}
-    >
-      {clickableElement}
-    </li>
-  );
+export type Props = {
+  children: Node,
+  selected: boolean,
+  spaceAround: boolean,
+  disabled: boolean,
+  href: ?string,
+  className: ?string,
 };
 
-BpkHorizontalNavItem.propTypes = {
-  children: PropTypes.node.isRequired,
-  className: PropTypes.string,
-  selected: PropTypes.bool,
-  spaceAround: PropTypes.bool,
-  href: PropTypes.string,
-};
+// In order to be able to access refs on the HorizontalNavItems, they need to be a fully defined
+// React Component class.
+// eslint-disable-next-line react/prefer-stateless-function
+class BpkHorizontalNavItem extends Component<Props> {
+  static propTypes = {
+    children: PropTypes.node.isRequired,
+    className: PropTypes.string,
+    selected: PropTypes.bool,
+    spaceAround: PropTypes.bool,
+    href: PropTypes.string,
+    disabled: PropTypes.bool,
+  };
 
-BpkHorizontalNavItem.defaultProps = {
-  className: null,
-  selected: false,
-  spaceAround: false,
-  href: null,
-};
+  static defaultProps = {
+    className: null,
+    selected: false,
+    spaceAround: false,
+    href: null,
+    disabled: false,
+  };
+
+  render() {
+    const {
+      children,
+      className,
+      disabled,
+      href,
+      selected,
+      spaceAround,
+      ...rest
+    } = this.props;
+
+    const classNames = getClassName(
+      'bpk-horizontal-nav__item',
+      spaceAround && 'bpk-horizontal-nav__item--space-around',
+    );
+    const innerClassNames = getClassName(
+      'bpk-horizontal-nav__link',
+      selected && 'bpk-horizontal-nav__link--selected',
+      disabled && 'bpk-horizontal-nav__link--disabled',
+      className,
+    );
+
+    const clickableElement = href ? (
+      <a
+        href={href}
+        className={innerClassNames}
+        aria-disabled={selected || disabled}
+        {...rest}
+      >
+        {children}
+      </a>
+    ) : (
+      <button
+        type="button"
+        className={innerClassNames}
+        disabled={selected || disabled}
+        {...rest}
+      >
+        {children}
+      </button>
+    );
+
+    return (
+      <li
+        role="tab"
+        aria-selected={selected ? 'true' : 'false'}
+        className={classNames}
+      >
+        {clickableElement}
+      </li>
+    );
+  }
+}
 
 const themeAttributes = [
   'horizontalNavLinkColor',

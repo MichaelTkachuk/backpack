@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,8 +21,8 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import {
   spacingBase,
-  colorGreen500,
-  colorGray100,
+  colorMonteverde,
+  colorSkyGrayTint06,
 } from 'bpk-tokens/tokens/base.es6';
 
 import BpkBreakpoint, { BREAKPOINTS } from './index';
@@ -30,7 +30,7 @@ import BpkBreakpoint, { BREAKPOINTS } from './index';
 const MediaQueryStatus = props => {
   const style = {
     padding: spacingBase,
-    backgroundColor: props.isActive ? colorGreen500 : colorGray100,
+    backgroundColor: props.isActive ? colorMonteverde : colorSkyGrayTint06,
   };
 
   return <div style={style}>{props.children}</div>;

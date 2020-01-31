@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,11 +16,12 @@
  * limitations under the License.
  */
 
-/* @flow */
+/* @flow strict */
 
 import React from 'react';
 import { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
+
 import BpkChip from './BpkChip';
 
 describe('BpkChip', () => {
@@ -63,6 +64,15 @@ describe('BpkChip', () => {
   it('should render correctly with a "closeLabel" string attribute', () => {
     const tree = shallow(
       <BpkChip onClose={() => null} closeLabel="close it">
+        This is a Chip!
+      </BpkChip>,
+    );
+    expect(toJson(tree)).toMatchSnapshot();
+  });
+
+  it('should render correctly when not "dismissible"', () => {
+    const tree = shallow(
+      <BpkChip onClose={() => null} closeLabel="Close" dismissible={false}>
         This is a Chip!
       </BpkChip>,
     );

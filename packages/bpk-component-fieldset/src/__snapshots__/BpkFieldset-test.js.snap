@@ -1,5 +1,54 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`BpkFieldset should render correctly when disabled with input component and "valid" attribute 1`] = `
+<fieldset
+  className="bpk-fieldset"
+>
+  <label
+    className="bpk-label bpk-label--disabled"
+    htmlFor="name_input"
+  >
+    Name
+  </label>
+  <input
+    aria-invalid={false}
+    aria-required={false}
+    className="bpk-input bpk-input--valid"
+    disabled={true}
+    id="name_input"
+    name="name"
+    placeholder="e.g. Joe Bloggs"
+    type="text"
+    value=""
+  />
+</fieldset>
+`;
+
+exports[`BpkFieldset should render correctly when disabled with input component and "valid" attribute equal to false 1`] = `
+<fieldset
+  className="bpk-fieldset"
+>
+  <label
+    className="bpk-label bpk-label--disabled bpk-label--invalid"
+    htmlFor="name_input"
+  >
+    Name
+  </label>
+  <input
+    aria-describedby="name_input_validation_message"
+    aria-invalid={true}
+    aria-required={false}
+    className="bpk-input bpk-input--invalid"
+    disabled={true}
+    id="name_input"
+    name="name"
+    placeholder="e.g. Joe Bloggs"
+    type="text"
+    value=""
+  />
+</fieldset>
+`;
+
 exports[`BpkFieldset should render correctly with checkbox component 1`] = `
 <fieldset
   className="bpk-fieldset"
@@ -8,6 +57,8 @@ exports[`BpkFieldset should render correctly with checkbox component 1`] = `
     className="bpk-checkbox"
   >
     <input
+      aria-invalid={false}
+      aria-label="I accept the terms and conditions"
       className="bpk-checkbox__input"
       disabled={false}
       id="terms_and_conditions_checkbox"
@@ -32,6 +83,7 @@ exports[`BpkFieldset should render correctly with checkbox component 1`] = `
       />
     </svg>
     <span
+      aria-hidden="true"
       className="bpk-checkbox__label"
     >
       I accept the terms and conditions
@@ -59,6 +111,34 @@ exports[`BpkFieldset should render correctly with checkbox component 1`] = `
           className="bpk-form-validation bpk-form-validation--is-checkbox"
           id="terms_and_conditions_checkbox_validation_message"
         >
+          <span
+            style={
+              Object {
+                "display": "inline-block",
+                "lineHeight": "1.125rem",
+                "marginTop": "0.1875rem",
+                "verticalAlign": "top",
+              }
+            }
+          >
+            <svg
+              className="bpk-form-validation__icon"
+              height="18"
+              style={
+                Object {
+                  "height": "1.125rem",
+                  "width": "1.125rem",
+                }
+              }
+              viewBox="0 0 24 24"
+              width="18"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 22c5.5 0 10-4.5 10-10S17.5 2 12 2 2 6.5 2 12s4.5 10 10 10zM10.5 5.9c0-.5.4-.9.9-.9h1.1c.5 0 .9.4.9.9V13c0 .5-.4.9-.9.9h-1.1c-.5 0-.9-.4-.9-.9V5.9zm0 11.1c0-.5.5-1 1-1h1c.5 0 1 .5 1 1v1c0 .5-.5 1-1 1h-1c-.5 0-1-.5-1-1v-1z"
+              />
+            </svg>
+          </span>
           You must accept the terms and conditions to continue
         </div>
       </div>
@@ -75,6 +155,8 @@ exports[`BpkFieldset should render correctly with checkbox component and "requir
     className="bpk-checkbox"
   >
     <input
+      aria-invalid={false}
+      aria-label="I accept the terms and conditions"
       className="bpk-checkbox__input"
       disabled={false}
       id="terms_and_conditions_checkbox"
@@ -99,6 +181,7 @@ exports[`BpkFieldset should render correctly with checkbox component and "requir
       />
     </svg>
     <span
+      aria-hidden="true"
       className="bpk-checkbox__label"
     >
       I accept the terms and conditions
@@ -131,6 +214,34 @@ exports[`BpkFieldset should render correctly with checkbox component and "requir
           className="bpk-form-validation bpk-form-validation--is-checkbox"
           id="terms_and_conditions_checkbox_validation_message"
         >
+          <span
+            style={
+              Object {
+                "display": "inline-block",
+                "lineHeight": "1.125rem",
+                "marginTop": "0.1875rem",
+                "verticalAlign": "top",
+              }
+            }
+          >
+            <svg
+              className="bpk-form-validation__icon"
+              height="18"
+              style={
+                Object {
+                  "height": "1.125rem",
+                  "width": "1.125rem",
+                }
+              }
+              viewBox="0 0 24 24"
+              width="18"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 22c5.5 0 10-4.5 10-10S17.5 2 12 2 2 6.5 2 12s4.5 10 10 10zM10.5 5.9c0-.5.4-.9.9-.9h1.1c.5 0 .9.4.9.9V13c0 .5-.4.9-.9.9h-1.1c-.5 0-.9-.4-.9-.9V5.9zm0 11.1c0-.5.5-1 1-1h1c.5 0 1 .5 1 1v1c0 .5-.5 1-1 1h-1c-.5 0-1-.5-1-1v-1z"
+              />
+            </svg>
+          </span>
           You must accept the terms and conditions to continue
         </div>
       </div>
@@ -182,6 +293,34 @@ exports[`BpkFieldset should render correctly with input component 1`] = `
           className="bpk-form-validation"
           id="name_input_validation_message"
         >
+          <span
+            style={
+              Object {
+                "display": "inline-block",
+                "lineHeight": "1.125rem",
+                "marginTop": "0.1875rem",
+                "verticalAlign": "top",
+              }
+            }
+          >
+            <svg
+              className="bpk-form-validation__icon"
+              height="18"
+              style={
+                Object {
+                  "height": "1.125rem",
+                  "width": "1.125rem",
+                }
+              }
+              viewBox="0 0 24 24"
+              width="18"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 22c5.5 0 10-4.5 10-10S17.5 2 12 2 2 6.5 2 12s4.5 10 10 10zM10.5 5.9c0-.5.4-.9.9-.9h1.1c.5 0 .9.4.9.9V13c0 .5-.4.9-.9.9h-1.1c-.5 0-.9-.4-.9-.9V5.9zm0 11.1c0-.5.5-1 1-1h1c.5 0 1 .5 1 1v1c0 .5-.5 1-1 1h-1c-.5 0-1-.5-1-1v-1z"
+              />
+            </svg>
+          </span>
           Please enter a name
         </div>
       </div>
@@ -240,6 +379,34 @@ exports[`BpkFieldset should render correctly with input component and "descripti
           className="bpk-form-validation"
           id="name_input_validation_message"
         >
+          <span
+            style={
+              Object {
+                "display": "inline-block",
+                "lineHeight": "1.125rem",
+                "marginTop": "0.1875rem",
+                "verticalAlign": "top",
+              }
+            }
+          >
+            <svg
+              className="bpk-form-validation__icon"
+              height="18"
+              style={
+                Object {
+                  "height": "1.125rem",
+                  "width": "1.125rem",
+                }
+              }
+              viewBox="0 0 24 24"
+              width="18"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 22c5.5 0 10-4.5 10-10S17.5 2 12 2 2 6.5 2 12s4.5 10 10 10zM10.5 5.9c0-.5.4-.9.9-.9h1.1c.5 0 .9.4.9.9V13c0 .5-.4.9-.9.9h-1.1c-.5 0-.9-.4-.9-.9V5.9zm0 11.1c0-.5.5-1 1-1h1c.5 0 1 .5 1 1v1c0 .5-.5 1-1 1h-1c-.5 0-1-.5-1-1v-1z"
+              />
+            </svg>
+          </span>
           Please enter a name
         </div>
       </div>
@@ -291,6 +458,34 @@ exports[`BpkFieldset should render correctly with input component and "disabled"
           className="bpk-form-validation"
           id="name_input_validation_message"
         >
+          <span
+            style={
+              Object {
+                "display": "inline-block",
+                "lineHeight": "1.125rem",
+                "marginTop": "0.1875rem",
+                "verticalAlign": "top",
+              }
+            }
+          >
+            <svg
+              className="bpk-form-validation__icon"
+              height="18"
+              style={
+                Object {
+                  "height": "1.125rem",
+                  "width": "1.125rem",
+                }
+              }
+              viewBox="0 0 24 24"
+              width="18"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 22c5.5 0 10-4.5 10-10S17.5 2 12 2 2 6.5 2 12s4.5 10 10 10zM10.5 5.9c0-.5.4-.9.9-.9h1.1c.5 0 .9.4.9.9V13c0 .5-.4.9-.9.9h-1.1c-.5 0-.9-.4-.9-.9V5.9zm0 11.1c0-.5.5-1 1-1h1c.5 0 1 .5 1 1v1c0 .5-.5 1-1 1h-1c-.5 0-1-.5-1-1v-1z"
+              />
+            </svg>
+          </span>
           Please enter a name
         </div>
       </div>
@@ -347,6 +542,34 @@ exports[`BpkFieldset should render correctly with input component and "required"
           className="bpk-form-validation"
           id="name_input_validation_message"
         >
+          <span
+            style={
+              Object {
+                "display": "inline-block",
+                "lineHeight": "1.125rem",
+                "marginTop": "0.1875rem",
+                "verticalAlign": "top",
+              }
+            }
+          >
+            <svg
+              className="bpk-form-validation__icon"
+              height="18"
+              style={
+                Object {
+                  "height": "1.125rem",
+                  "width": "1.125rem",
+                }
+              }
+              viewBox="0 0 24 24"
+              width="18"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 22c5.5 0 10-4.5 10-10S17.5 2 12 2 2 6.5 2 12s4.5 10 10 10zM10.5 5.9c0-.5.4-.9.9-.9h1.1c.5 0 .9.4.9.9V13c0 .5-.4.9-.9.9h-1.1c-.5 0-.9-.4-.9-.9V5.9zm0 11.1c0-.5.5-1 1-1h1c.5 0 1 .5 1 1v1c0 .5-.5 1-1 1h-1c-.5 0-1-.5-1-1v-1z"
+              />
+            </svg>
+          </span>
           Please enter a name
         </div>
       </div>
@@ -398,6 +621,34 @@ exports[`BpkFieldset should render correctly with input component and "valid" at
           className="bpk-form-validation"
           id="name_input_validation_message"
         >
+          <span
+            style={
+              Object {
+                "display": "inline-block",
+                "lineHeight": "1.125rem",
+                "marginTop": "0.1875rem",
+                "verticalAlign": "top",
+              }
+            }
+          >
+            <svg
+              className="bpk-form-validation__icon"
+              height="18"
+              style={
+                Object {
+                  "height": "1.125rem",
+                  "width": "1.125rem",
+                }
+              }
+              viewBox="0 0 24 24"
+              width="18"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 22c5.5 0 10-4.5 10-10S17.5 2 12 2 2 6.5 2 12s4.5 10 10 10zM10.5 5.9c0-.5.4-.9.9-.9h1.1c.5 0 .9.4.9.9V13c0 .5-.4.9-.9.9h-1.1c-.5 0-.9-.4-.9-.9V5.9zm0 11.1c0-.5.5-1 1-1h1c.5 0 1 .5 1 1v1c0 .5-.5 1-1 1h-1c-.5 0-1-.5-1-1v-1z"
+              />
+            </svg>
+          </span>
           Please enter a name
         </div>
       </div>
@@ -411,7 +662,7 @@ exports[`BpkFieldset should render correctly with input component and "valid" at
   className="bpk-fieldset"
 >
   <label
-    className="bpk-label"
+    className="bpk-label bpk-label--invalid"
     htmlFor="name_input"
   >
     Name
@@ -450,6 +701,34 @@ exports[`BpkFieldset should render correctly with input component and "valid" at
           className="bpk-form-validation bpk-form-validation--appear"
           id="name_input_validation_message"
         >
+          <span
+            style={
+              Object {
+                "display": "inline-block",
+                "lineHeight": "1.125rem",
+                "marginTop": "0.1875rem",
+                "verticalAlign": "top",
+              }
+            }
+          >
+            <svg
+              className="bpk-form-validation__icon"
+              height="18"
+              style={
+                Object {
+                  "height": "1.125rem",
+                  "width": "1.125rem",
+                }
+              }
+              viewBox="0 0 24 24"
+              width="18"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 22c5.5 0 10-4.5 10-10S17.5 2 12 2 2 6.5 2 12s4.5 10 10 10zM10.5 5.9c0-.5.4-.9.9-.9h1.1c.5 0 .9.4.9.9V13c0 .5-.4.9-.9.9h-1.1c-.5 0-.9-.4-.9-.9V5.9zm0 11.1c0-.5.5-1 1-1h1c.5 0 1 .5 1 1v1c0 .5-.5 1-1 1h-1c-.5 0-1-.5-1-1v-1z"
+              />
+            </svg>
+          </span>
           Please enter a name
         </div>
       </div>
@@ -526,6 +805,34 @@ exports[`BpkFieldset should render correctly with select component 1`] = `
           className="bpk-form-validation"
           id="fruits_select_validation_message"
         >
+          <span
+            style={
+              Object {
+                "display": "inline-block",
+                "lineHeight": "1.125rem",
+                "marginTop": "0.1875rem",
+                "verticalAlign": "top",
+              }
+            }
+          >
+            <svg
+              className="bpk-form-validation__icon"
+              height="18"
+              style={
+                Object {
+                  "height": "1.125rem",
+                  "width": "1.125rem",
+                }
+              }
+              viewBox="0 0 24 24"
+              width="18"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 22c5.5 0 10-4.5 10-10S17.5 2 12 2 2 6.5 2 12s4.5 10 10 10zM10.5 5.9c0-.5.4-.9.9-.9h1.1c.5 0 .9.4.9.9V13c0 .5-.4.9-.9.9h-1.1c-.5 0-.9-.4-.9-.9V5.9zm0 11.1c0-.5.5-1 1-1h1c.5 0 1 .5 1 1v1c0 .5-.5 1-1 1h-1c-.5 0-1-.5-1-1v-1z"
+              />
+            </svg>
+          </span>
           Please select a fruit
         </div>
       </div>
@@ -607,6 +914,34 @@ exports[`BpkFieldset should render correctly with select component and "required
           className="bpk-form-validation"
           id="fruits_select_validation_message"
         >
+          <span
+            style={
+              Object {
+                "display": "inline-block",
+                "lineHeight": "1.125rem",
+                "marginTop": "0.1875rem",
+                "verticalAlign": "top",
+              }
+            }
+          >
+            <svg
+              className="bpk-form-validation__icon"
+              height="18"
+              style={
+                Object {
+                  "height": "1.125rem",
+                  "width": "1.125rem",
+                }
+              }
+              viewBox="0 0 24 24"
+              width="18"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 22c5.5 0 10-4.5 10-10S17.5 2 12 2 2 6.5 2 12s4.5 10 10 10zM10.5 5.9c0-.5.4-.9.9-.9h1.1c.5 0 .9.4.9.9V13c0 .5-.4.9-.9.9h-1.1c-.5 0-.9-.4-.9-.9V5.9zm0 11.1c0-.5.5-1 1-1h1c.5 0 1 .5 1 1v1c0 .5-.5 1-1 1h-1c-.5 0-1-.5-1-1v-1z"
+              />
+            </svg>
+          </span>
           Please select a fruit
         </div>
       </div>

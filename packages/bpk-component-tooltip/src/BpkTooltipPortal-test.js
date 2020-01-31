@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,10 +16,11 @@
  * limitations under the License.
  */
 
-/* @flow */
+/* @flow strict */
 
 import React from 'react';
 import renderer from 'react-test-renderer';
+import { colorPanjin } from 'bpk-tokens/tokens/base.es6';
 
 jest.mock('bpk-react-utils', () => {
   const original = jest.requireActual('bpk-react-utils');
@@ -85,7 +86,7 @@ describe('BpkTooltipPortal', () => {
         <BpkTooltipPortal
           id="my-tooltip"
           target={<div>target</div>}
-          portalStyle={{ color: 'red' }}
+          portalStyle={{ color: colorPanjin }}
         >
           My tooltip content
         </BpkTooltipPortal>,

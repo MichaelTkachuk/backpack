@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,15 +18,18 @@
 
 import BpkStar, { STAR_TYPES } from './src/BpkStar';
 import BpkInteractiveStar from './src/BpkInteractiveStar';
-import BpkStarRating from './src/BpkStarRating';
+import BpkStarRating, { ROUNDING_TYPES } from './src/BpkStarRating';
 import BpkInteractiveStarRating from './src/BpkInteractiveStarRating';
 import withInteractiveStarRatingState from './src/withInteractiveStarRatingState';
+import themeAttributes from './src/themeAttributes';
 
 export {
   BpkStar,
   STAR_TYPES,
+  ROUNDING_TYPES,
   BpkInteractiveStar,
   BpkInteractiveStarRating,
   withInteractiveStarRatingState,
+  themeAttributes,
 };
 export default BpkStarRating;

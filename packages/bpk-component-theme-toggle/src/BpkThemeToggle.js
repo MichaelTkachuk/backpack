@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
  */
 
 import React from 'react';
+import Konami from 'konami';
 import BpkLabel from 'bpk-component-label';
 import BpkSelect from 'bpk-component-select';
 import { cssModules } from 'bpk-react-utils';
@@ -39,9 +40,6 @@ const setTheme = theme => {
 class BpkThemeToggle extends React.Component {
   constructor(props) {
     super(props);
-    this.cycleTheme = this.cycleTheme.bind(this);
-    this.handleKeyDown = this.handleKeyDown.bind(this);
-    this.handleChange = this.handleChange.bind(this);
     this.state = {
       selectedTheme: '',
     };
@@ -49,36 +47,44 @@ class BpkThemeToggle extends React.Component {
 
   componentDidMount() {
     document.addEventListener('keydown', this.handleKeyDown);
+    this.easterEgg = new Konami(() => {
+      this.konamiInterval = setInterval(this.cycleTheme, 200);
+    });
   }
 
   componentWillUnmount() {
     document.removeEventListener('keydown', this.handleKeyDown);
+
+    if (this.konamiInterval) {
+      clearInterval(this.konamiInterval);
+    }
   }
 
-  handleKeyDown(e) {
+  handleKeyDown = e => {
     if (e.ctrlKey && e.metaKey && e.key.toLowerCase() === 't') {
       this.cycleTheme();
     }
-  }
+  };
 
-  handleChange(e) {
+  handleChange = e => {
     const selectedTheme = e.target.value;
     this.setState({ selectedTheme });
     setTheme(bpkCustomThemes[selectedTheme]);
-  }
+  };
 
-  cycleTheme() {
+  cycleTheme = () => {
     let { selectedTheme } = this.state;
-    let selectedIndex = selectedTheme
+    const selectedIndex = selectedTheme
       ? availableThemes.indexOf(selectedTheme) + 1
       : 0;
     if (selectedIndex >= availableThemes.length) {
-      selectedIndex = 0;
+      selectedTheme = '';
+    } else {
+      selectedTheme = availableThemes[selectedIndex];
     }
-    selectedTheme = availableThemes[selectedIndex];
     this.setState({ selectedTheme });
     setTheme(bpkCustomThemes[selectedTheme]);
-  }
+  };
 
   render() {
     const { ...rest } = this.props;

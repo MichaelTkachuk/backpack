@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ import { cssModules } from 'bpk-react-utils';
 import _sortBy from 'lodash/sortBy';
 import _omit from 'lodash/omit';
 
-import STYLES from './bpk-data-table.scss';
+import STYLES from './BpkDataTable.scss';
 import BpkDataTableColumn from './BpkDataTableColumn';
 import hasChildrenOfType from './hasChildrenOfType';
 import { getSortIconDirection } from './bpkHeaderRenderer';
@@ -83,10 +83,6 @@ class BpkDataTable extends Component {
       sortDirection,
       rowSelected: undefined,
     };
-
-    this.onRowClicked = this.onRowClicked.bind(this);
-    this.rowClassName = this.rowClassName.bind(this);
-    this.onHeaderClick = this.onHeaderClick.bind(this);
   }
 
   componentWillReceiveProps({ rows }) {
@@ -97,7 +93,7 @@ class BpkDataTable extends Component {
     }
   }
 
-  onRowClicked({ index }) {
+  onRowClicked = ({ index }) => {
     if (this.state.rowSelected === index) {
       this.setState({ rowSelected: undefined });
     } else {
@@ -106,32 +102,39 @@ class BpkDataTable extends Component {
     if (this.props.onRowClick !== undefined) {
       this.props.onRowClick(this.state.sortedList[index]);
     }
-  }
+  };
 
-  onHeaderClick({ dataKey: sortBy, event }) {
+  onHeaderClick = ({ dataKey: sortBy, event }) => {
     const column = this.props.children.find(
       child => child.props.dataKey === sortBy,
     );
+
     if (column.props.disableSort === true) {
       return;
     }
 
-    const sortDirection = getSortDirection(
-      this.state,
-      sortBy,
-      getSortIconDirection(event.target),
-      column.props.defaultSortDirection || SortDirection.ASC,
-    );
-    const sortedList = sortList({
-      sortBy,
-      sortDirection,
-      list: this.props.rows,
+    // See: https://reactjs.org/docs/events.html#event-pooling
+    const eventTarget = event.target;
+
+    this.setState(prevState => {
+      const sortDirection = getSortDirection(
+        prevState,
+        sortBy,
+        getSortIconDirection(eventTarget),
+        column.props.defaultSortDirection || SortDirection.ASC,
+      );
+
+      const sortedList = sortList({
+        sortBy,
+        sortDirection,
+        list: this.props.rows,
+      });
+
+      return { sortBy, sortDirection, sortedList };
     });
+  };
 
-    this.setState({ sortBy, sortDirection, sortedList });
-  }
-
-  rowClassName({ index }) {
+  rowClassName = ({ index }) => {
     const classNames = [getClassName('bpk-data-table__row')];
     if (this.state.rowSelected === index) {
       classNames.push(getClassName('bpk-data-table__row--selected'));
@@ -140,7 +143,7 @@ class BpkDataTable extends Component {
       classNames.push(getClassName('bpk-data-table__header-row'));
     }
     return classNames;
-  }
+  };
 
   renderTable(width) {
     const { sortedList, sortDirection, sortBy } = this.state;

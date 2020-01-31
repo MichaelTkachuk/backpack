@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,11 @@
  * limitations under the License.
  */
 
+/* @flow strict */
+
 import React from 'react';
 import renderer from 'react-test-renderer';
+
 import BpkText from './BpkText';
 
 describe('BpkText', () => {
@@ -60,9 +63,23 @@ describe('BpkText', () => {
     expect(tree).toMatchSnapshot();
   });
 
+  it('should render correctly with tageName="text"', () => {
+    const tree = renderer
+      .create(
+        <BpkText tagName="text">
+          Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
+          commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus
+          et magnis dis parturient montes, nascetur ridiculus mus.
+        </BpkText>,
+      )
+      .toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
   it('should pass down unknown props', () => {
     const tree = renderer
       .create(
+        // eslint-disable-next-line backpack/use-tokens
         <BpkText style={{ color: 'red' }}>
           Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
           commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus

@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2017 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,9 +22,9 @@ import { cssModules } from 'bpk-react-utils';
 import BpkSmallArrowDownIcon from 'bpk-component-icon/sm/arrow-down';
 import BpkSmallArrowUpIcon from 'bpk-component-icon/sm/arrow-up';
 import { withRtlSupport } from 'bpk-component-icon';
-import { hasClassName } from './utils';
 
-import STYLES from './bpk-data-table-column.scss';
+import { hasClassName } from './utils';
+import STYLES from './BpkDataTableColumn.scss';
 
 const DownIcon = withRtlSupport(BpkSmallArrowDownIcon);
 const UpIcon = withRtlSupport(BpkSmallArrowUpIcon);

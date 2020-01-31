@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ import { colorWhite } from 'bpk-tokens/tokens/base.es6';
 import clamp from 'lodash.clamp';
 import { cssModules } from 'bpk-react-utils';
 
-import STYLES from './bpk-progress.scss';
+import STYLES from './BpkProgress.scss';
 
 const getClassName = cssModules(STYLES);
 
@@ -46,14 +46,6 @@ const renderSteps = (numberOfSteps, stepColor) => {
 };
 
 class BpkProgress extends Component {
-  constructor() {
-    super();
-
-    this.handleCompleteTransitionEnd = this.handleCompleteTransitionEnd.bind(
-      this,
-    );
-  }
-
   componentDidUpdate(previousProps) {
     const { value, max } = this.props;
     if (value >= max && value !== previousProps.value) {
@@ -65,12 +57,12 @@ class BpkProgress extends Component {
     }
   }
 
-  handleCompleteTransitionEnd() {
+  handleCompleteTransitionEnd = () => {
     const { onCompleteTransitionEnd, value, max } = this.props;
     if (value >= max && onCompleteTransitionEnd) {
       onCompleteTransitionEnd();
     }
-  }
+  };
 
   render() {
     const {
@@ -92,6 +84,11 @@ class BpkProgress extends Component {
       classNames.push(getClassName('bpk-progress--small'));
     }
 
+    const valueClassName = [getClassName('bpk-progress__value')];
+    if (stepped) {
+      valueClassName.push(getClassName('bpk-progress__value--stepped'));
+    }
+
     const adjustedValue = clamp(value, min, max);
     const percentage = 100 * (adjustedValue / (max - min));
     const numberOfSteps = stepped ? max - min - 1 : 0;
@@ -111,7 +108,7 @@ class BpkProgress extends Component {
         {...rest}
       >
         <div
-          className={getClassName('bpk-progress__value')}
+          className={valueClassName.join(' ')}
           style={{ width: `${percentage}%` }}
           onTransitionEnd={this.handleCompleteTransitionEnd}
         />

@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,11 +15,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/* @flow strict */
 
 import React from 'react';
 import { mount } from 'enzyme';
 import renderer from 'react-test-renderer';
-import BpkInput, { INPUT_TYPES } from './BpkInput';
+
+import BpkInput from './BpkInput';
+import { INPUT_TYPES } from './common-types';
 
 describe('BpkInput', () => {
   it('should render correctly', () => {
@@ -88,12 +91,7 @@ describe('BpkInput', () => {
     jest.spyOn(console, 'error').mockImplementation(() => jest.fn());
     const tree = renderer
       .create(
-        <BpkInput
-          id="test"
-          name="test"
-          value=""
-          clearButtonMode="whileEditing"
-        />,
+        <BpkInput id="test" name="test" value="" clearButtonMode="always" />,
       )
       .toJSON();
     expect(tree).toMatchSnapshot();
@@ -134,7 +132,7 @@ describe('BpkInput', () => {
   it('should render correctly with type attribute', () => {
     const tree = renderer
       .create(
-        <BpkInput type={INPUT_TYPES.PASSWORD} id="test" name="test" value="" />,
+        <BpkInput type={INPUT_TYPES.password} id="test" name="test" value="" />,
       )
       .toJSON();
     expect(tree).toMatchSnapshot();
@@ -193,5 +191,28 @@ describe('BpkInput', () => {
       .at(0)
       .instance();
     expect(input).toEqual(inputRef);
+  });
+
+  it('should call "onClear" when clearing', () => {
+    const onClear = jest.fn();
+
+    const name = 'field_name';
+
+    const wrapper = mount(
+      <BpkInput
+        id="test"
+        name={name}
+        value="value"
+        clearButtonMode="always"
+        onClear={onClear}
+        clearButtonLabel="clear"
+      />,
+    );
+
+    wrapper.find('BpkClearButton').simulate('click');
+
+    expect(onClear).toHaveBeenCalledWith(
+      expect.objectContaining({ target: expect.objectContaining({ name }) }),
+    );
   });
 });

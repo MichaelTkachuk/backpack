@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-/* @flow */
+/* @flow strict */
 
 import React from 'react';
 import Shallow from 'react-test-renderer/shallow';
@@ -24,13 +24,15 @@ import { mount } from 'enzyme';
 import renderer from 'react-test-renderer';
 
 jest.mock(
-  'popper.js',
+  '@skyscanner/popper.js',
   () =>
     class Popper {
       constructor(target, popover, options) {
         options.onCreate();
       }
+
       scheduleUpdate = () => {};
+
       destroy = () => {};
     },
 );
@@ -71,7 +73,10 @@ describe('BpkPopoverPortal', () => {
       .create(
         <BpkPopoverPortal
           id="my-popover"
-          target={() => document.createElement('button')}
+          // Ignoring this warning because Flow doesn't yet support a secondary
+          // argument for document.createElement.
+          // $FlowFixMe
+          target={() => document.createElement('button', { type: 'button' })}
           isOpen={false}
           onClose={() => null}
           label="My popover"
@@ -110,7 +115,7 @@ describe('BpkPopoverPortal', () => {
 
     it('should render correctly with portalStyle added to portal component', () => {
       const shallowRenderer = Shallow.createRenderer();
-      const customStyle: ?Object = { color: 'red' };
+      const customStyle: ?Object = { color: 'red' }; // eslint-disable-line  backpack/use-tokens
       const result = shallowRenderer.render(
         <BpkPopoverPortal
           id="my-popover"
@@ -129,7 +134,7 @@ describe('BpkPopoverPortal', () => {
     });
   });
 
-  it('should trap and restore focus', done => {
+  it('should trap and restore focus', () => {
     const focusStore = require('a11y-focus-store'); // eslint-disable-line global-require
     const focusScope = require('a11y-focus-scope'); // eslint-disable-line global-require
 
@@ -152,19 +157,18 @@ describe('BpkPopoverPortal', () => {
     expect(focusStore.restoreFocus).not.toHaveBeenCalled();
     expect(focusScope.unscopeFocus).not.toHaveBeenCalled();
 
-    portal.setProps({ isOpen: true }, () => {
-      expect(focusStore.storeFocus).toHaveBeenCalled();
-      expect(focusScope.scopeFocus).toHaveBeenCalled();
+    portal.setProps({ isOpen: true }).update();
 
-      portal.setProps({ isOpen: false }, () => {
-        expect(focusStore.restoreFocus).toHaveBeenCalled();
-        expect(focusScope.unscopeFocus).toHaveBeenCalled();
-        done();
-      });
-    });
+    expect(focusStore.storeFocus).toHaveBeenCalled();
+    expect(focusScope.scopeFocus).toHaveBeenCalled();
+
+    portal.setProps({ isOpen: false }).update();
+
+    expect(focusStore.restoreFocus).toHaveBeenCalled();
+    expect(focusScope.unscopeFocus).toHaveBeenCalled();
   });
 
-  it('should reposition when props are updated', done => {
+  it('should reposition when props are updated', () => {
     const portal = mount(
       <BpkPopoverPortal
         id="my-popover"
@@ -180,16 +184,14 @@ describe('BpkPopoverPortal', () => {
 
     portal.instance().position = jest.fn();
 
-    portal.setProps({ isOpen: true }, () => {
-      expect(portal.instance().position.mock.calls.length).toBe(1);
-      portal.setProps({ target: <div>another target</div> }, () => {
-        expect(portal.instance().position.mock.calls.length).toBe(2);
-        done();
-      });
-    });
+    portal.setProps({ isOpen: true }).update();
+    expect(portal.instance().position.mock.calls.length).toBe(1);
+
+    portal.setProps({ target: <div>another target</div> }).update();
+    expect(portal.instance().position.mock.calls.length).toBe(2);
   });
 
-  it('should not reposition if not open', done => {
+  it('should not reposition if not open', () => {
     const portal = mount(
       <BpkPopoverPortal
         id="my-popover"
@@ -205,13 +207,11 @@ describe('BpkPopoverPortal', () => {
 
     portal.instance().position = jest.fn();
 
-    portal.setProps({ isOpen: false }, () => {
-      expect(portal.instance().position.mock.calls.length).toBe(0);
-      done();
-    });
+    portal.setProps({ isOpen: false }).update();
+    expect(portal.instance().position.mock.calls.length).toBe(0);
   });
 
-  it('should not create multiple popper instances when repositioning', done => {
+  it('should not create multiple popper instances when repositioning', () => {
     const portal = mount(
       <BpkPopoverPortal
         id="my-popover"
@@ -227,9 +227,7 @@ describe('BpkPopoverPortal', () => {
 
     const { popper } = portal.instance();
 
-    portal.setProps({ target: <div>another target</div> }, () => {
-      expect(portal.instance().popper).toBe(popper);
-      done();
-    });
+    portal.setProps({ target: <div>another target</div> }).update();
+    expect(portal.instance().popper).toBe(popper);
   });
 });

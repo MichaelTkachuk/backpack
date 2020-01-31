@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,17 +16,47 @@
  * limitations under the License.
  */
 
+/* @flow strict */
+
 import React from 'react';
 import { storiesOf } from '@storybook/react';
+import BpkSmallBeerIcon from 'bpk-component-icon/sm/beer';
+import BpkSmallFlightIcon from 'bpk-component-icon/sm/flight';
+import BpkSmallWeatherIcon from 'bpk-component-icon/sm/weather';
+
+import BadgeLayout from './BadgeLayout';
 
 import BpkBadge, { BADGE_TYPES } from './index';
-import BadgeLayout from './BadgeLayout';
 
 storiesOf('bpk-component-badge', module)
   .add('Default', () => (
     <BadgeLayout>
       <div>
         This is a badge <BpkBadge>Promocionado</BpkBadge>
+      </div>
+    </BadgeLayout>
+  ))
+  .add('With icons', () => (
+    <BadgeLayout>
+      <div>
+        With one icon{' '}
+        <BpkBadge>
+          <BpkSmallFlightIcon />
+          &nbsp;Promocionado
+        </BpkBadge>
+      </div>
+      <div>
+        With multiple icons{' '}
+        <BpkBadge>
+          <BpkSmallWeatherIcon /> + <BpkSmallBeerIcon />
+          &nbsp;Promocionado
+        </BpkBadge>
+      </div>
+      <div>
+        With multiple icons and no text{' '}
+        <BpkBadge>
+          <BpkSmallWeatherIcon /> + <BpkSmallBeerIcon />
+        </BpkBadge>
       </div>
     </BadgeLayout>
   ))
@@ -38,12 +68,12 @@ storiesOf('bpk-component-badge', module)
     </BadgeLayout>
   ))
   .add('Docked right', () => (
-    <BadgeLayout docked>
+    <BadgeLayout docked="right">
       <BpkBadge docked="right">Promocionado</BpkBadge>
     </BadgeLayout>
   ))
   .add('Docked left', () => (
-    <BadgeLayout docked>
+    <BadgeLayout docked="left">
       <BpkBadge docked="left">Promocionado</BpkBadge>
     </BadgeLayout>
   ))

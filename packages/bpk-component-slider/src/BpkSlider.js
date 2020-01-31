@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,26 +19,18 @@
 import React from 'react';
 import Slider from 'react-slider';
 import PropTypes from 'prop-types';
-import { cssModules } from 'bpk-react-utils';
+import { cssModules, isRTL } from 'bpk-react-utils';
 
-import STYLES from './bpk-slider.scss';
+import STYLES from './BpkSlider.scss';
 
 const getClassName = cssModules(STYLES);
 
-const getScriptDirection = () => {
-  if (typeof document === 'undefined') {
-    return null;
-  }
-  const html = document.querySelector('html');
-  return window.getComputedStyle(html, null).getPropertyValue('direction');
-};
-
 const BpkSlider = props => {
   const { large, className, ...rest } = props;
-  const invert = getScriptDirection() === 'rtl';
+  const invert = isRTL();
   const classNames = [getClassName('bpk-slider')];
-  const handleClassNames = [getClassName('bpk-slider__handle')];
-  const barClassNames = [getClassName('bpk-slider__bar')];
+  const thumbClassNames = [getClassName('bpk-slider__handle')];
+  const trackClassNames = [getClassName('bpk-slider__bar')];
 
   const isRange = (rest.value || rest.defaultValue || []).length > 1;
 
@@ -50,18 +42,18 @@ const BpkSlider = props => {
   }
   if (large) {
     classNames.push(getClassName('bpk-slider--large'));
-    handleClassNames.push(getClassName('bpk-slider__handle--large'));
+    thumbClassNames.push(getClassName('bpk-slider__handle--large'));
   }
 
   return (
     <Slider
       {...rest}
-      withBars
+      withTracks
       invert={invert}
       className={classNames.join(' ')}
-      handleClassName={handleClassNames.join(' ')}
-      handleActiveClassName={getClassName('bpk-slider__handle--active')}
-      barClassName={barClassNames.join(' ')}
+      thumbClassName={thumbClassNames.join(' ')}
+      thumbActiveClassName={getClassName('bpk-slider__handle--active')}
+      trackClassName={trackClassNames.join(' ')}
     />
   );
 };

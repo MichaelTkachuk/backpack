@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,15 +15,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/* @flow strict */
 
 import React from 'react';
 import renderer from 'react-test-renderer';
+
 import BpkCodeBlock from './BpkCodeBlock';
 
 describe('BpkCodeBlock', () => {
   it('should render correctly', () => {
     const tree = renderer
       .create(<BpkCodeBlock>npm install react --save-dev</BpkCodeBlock>)
+      .toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('should render correctly with "alternate"', () => {
+    const tree = renderer
+      .create(
+        <BpkCodeBlock alternate>npm install react --save-dev</BpkCodeBlock>,
+      )
+      .toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('should render correctly with custom "className"', () => {
+    const tree = renderer
+      .create(
+        <BpkCodeBlock className="my-custom-class">
+          npm install react --save-dev
+        </BpkCodeBlock>,
+      )
       .toJSON();
     expect(tree).toMatchSnapshot();
   });

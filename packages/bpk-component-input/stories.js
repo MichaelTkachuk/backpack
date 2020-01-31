@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,13 +15,73 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/* @flow strict */
 
-import React from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-
 import BpkText from 'bpk-component-text';
-import BpkInput, { INPUT_TYPES } from './index';
+
+import BpkInput, {
+  propTypes as inputPropTypes,
+  defaultProps as inputDefaultProps,
+  type BpkInputProps,
+  INPUT_TYPES,
+  CLEAR_BUTTON_MODES,
+} from './index';
+
+type Props = {
+  ...$Exact<$Diff<BpkInputProps, { value: string }>>,
+  initialValue: string,
+};
+
+type State = {
+  value: string,
+};
+
+const { value: valueProp, ...propTypes } = inputPropTypes;
+
+class ClearableInput extends Component<Props, State> {
+  static propTypes = {
+    ...propTypes,
+    initialValue: PropTypes.string.isRequired,
+  };
+
+  static defaultProps = {
+    ...inputDefaultProps,
+  };
+
+  constructor(props: Props) {
+    super(props);
+
+    this.state = {
+      value: props.initialValue,
+    };
+  }
+
+  onChange = e => {
+    this.setState({ value: e.target.value });
+  };
+
+  onClear = () => {
+    this.setState({ value: '' });
+  };
+
+  render() {
+    const { value } = this.state;
+    const { initialValue, ...rest } = this.props;
+
+    return (
+      <BpkInput
+        {...rest}
+        onChange={this.onChange}
+        onClear={this.onClear}
+        value={value}
+      />
+    );
+  }
+}
 
 storiesOf('bpk-component-input', module)
   .add('Text value', () => (
@@ -75,50 +135,44 @@ storiesOf('bpk-component-input', module)
   .add('Clearable', () => (
     <div>
       <BpkText tagName="p">clearButtonMode=whileEditing</BpkText>
-      <BpkInput
+      <ClearableInput
         id="clearable"
         name="clearable"
-        value="Edinburgh"
-        onChange={action('input changed')}
+        initialValue="Edinburgh"
         placeholder="Enter a country, city or airport"
-        clearButtonMode="whileEditing"
+        clearButtonMode={CLEAR_BUTTON_MODES.whileEditing}
         clearButtonLabel="Clear field"
-        onClear={action('input cleared')}
       />
 
       <BpkText tagName="p">clearButtonMode=always</BpkText>
-      <BpkInput
+      <ClearableInput
         id="clearable"
         name="clearable"
-        value="Edinburgh"
-        onChange={action('input changed')}
+        initialValue="Edinburgh"
         placeholder="Enter a country, city or airport"
         valid
-        clearButtonMode="always"
+        clearButtonMode={CLEAR_BUTTON_MODES.always}
         clearButtonLabel="Clear field"
-        onClear={action('input cleared')}
       />
 
       <BpkText tagName="p">
         clearButtonMode=whileEditing, large=true, valid=true
       </BpkText>
-      <BpkInput
+      <ClearableInput
         id="clearable"
         name="clearable"
-        value="Edinburgh"
-        onChange={action('input changed')}
+        initialValue="Edinburgh"
         placeholder="Enter a country, city or airport"
         large
         valid
-        clearButtonMode="whileEditing"
+        clearButtonMode={CLEAR_BUTTON_MODES.whileEditing}
         clearButtonLabel="Clear field"
-        onClear={action('input cleared')}
       />
     </div>
   ))
   .add('Email', () => (
     <BpkInput
-      type={INPUT_TYPES.EMAIL}
+      type={INPUT_TYPES.email}
       id="email"
       name="email"
       value=""
@@ -128,7 +182,7 @@ storiesOf('bpk-component-input', module)
   ))
   .add('Number', () => (
     <BpkInput
-      type={INPUT_TYPES.NUMBER}
+      type={INPUT_TYPES.number}
       id="number"
       name="number"
       value="0"
@@ -138,7 +192,7 @@ storiesOf('bpk-component-input', module)
   ))
   .add('Password', () => (
     <BpkInput
-      type={INPUT_TYPES.PASSWORD}
+      type={INPUT_TYPES.password}
       id="password"
       name="password"
       value="letmein"
@@ -148,7 +202,7 @@ storiesOf('bpk-component-input', module)
   ))
   .add('Telephone', () => (
     <BpkInput
-      type={INPUT_TYPES.TEL}
+      type={INPUT_TYPES.tel}
       id="telephone"
       name="telephone"
       value="+441234567890"

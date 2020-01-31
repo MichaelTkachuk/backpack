@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +18,10 @@
 
 import React from 'react';
 import renderer from 'react-test-renderer';
-import composeCalendar from './composeCalendar';
+
 import { weekDays, formatMonth, formatDateFull } from '../test-utils';
+
+import composeCalendar from './composeCalendar';
 
 const createNodeMock = () => ({
   focus: () => null,
@@ -40,6 +42,7 @@ describe('composeCalendar', () => {
           formatMonth={formatMonth}
           formatDateFull={formatDateFull}
           daysOfWeek={weekDays}
+          weekStartsOn={1}
           changeMonthLabel="Change month"
           minDate={new Date(Date.UTC(2010, 1, 15))}
           maxDate={new Date(Date.UTC(2010, 2, 15))}
@@ -59,6 +62,7 @@ describe('composeCalendar', () => {
           formatMonth={formatMonth}
           formatDateFull={formatDateFull}
           daysOfWeek={weekDays}
+          weekStartsOn={1}
           changeMonthLabel="Change month"
           minDate={new Date(Date.UTC(2010, 1, 15))}
           maxDate={new Date(Date.UTC(2010, 2, 15))}
@@ -79,6 +83,7 @@ describe('composeCalendar', () => {
           formatMonth={formatMonth}
           formatDateFull={formatDateFull}
           daysOfWeek={weekDays}
+          weekStartsOn={1}
           changeMonthLabel="Change month"
           minDate={new Date(Date.UTC(2010, 1, 15))}
           maxDate={new Date(Date.UTC(2010, 2, 15))}
@@ -99,6 +104,7 @@ describe('composeCalendar', () => {
           formatMonth={formatMonth}
           formatDateFull={formatDateFull}
           daysOfWeek={weekDays}
+          weekStartsOn={1}
           changeMonthLabel="Change month"
           minDate={new Date(Date.UTC(2010, 1, 15))}
           maxDate={new Date(Date.UTC(2010, 2, 15))}
@@ -118,10 +124,47 @@ describe('composeCalendar', () => {
           formatMonth={formatMonth}
           formatDateFull={formatDateFull}
           daysOfWeek={weekDays}
+          weekStartsOn={1}
           changeMonthLabel="Change month"
           minDate={new Date(Date.UTC(2010, 1, 15))}
           maxDate={new Date(Date.UTC(2010, 2, 15))}
           month={new Date(Date.UTC(2010, 1, 15))}
+        />,
+        { createNodeMock },
+      )
+      .toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('should pass props to their respective components', () => {
+    const PropsBasedCalendarComponent = composeCalendar(
+      props => props.name,
+      props => props.name,
+      props => (
+        <div>
+          <h1>{props.name}</h1>
+          <props.DateComponent {...props.dateProps} />
+        </div>
+      ),
+      props => props.name,
+    );
+
+    const tree = renderer
+      .create(
+        <PropsBasedCalendarComponent
+          id="myCalendar"
+          formatMonth={formatMonth}
+          formatDateFull={formatDateFull}
+          daysOfWeek={weekDays}
+          weekStartsOn={1}
+          changeMonthLabel="Change month"
+          minDate={new Date(Date.UTC(2010, 1, 15))}
+          maxDate={new Date(Date.UTC(2010, 2, 15))}
+          month={new Date(Date.UTC(2010, 1, 15))}
+          navProps={{ name: 'Nav' }}
+          headerProps={{ name: 'Header' }}
+          gridProps={{ name: 'Grid' }}
+          dateProps={{ name: 'Date' }}
         />,
         { createNodeMock },
       )

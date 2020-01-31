@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -68,6 +68,26 @@ export const restoreScroll = () => {
   if (window) {
     window.scrollTo(0, scrollOffset);
   }
+};
+
+export const fixBody = () => {
+  const body = getBodyElement();
+
+  if (!body) {
+    return;
+  }
+
+  body.style.position = 'fixed';
+};
+
+export const unfixBody = () => {
+  const body = getBodyElement();
+
+  if (!body) {
+    return;
+  }
+
+  body.style.position = '';
 };
 
 export const lockScroll = () => {

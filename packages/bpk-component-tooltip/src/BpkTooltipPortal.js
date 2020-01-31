@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,14 +16,18 @@
  * limitations under the License.
  */
 
-/* @flow */
+/* @flow strict */
 
-import Popper from 'popper.js';
+import Popper from '@skyscanner/popper.js';
 import PropTypes from 'prop-types';
 import React, { Component, type Node } from 'react';
 import { Portal, cssModules } from 'bpk-react-utils';
 
-import BpkTooltip, { type TooltipProps } from './BpkTooltip';
+import BpkTooltip, {
+  propTypes as tooltipPropTypes,
+  defaultProps as tooltipDefaultProps,
+  type TooltipProps,
+} from './BpkTooltip';
 import { ARROW_ID } from './constants';
 import STYLES from './BpkTooltip.scss';
 
@@ -42,9 +46,9 @@ export type Props = {
   children: Node,
   placement: 'top' | 'right' | 'bottom' | 'left' | 'auto',
   hideOnTouchDevices: boolean,
-  padded: boolean,
   portalStyle: ?Object, // eslint-disable-line react/forbid-prop-types
   portalClassName: ?string,
+  renderTarget: ?() => HTMLElement,
   popperModifiers: ?Object,
 };
 
@@ -54,27 +58,28 @@ type State = {
 
 class BpkTooltipPortal extends Component<Props, State> {
   popper: ?Popper;
+
   targetRef: ?HTMLElement;
 
   static propTypes = {
-    ...BpkTooltip.propTypes,
+    ...tooltipPropTypes,
     target: PropTypes.node.isRequired,
     children: PropTypes.node.isRequired,
     placement: PropTypes.oneOf(Popper.placements),
     hideOnTouchDevices: PropTypes.bool,
-    padded: PropTypes.bool,
     portalStyle: PropTypes.object, // eslint-disable-line react/forbid-prop-types
     portalClassName: PropTypes.string,
+    renderTarget: PropTypes.func,
     popperModifiers: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   };
 
   static defaultProps = {
-    ...BpkTooltip.defaultProps,
+    ...tooltipDefaultProps,
     placement: 'bottom',
     hideOnTouchDevices: true,
-    padded: true,
     portalStyle: null,
     portalClassName: null,
+    renderTarget: null,
     popperModifiers: null,
   };
 
@@ -108,10 +113,15 @@ class BpkTooltipPortal extends Component<Props, State> {
   }
 
   onOpen = (tooltipElement: HTMLElement, targetElement: HTMLElement) => {
+    // Note that GPU acceleration should be disabled otherwise Popper will use `translate3d`
+    // which can cause blurriness in Safari and Chrome.
     this.popper = new Popper(targetElement, tooltipElement, {
       placement: this.props.placement,
       modifiers: {
         ...this.props.popperModifiers,
+        computeStyle: {
+          gpuAcceleration: false,
+        },
         arrow: {
           element: `#${ARROW_ID}`,
         },
@@ -151,6 +161,7 @@ class BpkTooltipPortal extends Component<Props, State> {
       hideOnTouchDevices,
       portalClassName,
       portalStyle,
+      renderTarget,
       popperModifiers,
       ...rest
     } = this.props;
@@ -172,6 +183,7 @@ class BpkTooltipPortal extends Component<Props, State> {
         onOpen={this.onOpen}
         onClose={this.closeTooltip}
         style={portalStyle}
+        renderTarget={renderTarget}
         className={classNames.join(' ')}
       >
         <BpkTooltip padded={padded} {...rest}>

@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 const uniq = (arr = []) => {
@@ -39,10 +39,9 @@ const createStyle = (theme, themeAttributes) => {
   const missingThemeAttributes = [];
   flattenedThemeAttributes.forEach(attribute => {
     if (theme[attribute]) {
-      const cssName = attribute.replace(
-        /([A-Z])/g,
-        variable => `-${variable.toLowerCase()}`,
-      );
+      const cssName = attribute
+        .replace(/([A-Z])/g, variable => `-${variable.toLowerCase()}`)
+        .replace(/([0-9])/, variable => `-${variable.toLowerCase()}`);
       const value = theme[attribute];
       style[`--bpk-${cssName}`] = value;
     } else {
@@ -57,17 +56,34 @@ const createStyle = (theme, themeAttributes) => {
   return style;
 };
 
-const BpkThemeProvider = props => {
-  const { children, theme, themeAttributes, ...rest } = props;
+class BpkThemeProvider extends Component {
+  getChildContext() {
+    return { theme: this.props.theme };
+  }
 
-  const dedupedThemeAttributes = uniq(themeAttributes);
-  const style = createStyle(theme, dedupedThemeAttributes);
+  render() {
+    const {
+      children,
+      theme,
+      themeAttributes,
+      component: WrapperComponent,
+      style: userStyle,
+      ...rest
+    } = this.props;
 
-  return (
-    <div style={style} {...rest}>
-      {children}
-    </div>
-  );
+    const dedupedThemeAttributes = uniq(themeAttributes);
+    const style = createStyle(theme, dedupedThemeAttributes);
+
+    return (
+      <WrapperComponent style={{ ...userStyle, ...style }} {...rest}>
+        {children}
+      </WrapperComponent>
+    );
+  }
+}
+
+BpkThemeProvider.childContextTypes = {
+  theme: PropTypes.object, // eslint-disable-line react/forbid-prop-types
 };
 
 const themeAttributesPropType = (props, propName, componentName) => {
@@ -120,9 +136,14 @@ BpkThemeProvider.propTypes = {
   theme: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   themeAttributes: themeAttributesPropType, // eslint-disable-line react/require-default-props
   // (disabled because isRequired is inside the custom validator)
+  component: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+  style: PropTypes.object, // eslint-disable-line react/forbid-prop-types
 };
+
 BpkThemeProvider.defaultProps = {
   theme: null,
+  component: 'div',
+  style: null,
 };
 
 export default BpkThemeProvider;

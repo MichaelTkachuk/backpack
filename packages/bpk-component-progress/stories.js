@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,8 +20,8 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-
 import BpkButton from 'bpk-component-button';
+
 import BpkProgress from './index';
 
 class ProgressContainer extends Component {
@@ -31,13 +31,11 @@ class ProgressContainer extends Component {
     this.state = {
       progress: props.initialValue,
     };
-
-    this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange(progress) {
+  handleChange = progress => {
     this.setState({ progress });
-  }
+  };
 
   render() {
     const { steps, ...rest } = this.props;

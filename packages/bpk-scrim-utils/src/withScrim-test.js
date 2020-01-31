@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,10 +34,12 @@ jest.mock('a11y-focus-scope', () => ({
   scopeFocus: jest.fn(),
   unscopeFocus: jest.fn(),
 }));
+
 jest.mock('a11y-focus-store', () => ({
   storeFocus: jest.fn(),
   restoreFocus: jest.fn(),
 }));
+
 jest.mock('./scroll-utils', () => ({
   lockScroll: jest.fn(),
   restoreScroll: jest.fn(),
@@ -88,6 +90,19 @@ describe('BpkScrim', () => {
             onClose={jest.fn()}
             getApplicationElement={jest.fn()}
             containerClassName="containerClassName"
+          />,
+        )
+        .toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+
+    it('should render correctly with closeOnScrimClick as false', () => {
+      const tree = renderer
+        .create(
+          <Component
+            onClose={jest.fn()}
+            getApplicationElement={jest.fn()}
+            closeOnScrimClick={false}
           />,
         )
         .toJSON();

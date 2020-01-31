@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@
 
 import isEqual from 'lodash/isEqual';
 import React, { Component } from 'react';
-
 import { wrapDisplayName } from 'bpk-react-utils';
 
 // eslint-disable-next-line import/prefer-default-export
@@ -30,20 +29,15 @@ export const withSelectedState = ComposedComponent => {
       this.state = {
         selectedPoint: null,
       };
-
-      this.onBarClick = this.onBarClick.bind(this);
-      this.getBarSelection = this.getBarSelection.bind(this);
     }
 
-    onBarClick(e, { point }) {
+    onBarClick = (e, { point }) => {
       this.setState({
         selectedPoint: point,
       });
-    }
+    };
 
-    getBarSelection(point) {
-      return isEqual(this.state.selectedPoint, point);
-    }
+    getBarSelection = point => isEqual(this.state.selectedPoint, point);
 
     render() {
       const { ...rest } = this.props;

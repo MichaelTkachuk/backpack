@@ -2,7 +2,7 @@
  * 
  * Backpack - Skyscanner's Design System
  * 
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,376 +17,385 @@
  * limitations under the License.
  * 
  */
-export const durationXs = "50ms";
-export const durationSm = "200ms";
-export const durationBase = "400ms";
 export const autosuggestListBackgroundColor = "rgb(255, 255, 255)";
-export const autosuggestListItemActiveBackgroundColor = "rgb(230, 228, 235)";
-export const autosuggestListItemHighlightedBackgroundColor = "rgb(243, 242, 245)";
-export const badgePaddingY = "0";
-export const badgePaddingX = ".375rem";
-export const badgeBackgroundColor = "rgb(255, 187, 0)";
+export const autosuggestListItemActiveBackgroundColor = "rgb(221, 221, 229)";
+export const autosuggestListItemHighlightedBackgroundColor = "rgb(241, 242, 248)";
+export const badgeBackgroundColor = "rgb(255, 181, 77)";
 export const badgeCenteredVerticalAlign = "text-bottom";
-export const borderRadiusXs = ".1875rem";
-export const borderRadiusSm = ".375rem";
+export const badgePaddingX = ".375rem";
+export const badgePaddingY = "0";
+export const bannerAlertBackgroundColor = "rgb(255, 255, 255)";
+export const bannerAlertChildrenColor = "rgb(104, 105, 127)";
+export const bannerAlertChildrenPaddingX = ".75rem";
+export const bannerAlertChildrenPaddingY = ".375rem";
+export const bannerAlertErrorColor = "rgb(209, 67, 91)";
+export const bannerAlertExpandIconFill = "rgb(68, 69, 96)";
+export const bannerAlertHeaderExpandableActiveBackgroundColor = "rgb(221, 221, 229)";
+export const bannerAlertHeaderExpandableHoverBackgroundColor = "rgb(241, 242, 248)";
+export const bannerAlertHeaderPaddingX = ".75rem";
+export const bannerAlertHeaderPaddingY = ".375rem";
+export const bannerAlertNeutralColor = "rgb(104, 105, 127)";
+export const bannerAlertSuccessColor = "rgb(0, 166, 152)";
+export const bannerAlertWarnColor = "rgb(255, 181, 77)";
 export const borderRadiusPill = "1.125rem";
 export const borderRadiusPillLg = "1.3125rem";
-export const borderSizeSm = "1px";
+export const borderRadiusSm = ".375rem";
+export const borderRadiusXs = ".25rem";
 export const borderSizeLg = "2px";
+export const borderSizeSm = "1px";
 export const borderSizeXl = "3px";
-export const boxShadowSm = "0px 1px 3px 0px rgba(37,32,31,.3)";
 export const boxShadowLg = "0px 4px 14px 0px rgba(37,32,31,.25)";
+export const boxShadowSm = "0px 1px 3px 0px rgba(37,32,31,.3)";
 export const boxShadowXl = "0px 12px 50px 0px rgba(37,32,31,.25)";
-export const breakpointMobile = "32.25rem";
-export const breakpointTablet = "50.25rem";
 export const breakpointDesktop = "71.25rem";
+export const breakpointMobile = "32.25rem";
+export const breakpointQueryAboveMobile = "(min-width: 32.3125rem)";
+export const breakpointQueryAboveTablet = "(min-width: 50.3125rem)";
 export const breakpointQueryMobile = "(max-width: 32.25rem)";
 export const breakpointQueryTablet = "(max-width: 50.25rem)";
 export const breakpointQueryTabletOnly = "(min-width: 32.3125rem) and (max-width: 50.25rem)";
-export const breakpointQueryAboveMobile = "(min-width: 32.3125rem)";
-export const breakpointQueryAboveTablet = "(min-width: 50.3125rem)";
-export const buttonPaddingY = ".375rem";
-export const buttonPaddingX = "1.125rem";
-export const buttonPaddingXIconOnly = ".5625rem";
-export const buttonBorderRadius = "1.125rem";
-export const buttonBorderRadiusLg = "1.3125rem";
-export const buttonBackgroundColor = "rgb(0, 215, 117)";
-export const buttonBackgroundImage = "linear-gradient(-180deg, #00d775 0%, #00bd68 100%)";
-export const buttonGradientStartColor = "rgb(0, 215, 117)";
-export const buttonGradientEndColor = "rgb(0, 189, 104)";
-export const buttonHoverBackgroundColor = "rgb(0, 189, 104)";
-export const buttonHoverBackgroundImage = "none";
-export const buttonActiveBackgroundColor = "rgb(0, 168, 93)";
+export const breakpointTablet = "50.25rem";
+export const buttonActiveBackgroundColor = "rgb(0, 106, 97)";
 export const buttonActiveBackgroundImage = "none";
-export const buttonDisabledBackgroundColor = "rgb(230, 228, 235)";
-export const buttonDisabledBackgroundImage = "none";
-export const buttonColor = "rgb(255, 255, 255)";
-export const buttonHoverColor = "rgb(255, 255, 255)";
-export const buttonActiveColor = "rgb(255, 255, 255)";
-export const buttonBoxShadow = "none";
-export const buttonHoverBoxShadow = "none";
 export const buttonActiveBoxShadow = "none";
+export const buttonActiveColor = "rgb(255, 255, 255)";
+export const buttonBackgroundColor = "rgb(0, 166, 152)";
+export const buttonBorderRadius = ".25rem";
+export const buttonBoxShadow = "none";
+export const buttonColor = "rgb(255, 255, 255)";
+export const buttonDestructiveActiveBackgroundColor = "rgb(255, 255, 255)";
+export const buttonDestructiveActiveBorderColor = "rgb(209, 67, 91)";
+export const buttonDestructiveActiveBoxShadow = "0 0 0 3px #d1435b inset";
+export const buttonDestructiveActiveColor = "rgb(209, 67, 91)";
+export const buttonDestructiveBackgroundColor = "rgb(255, 255, 255)";
+export const buttonDestructiveBorderColor = "rgb(221, 221, 229)";
+export const buttonDestructiveBoxShadow = "0 0 0 2px #DDDDE5 inset";
+export const buttonDestructiveColor = "rgb(209, 67, 91)";
+export const buttonDestructiveDisabledBackgroundColor = "rgb(221, 221, 229)";
+export const buttonDestructiveDisabledBackgroundImage = "none";
+export const buttonDestructiveDisabledBoxShadow = "none";
+export const buttonDestructiveDisabledColor = "rgb(178, 178, 191)";
+export const buttonDestructiveHoverBackgroundColor = "rgb(255, 255, 255)";
+export const buttonDestructiveHoverBackgroundImage = "none";
+export const buttonDestructiveHoverBorderColor = "rgb(209, 67, 91)";
+export const buttonDestructiveHoverBoxShadow = "0 0 0 2px #d1435b inset";
+export const buttonDestructiveHoverColor = "rgb(209, 67, 91)";
+export const buttonDisabledBackgroundColor = "rgb(221, 221, 229)";
+export const buttonDisabledBackgroundImage = "none";
 export const buttonDisabledBoxShadow = "none";
-export const buttonDisabledColor = "rgb(178, 174, 189)";
-export const buttonFontSize = "1rem";
+export const buttonDisabledColor = "rgb(178, 178, 191)";
+export const buttonFeaturedActiveBackgroundColor = "rgb(4, 39, 89)";
+export const buttonFeaturedActiveBackgroundImage = "none";
+export const buttonFeaturedActiveBoxShadow = "none";
+export const buttonFeaturedActiveColor = "rgb(255, 255, 255)";
+export const buttonFeaturedBackgroundColor = "rgb(7, 112, 227)";
+export const buttonFeaturedBackgroundImage = "#0770e3";
+export const buttonFeaturedColor = "rgb(255, 255, 255)";
+export const buttonFeaturedDisabledBackgroundColor = "rgb(221, 221, 229)";
+export const buttonFeaturedDisabledBackgroundImage = "none";
+export const buttonFeaturedHoverBackgroundColor = "rgb(8, 78, 178)";
+export const buttonFeaturedHoverBackgroundImage = "none";
+export const buttonFeaturedHoverBoxShadow = "none";
+export const buttonFeaturedHoverColor = "rgb(255, 255, 255)";
+export const buttonFontSize = "1.1875rem";
 export const buttonFontWeight = "700";
-export const buttonLineHeight = "1.5rem";
-export const buttonTextAlign = "center";
-export const buttonLargePaddingY = ".375rem";
-export const buttonLargePaddingX = "1.5rem";
-export const buttonLargePaddingXIconOnly = ".5625rem";
+export const buttonGradientEndColor = "rgb(0, 166, 152)";
+export const buttonGradientStartColor = "rgb(0, 166, 152)";
+export const buttonHoverBackgroundColor = "rgb(0, 136, 125)";
+export const buttonHoverBackgroundImage = "none";
+export const buttonHoverBoxShadow = "none";
+export const buttonHoverColor = "rgb(255, 255, 255)";
+export const buttonIconBorderRadius = "1.125rem";
+export const buttonIconBorderRadiusLg = "1.3125rem";
 export const buttonLargeFontSize = "1.5rem";
 export const buttonLargeLineHeight = "1.875rem";
-export const buttonSecondaryBackgroundColor = "rgb(255, 255, 255)";
-export const buttonSecondaryBackgroundImage = "none";
-export const buttonSecondaryHoverBackgroundColor = "rgb(255, 255, 255)";
-export const buttonSecondaryHoverBackgroundImage = "none";
+export const buttonLargePaddingX = "1.5rem";
+export const buttonLargePaddingXIconOnly = ".5625rem";
+export const buttonLargePaddingY = ".375rem";
+export const buttonLineHeight = "1.5rem";
+export const buttonOutlineActiveBackgroundColor = "rgba(0, 0, 0, 0)";
+export const buttonOutlineActiveBorderColor = "rgb(255, 255, 255)";
+export const buttonOutlineBackgroundColor = "rgba(0, 0, 0, 0)";
+export const buttonOutlineBackgroundImage = "none";
+export const buttonOutlineBorderColor = "rgb(255, 255, 255)";
+export const buttonOutlineColor = "rgb(255, 255, 255)";
+export const buttonOutlineDisabledBackgroundColor = "rgb(221, 221, 229)";
+export const buttonOutlineDisabledBackgroundImage = "none";
+export const buttonOutlineDisabledBoxShadow = "none";
+export const buttonOutlineDisabledColor = "rgb(178, 178, 191)";
+export const buttonOutlineHoverBackgroundColor = "rgba(0, 0, 0, 0)";
+export const buttonOutlineHoverBorderColor = "rgb(255, 255, 255)";
+export const buttonOutlineHoverBorderOpacity = "0.5";
+export const buttonPaddingX = "1.125rem";
+export const buttonPaddingXIconOnly = ".5625rem";
+export const buttonPaddingY = ".375rem";
 export const buttonSecondaryActiveBackgroundColor = "rgb(255, 255, 255)";
 export const buttonSecondaryActiveBackgroundImage = "none";
-export const buttonSecondaryDisabledBackgroundColor = "rgb(230, 228, 235)";
+export const buttonSecondaryActiveBorderColor = "rgb(8, 78, 178)";
+export const buttonSecondaryActiveBoxShadow = "0 0 0 3px #084eb2 inset";
+export const buttonSecondaryActiveColor = "rgb(8, 78, 178)";
+export const buttonSecondaryBackgroundColor = "rgb(255, 255, 255)";
+export const buttonSecondaryBackgroundImage = "none";
+export const buttonSecondaryBorderColor = "rgb(221, 221, 229)";
+export const buttonSecondaryBoxShadow = "0 0 0 2px #DDDDE5 inset";
+export const buttonSecondaryColor = "rgb(7, 112, 227)";
+export const buttonSecondaryDisabledBackgroundColor = "rgb(221, 221, 229)";
 export const buttonSecondaryDisabledBackgroundImage = "none";
-export const buttonSecondaryColor = "rgb(0, 178, 214)";
-export const buttonSecondaryHoverColor = "rgb(0, 178, 214)";
-export const buttonSecondaryActiveColor = "rgb(0, 178, 214)";
-export const buttonSecondaryDisabledColor = "rgb(178, 174, 189)";
-export const buttonSecondaryBoxShadow = "0 0 0 2px #E6E4EB inset";
-export const buttonSecondaryHoverBoxShadow = "0 0 0 2px #00b2d6 inset";
-export const buttonSecondaryActiveBoxShadow = "0 0 0 3px #00b2d6 inset";
-export const buttonSecondaryBorderColor = "rgb(230, 228, 235)";
-export const buttonSecondaryHoverBorderColor = "rgb(0, 178, 214)";
-export const buttonSecondaryActiveBorderColor = "rgb(0, 178, 214)";
 export const buttonSecondaryDisabledBoxShadow = "none";
-export const buttonDestructiveColor = "rgb(255, 84, 82)";
-export const buttonDestructiveBoxShadow = "0 0 0 2px #E6E4EB inset";
-export const buttonDestructiveHoverColor = "rgb(255, 84, 82)";
-export const buttonDestructiveHoverBoxShadow = "0 0 0 2px #ff5452 inset";
-export const buttonDestructiveActiveColor = "rgb(255, 84, 82)";
-export const buttonDestructiveActiveBoxShadow = "0 0 0 3px #ff5452 inset";
-export const buttonDestructiveDisabledBackgroundColor = "rgb(230, 228, 235)";
-export const buttonDestructiveDisabledBackgroundImage = "none";
-export const buttonDestructiveDisabledColor = "rgb(178, 174, 189)";
-export const buttonDestructiveDisabledBoxShadow = "none";
-export const buttonSelectedBackgroundColor = "rgb(0, 178, 214)";
-export const buttonSelectedBackgroundImage = "linear-gradient(-180deg, #009dbd 0%, #008ca8 100%)";
-export const buttonSelectedHoverBackgroundColor = "rgb(0, 140, 168)";
-export const buttonSelectedHoverBackgroundImage = "none";
-export const buttonSelectedActiveBackgroundColor = "rgb(0, 117, 140)";
+export const buttonSecondaryDisabledColor = "rgb(178, 178, 191)";
+export const buttonSecondaryHoverBackgroundColor = "rgb(255, 255, 255)";
+export const buttonSecondaryHoverBackgroundImage = "none";
+export const buttonSecondaryHoverBorderColor = "rgb(7, 112, 227)";
+export const buttonSecondaryHoverBoxShadow = "0 0 0 2px #0770e3 inset";
+export const buttonSecondaryHoverColor = "rgb(7, 112, 227)";
+export const buttonSelectedActiveBackgroundColor = "rgb(4, 39, 89)";
 export const buttonSelectedActiveBackgroundImage = "none";
-export const buttonSelectedColor = "rgb(255, 255, 255)";
-export const buttonSelectedHoverColor = "rgb(255, 255, 255)";
-export const buttonSelectedActiveColor = "rgb(255, 255, 255)";
-export const buttonSelectedBoxShadow = "none";
-export const buttonSelectedHoverBoxShadow = "none";
 export const buttonSelectedActiveBoxShadow = "none";
+export const buttonSelectedActiveColor = "rgb(255, 255, 255)";
+export const buttonSelectedBackgroundColor = "rgb(7, 112, 227)";
+export const buttonSelectedBackgroundImage = "#084eb2";
+export const buttonSelectedBoxShadow = "none";
+export const buttonSelectedColor = "rgb(255, 255, 255)";
 export const buttonSelectedDisabledBoxShadow = "none";
-export const buttonFeaturedBackgroundImage = "linear-gradient(-180deg, #FA488A 0%, #D92B6B 100%)";
-export const buttonFeaturedColor = "rgb(255, 255, 255)";
-export const buttonFeaturedHoverColor = "rgb(255, 255, 255)";
-export const buttonFeaturedActiveColor = "rgb(255, 255, 255)";
-export const buttonFeaturedHoverBackgroundColor = "rgb(217, 43, 107)";
-export const buttonFeaturedActiveBackgroundColor = "rgb(197, 15, 82)";
-export const buttonFeaturedActiveBackgroundImage = "none";
-export const buttonFeaturedDisabledBackgroundColor = "rgb(230, 228, 235)";
-export const buttonFeaturedDisabledBackgroundImage = "none";
-export const calendarPadding = ".75rem";
-export const calendarDaySpacing = ".375rem";
-export const calendarDaySize = "2.250rem";
-export const calendarDayColor = "rgb(0, 178, 214)";
-export const calendarDayBackgroundColor = "rgb(255, 255, 255)";
+export const buttonSelectedHoverBackgroundColor = "rgb(8, 78, 178)";
+export const buttonSelectedHoverBackgroundImage = "none";
+export const buttonSelectedHoverBoxShadow = "none";
+export const buttonSelectedHoverColor = "rgb(255, 255, 255)";
+export const buttonTextAlign = "center";
+export const calendarDayActiveBackgroundColor = "rgb(221, 221, 229)";
+export const calendarDayActiveColor = "rgb(17, 18, 54)";
+export const calendarDayColor = "rgb(7, 112, 227)";
+export const calendarDayDisabledColor = "rgb(221, 221, 229)";
+export const calendarDayFocusedBorderColor = "rgb(7, 112, 227)";
+export const calendarDayFocusedColor = "rgb(7, 112, 227)";
+export const calendarDayHoverBackgroundColor = "rgb(241, 242, 248)";
+export const calendarDayHoverColor = "rgb(68, 69, 96)";
+export const calendarDayOutsideColor = "rgb(178, 178, 191)";
+export const calendarDaySelectedBackgroundColor = "rgb(8, 78, 178)";
 export const calendarDaySelectedColor = "rgb(255, 255, 255)";
-export const calendarDaySelectedBackgroundColor = "rgb(0, 140, 168)";
-export const calendarDayHoverColor = "rgb(82, 76, 97)";
-export const calendarDayHoverBackgroundColor = "rgb(243, 242, 245)";
-export const calendarDayActiveColor = "rgb(37, 32, 51)";
-export const calendarDayActiveBackgroundColor = "rgb(230, 228, 235)";
-export const calendarDayDisabledColor = "rgb(230, 228, 235)";
-export const calendarDayDisabledBackgroundColor = "rgb(255, 255, 255)";
-export const calendarDayOutsideColor = "rgb(178, 174, 189)";
-export const calendarDayOutsideBackgroundColor = "rgb(255, 255, 255)";
-export const calendarNavIconFill = "rgb(0, 178, 214)";
-export const calendarNavIconHoverFill = "rgb(0, 157, 189)";
-export const calendarNavIconActiveFill = "rgb(0, 140, 168)";
-export const calendarNavIconDisabledFill = "rgb(230, 228, 235)";
+export const calendarDaySize = "2.250rem";
+export const calendarDaySpacing = ".375rem";
+export const calendarNavIconActiveFill = "rgb(4, 39, 89)";
+export const calendarNavIconDisabledFill = "rgb(221, 221, 229)";
+export const calendarNavIconFill = "rgb(7, 112, 227)";
+export const calendarNavIconHoverFill = "rgb(8, 78, 178)";
+export const calendarPadding = ".75rem";
 export const cardBackgroundColor = "rgb(255, 255, 255)";
-export const cardColor = "rgb(82, 76, 97)";
+export const cardColor = "rgb(17, 18, 54)";
 export const cardPadding = ".75rem";
+export const checkboxCheckedTickColor = "rgb(7, 112, 227)";
+export const colorAbisko = "rgb(90, 72, 155)";
+export const colorBagan = "rgb(255, 235, 208)";
+export const colorBunol = "rgb(255, 123, 89)";
+export const colorErfoud = "rgb(255, 181, 77)";
+export const colorGlencoe = "rgb(115, 206, 198)";
+export const colorHarbour = "rgb(246, 221, 225)";
+export const colorHillier = "rgb(225, 139, 150)";
+export const colorKolkata = "rgb(255, 148, 0)";
+export const colorMonteverde = "rgb(0, 166, 152)";
+export const colorNara = "rgb(255, 231, 224)";
+export const colorPanjin = "rgb(209, 67, 91)";
+export const colorPetra = "rgb(255, 171, 149)";
+export const colorPrimaryGradientLight = "rgb(7, 112, 227)";
+export const colorSagano = "rgb(208, 238, 236)";
+export const colorSkyBlue = "rgb(7, 112, 227)";
+export const colorSkyBlueShade01 = "rgb(8, 78, 178)";
+export const colorSkyBlueShade02 = "rgb(4, 39, 89)";
+export const colorSkyBlueShade03 = "rgb(2, 18, 44)";
+export const colorSkyBlueTint01 = "rgb(109, 159, 235)";
+export const colorSkyBlueTint02 = "rgb(157, 192, 242)";
+export const colorSkyBlueTint03 = "rgb(205, 223, 248)";
+export const colorSkyGray = "rgb(17, 18, 54)";
+export const colorSkyGrayTint01 = "rgb(68, 69, 96)";
+export const colorSkyGrayTint02 = "rgb(104, 105, 127)";
+export const colorSkyGrayTint03 = "rgb(143, 144, 160)";
+export const colorSkyGrayTint04 = "rgb(178, 178, 191)";
+export const colorSkyGrayTint05 = "rgb(205, 205, 215)";
+export const colorSkyGrayTint06 = "rgb(221, 221, 229)";
+export const colorSkyGrayTint07 = "rgb(241, 242, 248)";
+export const colorSystemGreen = "rgb(0, 166, 152)";
+export const colorSystemRed = "rgb(209, 67, 91)";
+export const colorTochigi = "rgb(225, 221, 236)";
+export const colorValensole = "rgb(165, 155, 200)";
 export const colorWhite = "rgb(255, 255, 255)";
-export const colorBlue50 = "rgb(225, 244, 248)";
-export const colorBlue100 = "rgb(203, 238, 245)";
-export const colorBlue200 = "rgb(176, 228, 238)";
-export const colorBlue300 = "rgb(127, 215, 232)";
-export const colorBlue400 = "rgb(64, 196, 223)";
-export const colorBlue500 = "rgb(0, 178, 214)";
-export const colorBlue600 = "rgb(0, 157, 189)";
-export const colorBlue700 = "rgb(0, 140, 168)";
-export const colorBlue800 = "rgb(0, 117, 140)";
-export const colorBlue900 = "rgb(0, 85, 103)";
-export const colorGray50 = "rgb(243, 242, 245)";
-export const colorGray100 = "rgb(230, 228, 235)";
-export const colorGray200 = "rgb(204, 201, 212)";
-export const colorGray300 = "rgb(178, 174, 189)";
-export const colorGray400 = "rgb(154, 149, 167)";
-export const colorGray500 = "rgb(129, 123, 143)";
-export const colorGray600 = "rgb(105, 97, 121)";
-export const colorGray700 = "rgb(82, 76, 97)";
-export const colorGray800 = "rgb(59, 52, 75)";
-export const colorGray900 = "rgb(37, 32, 51)";
-export const colorGreen50 = "rgb(223, 247, 236)";
-export const colorGreen100 = "rgb(203, 245, 226)";
-export const colorGreen200 = "rgb(175, 237, 209)";
-export const colorGreen300 = "rgb(128, 232, 185)";
-export const colorGreen400 = "rgb(64, 222, 151)";
-export const colorGreen500 = "rgb(0, 215, 117)";
-export const colorGreen600 = "rgb(0, 189, 104)";
-export const colorGreen700 = "rgb(0, 168, 93)";
-export const colorGreen800 = "rgb(0, 140, 77)";
-export const colorGreen900 = "rgb(0, 102, 56)";
-export const colorRed50 = "rgb(252, 242, 242)";
-export const colorRed100 = "rgb(255, 214, 213)";
-export const colorRed200 = "rgb(255, 187, 186)";
-export const colorRed300 = "rgb(255, 150, 148)";
-export const colorRed400 = "rgb(254, 116, 113)";
-export const colorRed500 = "rgb(255, 84, 82)";
-export const colorRed600 = "rgb(235, 66, 63)";
-export const colorRed700 = "rgb(222, 50, 47)";
-export const colorRed800 = "rgb(204, 31, 29)";
-export const colorRed900 = "rgb(168, 3, 0)";
-export const colorYellow50 = "rgb(255, 249, 230)";
-export const colorYellow100 = "rgb(255, 243, 207)";
-export const colorYellow200 = "rgb(255, 236, 184)";
-export const colorYellow300 = "rgb(255, 225, 140)";
-export const colorYellow400 = "rgb(255, 207, 74)";
-export const colorYellow500 = "rgb(255, 187, 0)";
-export const colorYellow600 = "rgb(240, 176, 0)";
-export const colorYellow700 = "rgb(225, 165, 0)";
-export const colorYellow800 = "rgb(194, 142, 0)";
-export const colorYellow900 = "rgb(156, 114, 0)";
-export const primaryGradient = "linear-gradient(135deg, #00b2d6 0%, #02DDD8 100%)";
-export const checkboxCheckedTickColor = "rgb(0, 140, 168)";
-export const radioCheckedCircleColor = "rgb(0, 140, 168)";
-export const inputHeight = "2.250rem";
-export const inputPaddingX = ".75rem";
-export const inputPaddingY = ".375rem";
-export const inputBorderWidth = ".0625rem";
-export const inputBorder = "solid .0625rem #E6E4EB";
-export const inputBorderRadius = ".1875rem";
-export const inputBackground = "#ffffff";
-export const inputColor = "rgb(82, 76, 97)";
-export const inputPlaceholderColor = "rgb(129, 123, 143)";
-export const inputPlaceholderFontStyle = "italic";
-export const inputDisabledBorderColor = "rgb(243, 242, 245)";
-export const inputDisabledColor = "rgb(178, 174, 189)";
-export const inputLargeHeight = "2.625rem + .375rem";
-export const selectHeight = "2.250rem";
-export const selectPaddingTop = ".375rem";
-export const selectPaddingRight = "1.875rem";
-export const selectPaddingBottom = ".375rem";
-export const selectPaddingLeft = ".75rem";
-export const selectBorderWidth = ".0625rem";
-export const selectBorder = "solid .0625rem #E6E4EB";
-export const selectBorderRadius = ".1875rem";
-export const selectColor = "rgb(82, 76, 97)";
-export const selectDisabledBorderColor = "rgb(243, 242, 245)";
-export const selectDisabledColor = "rgb(178, 174, 189)";
-export const selectLargeHeight = "2.625rem + .375rem";
-export const labelColor = "rgb(82, 76, 97)";
-export const labelDisabledColor = "rgb(178, 174, 189)";
-export const labelFontSize = ".75rem";
-export const labelLineHeight = "1.125rem";
-export const formValidationMargin = "0";
-export const formValidationPaddingY = ".375rem";
-export const formValidationPaddingX = ".75rem";
-export const formValidationBackgroundColor = "rgb(255, 84, 82)";
-export const formValidationColor = "rgb(255, 255, 255)";
-export const formValidationArrowSize = ".375rem";
-export const formValidationCheckboxArrowLeft = "1.5rem";
-export const textareaMinHeight = "2.625rem * 2";
-export const requiredColor = "rgb(255, 84, 82)";
-export const gridColumns = "12";
-export const gridGutter = "1.5rem";
-export const gridContainerPadding = "1.5rem";
-export const gridContainerMobilePadding = ".75rem";
-export const horizontalNavLinkColor = "rgb(82, 76, 97)";
-export const horizontalNavLinkHoverColor = "rgb(59, 52, 75)";
-export const horizontalNavLinkActiveColor = "rgb(37, 32, 51)";
-export const horizontalNavLinkSelectedColor = "rgb(0, 178, 214)";
-export const horizontalNavBarSelectedColor = "rgb(0, 178, 214)";
-export const iconSizeSm = "1.125rem";
-export const iconSizeLg = "1.5rem";
-export const modalScrimBackgroundColor = "rgb(178, 174, 189)";
-export const modalScrimInitialOpacity = "0";
-export const modalScrimOpacity = ".7";
-export const modalScrimMobileOpacity = "1";
-export const modalBackgroundColor = "rgb(255, 255, 255)";
-export const modalInitialOpacity = "0";
-export const modalOpacity = "1";
-export const modalMaxWidth = "32.25rem";
-export const modalWideMaxWidth = "50.25rem";
-export const modalHeaderPadding = ".75rem";
-export const modalCloseIconFill = "rgb(129, 123, 143)";
-export const modalCloseIconHoverFill = "rgb(82, 76, 97)";
-export const modalContentPadding = ".75rem";
-export const scrimBackgroundColor = "rgb(178, 174, 189)";
-export const scrimInitialOpacity = "0";
-export const scrimOpacity = ".7";
-export const scrimMobileOpacity = "1";
-export const bannerAlertBackgroundColor = "rgb(255, 255, 255)";
-export const bannerAlertHeaderPaddingY = ".375rem";
-export const bannerAlertHeaderPaddingX = ".75rem";
-export const bannerAlertHeaderExpandableHoverBackgroundColor = "rgb(243, 242, 245)";
-export const bannerAlertHeaderExpandableActiveBackgroundColor = "rgb(230, 228, 235)";
-export const bannerAlertSuccessColor = "rgb(0, 215, 117)";
-export const bannerAlertWarnColor = "rgb(255, 187, 0)";
-export const bannerAlertErrorColor = "rgb(255, 84, 82)";
-export const bannerAlertNeutralColor = "rgb(129, 123, 143)";
-export const bannerAlertExpandIconFill = "rgb(82, 76, 97)";
-export const bannerAlertChildrenPaddingY = ".375rem";
-export const bannerAlertChildrenPaddingX = ".75rem";
-export const bannerAlertChildrenColor = "rgb(129, 123, 143)";
-export const panelPadding = ".75rem";
-export const panelBorderColor = "rgb(230, 228, 235)";
-export const panelBackgroundColor = "rgb(255, 255, 255)";
-export const spacingXs = ".375rem";
-export const spacingSm = ".75rem";
-export const spacingMd = "1.125rem";
-export const spacingBase = "1.5rem";
-export const spacingLg = "1.875rem";
-export const spacingXl = "2.250rem";
-export const spacingXxl = "2.625rem";
-export const onePixelRem = ".0625rem";
-export const stateSelectedBackgroundColor = "rgb(0, 140, 168)";
-export const fontFamilyBase = "-apple-system, BlinkMacSystemFont, 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', 'Arial', sans-serif";
-export const fontColorBase = "rgb(82, 76, 97)";
-export const lineHeightSm = "1.125rem";
-export const lineHeightBase = "1.5rem";
-export const lineHeightLg = "1.875rem";
-export const lineHeightXl = "2.625rem";
-export const lineHeightXxl = "3.375rem";
-export const fontSizeRoot = "100%";
-export const fontSizeSm = ".75rem";
+export const durationBase = "400ms";
+export const durationSm = "200ms";
+export const durationXs = "50ms";
+export const flareCornerRadius = "1.3125rem";
+export const flareHeightDesktop = "1.5rem";
+export const flareHeightMobile = "1.125rem";
+export const fontColorBase = "rgb(17, 18, 54)";
+export const fontFamilyBase = "'Skyscanner Relative', -apple-system, BlinkMacSystemFont, 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', 'Arial', sans-serif";
 export const fontSizeBase = "1rem";
 export const fontSizeLg = "1.5rem";
+export const fontSizeRoot = "100%";
+export const fontSizeSm = ".75rem";
 export const fontSizeXl = "1.75rem";
 export const fontSizeXxl = "2.625rem";
+export const fontWeightBlack = "900";
 export const fontWeightBold = "700";
-export const h6FontSize = ".75rem";
-export const h5FontSize = ".75rem";
-export const h4FontSize = "1rem";
-export const h3FontSize = "1.5rem";
-export const h2FontSize = "1.75rem";
+export const formValidationArrowSize = ".375rem";
+export const formValidationColor = "rgb(209, 67, 91)";
+export const gridColumns = "12";
+export const gridContainerMobilePadding = ".75rem";
+export const gridContainerPadding = "1.5rem";
+export const gridGutter = "1.5rem";
 export const h1FontSize = "2.625rem";
-export const h6LineHeight = "1.125rem";
-export const h5LineHeight = "1.125rem";
-export const h4LineHeight = "1.5rem";
-export const h3LineHeight = "1.875rem";
-export const h2LineHeight = "2.625rem";
-export const h1LineHeight = "3.375rem";
-export const h6FontWeight = "700";
-export const h5FontWeight = "700";
-export const h4FontWeight = "700";
-export const h3FontWeight = "400";
-export const h2FontWeight = "400";
 export const h1FontWeight = "400";
-export const headingMarginTop = "0";
-export const headingMarginBottom = ".75rem";
+export const h1LineHeight = "3.375rem";
+export const h2FontSize = "1.75rem";
+export const h2FontWeight = "400";
+export const h2LineHeight = "2.625rem";
+export const h3FontSize = "1.5rem";
+export const h3FontWeight = "400";
+export const h3LineHeight = "1.875rem";
+export const h4FontSize = "1rem";
+export const h4FontWeight = "700";
+export const h4LineHeight = "1.5rem";
+export const h5FontSize = ".75rem";
+export const h5FontWeight = "700";
+export const h5LineHeight = "1.125rem";
+export const h6FontSize = ".75rem";
+export const h6FontWeight = "700";
+export const h6LineHeight = "1.125rem";
 export const headingContentMarginTop = "1.875rem";
-export const pMarginTop = "0";
-export const pMarginBottom = ".75rem";
-export const listMarginTop = "0";
-export const listMarginBottom = ".75rem";
-export const listNestedMarginTop = "0";
-export const listNestedMarginBottom = "0";
-export const listItemMarginTop = "0";
-export const listItemMarginBottom = "0";
-export const linkColor = "rgb(0, 178, 214)";
-export const linkTextDecoration = "none";
-export const linkHoverColor = "rgb(82, 76, 97)";
-export const linkHoverTextDecoration = "underline";
-export const linkActiveColor = "rgb(37, 32, 51)";
-export const linkVisitedColor = "rgb(0, 140, 168)";
-export const linkWhiteColor = "rgb(255, 255, 255)";
-export const linkWhiteHoverColor = "rgb(255, 255, 255)";
-export const linkWhiteActiveColor = "rgb(230, 228, 235)";
-export const linkWhiteVisitedColor = "rgb(255, 255, 255)";
+export const headingMarginBottom = ".75rem";
+export const headingMarginTop = "0";
+export const horizontalNavBarSelectedColor = "rgb(7, 112, 227)";
+export const horizontalNavLinkActiveColor = "rgb(17, 18, 54)";
+export const horizontalNavLinkColor = "rgb(104, 105, 127)";
+export const horizontalNavLinkHoverColor = "rgb(68, 69, 96)";
+export const horizontalNavLinkSelectedColor = "rgb(7, 112, 227)";
+export const iconSizeLg = "1.5rem";
+export const iconSizeSm = "1.125rem";
+export const inputBackground = "#ffffff";
+export const inputBorder = "solid .0625rem #B2B2BF";
+export const inputBorderRadius = ".25rem";
+export const inputBorderWidth = ".0625rem";
+export const inputColor = "rgb(17, 18, 54)";
+export const inputDisabledBorderColor = "rgb(241, 242, 248)";
+export const inputDisabledColor = "rgb(178, 178, 191)";
+export const inputHeight = "2.250rem";
+export const inputLargeHeight = "2.625rem + .375rem";
+export const inputPaddingX = ".75rem";
+export const inputPaddingY = ".375rem";
+export const inputPlaceholderColor = "rgb(104, 105, 127)";
+export const inputPlaceholderFontStyle = "italic";
+export const labelColor = "rgb(17, 18, 54)";
+export const labelDisabledColor = "rgb(178, 178, 191)";
+export const labelFontSize = ".75rem";
+export const labelLineHeight = "1.125rem";
+export const lineHeightBase = "1.5rem";
+export const lineHeightLg = "1.875rem";
+export const lineHeightSm = "1.125rem";
+export const lineHeightXl = "2.625rem";
+export const lineHeightXxl = "3.375rem";
+export const linkActiveColor = "rgb(4, 39, 89)";
+export const linkAlternateActiveColor = "rgb(221, 221, 229)";
 export const linkAlternateColor = "rgb(255, 255, 255)";
 export const linkAlternateHoverColor = "rgb(255, 255, 255)";
-export const linkAlternateActiveColor = "rgb(230, 228, 235)";
 export const linkAlternateVisitedColor = "rgb(255, 255, 255)";
-export const textXsFontSize = ".75rem";
-export const textXsLineHeight = "1.125rem";
-export const textXsFontWeight = "400";
-export const textXsLetterSpacing = "normal";
-export const textSmFontSize = ".75rem";
-export const textSmLineHeight = "1.125rem";
-export const textSmFontWeight = "400";
-export const textSmLetterSpacing = "normal";
+export const linkColor = "rgb(7, 112, 227)";
+export const linkHoverColor = "rgb(8, 78, 178)";
+export const linkHoverTextDecoration = "underline";
+export const linkTextDecoration = "none";
+export const linkVisitedColor = "rgb(7, 112, 227)";
+export const linkWhiteActiveColor = "rgb(221, 221, 229)";
+export const linkWhiteColor = "rgb(255, 255, 255)";
+export const linkWhiteHoverColor = "rgb(255, 255, 255)";
+export const linkWhiteVisitedColor = "rgb(255, 255, 255)";
+export const listItemMarginBottom = "0";
+export const listItemMarginTop = "0";
+export const listMarginBottom = ".75rem";
+export const listMarginTop = "0";
+export const listNestedMarginBottom = "0";
+export const listNestedMarginTop = "0";
+export const modalBackgroundColor = "rgb(255, 255, 255)";
+export const modalContentPadding = ".75rem";
+export const modalHeaderPadding = ".75rem";
+export const modalInitialOpacity = "0";
+export const modalMaxWidth = "32.25rem";
+export const modalOpacity = "1";
+export const modalWideMaxWidth = "50.25rem";
+export const onePixelRem = ".0625rem";
+export const panelBackgroundColor = "rgb(255, 255, 255)";
+export const panelBorderColor = "rgb(221, 221, 229)";
+export const panelPadding = ".75rem";
+export const primaryGradient = "#0770e3";
+export const pMarginBottom = ".75rem";
+export const pMarginTop = "0";
+export const radioCheckedCircleColor = "rgb(7, 112, 227)";
+export const ratingBaseHeight = ".75rem * 4";
+export const ratingBaseWidth = ".75rem * 4";
+export const ratingLgHeight = "1.875rem * 2";
+export const ratingLgWidth = "1.875rem * 2";
+export const ratingSmHeight = ".75rem * 3";
+export const ratingSmWidth = ".75rem * 3";
+export const requiredColor = "rgb(209, 67, 91)";
+export const scrimBackgroundColor = "rgb(178, 178, 191)";
+export const scrimDarkBackgroundColor = "rgb(17, 18, 54)";
+export const scrimDarkOpacity = ".95";
+export const scrimInitialOpacity = "0";
+export const scrimMobileOpacity = "1";
+export const scrimOpacity = ".7";
+export const selectBorder = "solid .0625rem #B2B2BF";
+export const selectBorderRadius = ".25rem";
+export const selectBorderWidth = ".0625rem";
+export const selectColor = "rgb(17, 18, 54)";
+export const selectDisabledBorderColor = "rgb(241, 242, 248)";
+export const selectDisabledColor = "rgb(178, 178, 191)";
+export const selectHeight = "2.250rem";
+export const selectLargeHeight = "2.625rem + .375rem";
+export const selectPaddingBottom = ".375rem";
+export const selectPaddingLeft = ".75rem";
+export const selectPaddingRight = "1.875rem";
+export const selectPaddingTop = ".375rem";
+export const spacingBase = "1.5rem";
+export const spacingLg = "1.875rem";
+export const spacingMd = "1.125rem";
+export const spacingNone = "0";
+export const spacingSm = ".75rem";
+export const spacingXl = "2.250rem";
+export const spacingXs = ".375rem";
+export const spacingXxl = "2.625rem";
+export const stateSelectedBackgroundColor = "rgb(8, 78, 178)";
+export const textareaMinHeight = "2.625rem * 2";
 export const textBaseFontSize = "1rem";
-export const textBaseLineHeight = "1.5rem";
 export const textBaseFontWeight = "400";
 export const textBaseLetterSpacing = "normal";
+export const textBaseLineHeight = "1.5rem";
 export const textLgFontSize = "1.5rem";
-export const textLgLineHeight = "1.875rem";
 export const textLgFontWeight = "400";
 export const textLgLetterSpacing = "normal";
+export const textLgLineHeight = "1.875rem";
+export const textPrimaryLightColor = "rgb(17, 18, 54)";
+export const textSecondaryLightColor = "rgb(68, 69, 96)";
+export const textSmFontSize = ".75rem";
+export const textSmFontWeight = "400";
+export const textSmLetterSpacing = "normal";
+export const textSmLineHeight = "1.125rem";
 export const textXlFontSize = "1.75rem";
-export const textXlLineHeight = "2.625rem";
 export const textXlFontWeight = "400";
 export const textXlLetterSpacing = "normal";
+export const textXlLineHeight = "2.625rem";
+export const textXsFontSize = ".75rem";
+export const textXsFontWeight = "400";
+export const textXsLetterSpacing = "normal";
+export const textXsLineHeight = "1.125rem";
 export const textXxlFontSize = "2.625rem";
-export const textXxlLineHeight = "3.375rem";
 export const textXxlFontWeight = "400";
 export const textXxlLetterSpacing = "normal";
+export const textXxlLineHeight = "3.375rem";
 export const zindexAutosuggest = "900";
-export const zindexPopover = "900";
-export const zindexTooltip = "900";
-export const zindexModalScrim = "1000";
-export const zindexScrim = "1000";
-export const zindexModal = "1100";
 export const zindexDrawer = "1100";
+export const zindexModal = "1100";
+export const zindexPopover = "900";
+export const zindexScrim = "1000";
+export const zindexTooltip = "900";
 export const animations = {
-durationXs,
-durationSm,
 durationBase,
+durationSm,
+durationXs,
 };
 export const autosuggest = {
 autosuggestListBackgroundColor,
@@ -394,142 +403,158 @@ autosuggestListItemActiveBackgroundColor,
 autosuggestListItemHighlightedBackgroundColor,
 };
 export const badges = {
-badgePaddingY,
-badgePaddingX,
 badgeBackgroundColor,
 badgeCenteredVerticalAlign,
-};
-export const radii = {
-borderRadiusXs,
-borderRadiusSm,
-borderRadiusPill,
-borderRadiusPillLg,
+badgePaddingX,
+badgePaddingY,
 };
 export const borders = {
-borderSizeSm,
 borderSizeLg,
+borderSizeSm,
 borderSizeXl,
 };
 export const boxShadows = {
-boxShadowSm,
 boxShadowLg,
+boxShadowSm,
 boxShadowXl,
 };
 export const breakpoints = {
-breakpointMobile,
-breakpointTablet,
 breakpointDesktop,
+breakpointMobile,
+breakpointQueryAboveMobile,
+breakpointQueryAboveTablet,
 breakpointQueryMobile,
 breakpointQueryTablet,
 breakpointQueryTabletOnly,
-breakpointQueryAboveMobile,
-breakpointQueryAboveTablet,
+breakpointTablet,
 };
 export const buttons = {
-buttonPaddingY,
-buttonPaddingX,
-buttonPaddingXIconOnly,
-buttonBorderRadius,
-buttonBorderRadiusLg,
-buttonBackgroundColor,
-buttonBackgroundImage,
-buttonGradientStartColor,
-buttonGradientEndColor,
-buttonHoverBackgroundColor,
-buttonHoverBackgroundImage,
 buttonActiveBackgroundColor,
 buttonActiveBackgroundImage,
-buttonDisabledBackgroundColor,
-buttonDisabledBackgroundImage,
-buttonColor,
-buttonHoverColor,
-buttonActiveColor,
-buttonBoxShadow,
-buttonHoverBoxShadow,
 buttonActiveBoxShadow,
-buttonDisabledBoxShadow,
-buttonDisabledColor,
-buttonFontSize,
-buttonFontWeight,
-buttonLineHeight,
-buttonTextAlign,
-buttonLargePaddingY,
-buttonLargePaddingX,
-buttonLargePaddingXIconOnly,
-buttonLargeFontSize,
-buttonLargeLineHeight,
-buttonSecondaryBackgroundColor,
-buttonSecondaryBackgroundImage,
-buttonSecondaryHoverBackgroundColor,
-buttonSecondaryHoverBackgroundImage,
-buttonSecondaryActiveBackgroundColor,
-buttonSecondaryActiveBackgroundImage,
-buttonSecondaryDisabledBackgroundColor,
-buttonSecondaryDisabledBackgroundImage,
-buttonSecondaryColor,
-buttonSecondaryHoverColor,
-buttonSecondaryActiveColor,
-buttonSecondaryDisabledColor,
-buttonSecondaryBoxShadow,
-buttonSecondaryHoverBoxShadow,
-buttonSecondaryActiveBoxShadow,
-buttonSecondaryBorderColor,
-buttonSecondaryHoverBorderColor,
-buttonSecondaryActiveBorderColor,
-buttonSecondaryDisabledBoxShadow,
-buttonDestructiveColor,
-buttonDestructiveBoxShadow,
-buttonDestructiveHoverColor,
-buttonDestructiveHoverBoxShadow,
-buttonDestructiveActiveColor,
+buttonActiveColor,
+buttonBackgroundColor,
+buttonBorderRadius,
+buttonBoxShadow,
+buttonColor,
+buttonDestructiveActiveBackgroundColor,
+buttonDestructiveActiveBorderColor,
 buttonDestructiveActiveBoxShadow,
+buttonDestructiveActiveColor,
+buttonDestructiveBackgroundColor,
+buttonDestructiveBorderColor,
+buttonDestructiveBoxShadow,
+buttonDestructiveColor,
 buttonDestructiveDisabledBackgroundColor,
 buttonDestructiveDisabledBackgroundImage,
-buttonDestructiveDisabledColor,
 buttonDestructiveDisabledBoxShadow,
-buttonSelectedBackgroundColor,
-buttonSelectedBackgroundImage,
-buttonSelectedHoverBackgroundColor,
-buttonSelectedHoverBackgroundImage,
-buttonSelectedActiveBackgroundColor,
-buttonSelectedActiveBackgroundImage,
-buttonSelectedColor,
-buttonSelectedHoverColor,
-buttonSelectedActiveColor,
-buttonSelectedBoxShadow,
-buttonSelectedHoverBoxShadow,
-buttonSelectedActiveBoxShadow,
-buttonSelectedDisabledBoxShadow,
-buttonFeaturedBackgroundImage,
-buttonFeaturedColor,
-buttonFeaturedHoverColor,
-buttonFeaturedActiveColor,
-buttonFeaturedHoverBackgroundColor,
+buttonDestructiveDisabledColor,
+buttonDestructiveHoverBackgroundColor,
+buttonDestructiveHoverBackgroundImage,
+buttonDestructiveHoverBorderColor,
+buttonDestructiveHoverBoxShadow,
+buttonDestructiveHoverColor,
+buttonDisabledBackgroundColor,
+buttonDisabledBackgroundImage,
+buttonDisabledBoxShadow,
+buttonDisabledColor,
 buttonFeaturedActiveBackgroundColor,
 buttonFeaturedActiveBackgroundImage,
+buttonFeaturedActiveBoxShadow,
+buttonFeaturedActiveColor,
+buttonFeaturedBackgroundColor,
+buttonFeaturedBackgroundImage,
+buttonFeaturedColor,
 buttonFeaturedDisabledBackgroundColor,
 buttonFeaturedDisabledBackgroundImage,
+buttonFeaturedHoverBackgroundColor,
+buttonFeaturedHoverBackgroundImage,
+buttonFeaturedHoverBoxShadow,
+buttonFeaturedHoverColor,
+buttonFontWeight,
+buttonGradientEndColor,
+buttonGradientStartColor,
+buttonHoverBackgroundColor,
+buttonHoverBackgroundImage,
+buttonHoverBoxShadow,
+buttonHoverColor,
+buttonIconBorderRadius,
+buttonIconBorderRadiusLg,
+buttonLargeFontSize,
+buttonLargeLineHeight,
+buttonLargePaddingX,
+buttonLargePaddingXIconOnly,
+buttonLargePaddingY,
+buttonLineHeight,
+buttonOutlineActiveBackgroundColor,
+buttonOutlineActiveBorderColor,
+buttonOutlineBackgroundColor,
+buttonOutlineBackgroundImage,
+buttonOutlineBorderColor,
+buttonOutlineColor,
+buttonOutlineDisabledBackgroundColor,
+buttonOutlineDisabledBackgroundImage,
+buttonOutlineDisabledBoxShadow,
+buttonOutlineDisabledColor,
+buttonOutlineHoverBackgroundColor,
+buttonOutlineHoverBorderColor,
+buttonOutlineHoverBorderOpacity,
+buttonPaddingX,
+buttonPaddingXIconOnly,
+buttonPaddingY,
+buttonSecondaryActiveBackgroundColor,
+buttonSecondaryActiveBackgroundImage,
+buttonSecondaryActiveBorderColor,
+buttonSecondaryActiveBoxShadow,
+buttonSecondaryActiveColor,
+buttonSecondaryBackgroundColor,
+buttonSecondaryBackgroundImage,
+buttonSecondaryBorderColor,
+buttonSecondaryBoxShadow,
+buttonSecondaryColor,
+buttonSecondaryDisabledBackgroundColor,
+buttonSecondaryDisabledBackgroundImage,
+buttonSecondaryDisabledBoxShadow,
+buttonSecondaryDisabledColor,
+buttonSecondaryHoverBackgroundColor,
+buttonSecondaryHoverBackgroundImage,
+buttonSecondaryHoverBorderColor,
+buttonSecondaryHoverBoxShadow,
+buttonSecondaryHoverColor,
+buttonSelectedActiveBackgroundColor,
+buttonSelectedActiveBackgroundImage,
+buttonSelectedActiveBoxShadow,
+buttonSelectedActiveColor,
+buttonSelectedBackgroundColor,
+buttonSelectedBackgroundImage,
+buttonSelectedBoxShadow,
+buttonSelectedColor,
+buttonSelectedDisabledBoxShadow,
+buttonSelectedHoverBackgroundColor,
+buttonSelectedHoverBackgroundImage,
+buttonSelectedHoverBoxShadow,
+buttonSelectedHoverColor,
+buttonTextAlign,
 };
 export const calendar = {
-calendarPadding,
-calendarDaySpacing,
-calendarDaySize,
-calendarDayColor,
-calendarDayBackgroundColor,
-calendarDaySelectedColor,
-calendarDaySelectedBackgroundColor,
-calendarDayHoverColor,
-calendarDayHoverBackgroundColor,
-calendarDayActiveColor,
 calendarDayActiveBackgroundColor,
+calendarDayActiveColor,
+calendarDayColor,
 calendarDayDisabledColor,
-calendarDayDisabledBackgroundColor,
+calendarDayFocusedBorderColor,
+calendarDayFocusedColor,
+calendarDayHoverBackgroundColor,
+calendarDayHoverColor,
 calendarDayOutsideColor,
-calendarDayOutsideBackgroundColor,
-calendarNavIconFill,
-calendarNavIconHoverFill,
+calendarDaySelectedBackgroundColor,
+calendarDaySelectedColor,
+calendarDaySize,
+calendarDaySpacing,
 calendarNavIconActiveFill,
 calendarNavIconDisabledFill,
+calendarNavIconFill,
+calendarNavIconHoverFill,
+calendarPadding,
 };
 export const cards = {
 cardBackgroundColor,
@@ -537,273 +562,270 @@ cardColor,
 cardPadding,
 };
 export const colors = {
+colorAbisko,
+colorBagan,
+colorBunol,
+colorErfoud,
+colorGlencoe,
+colorHarbour,
+colorHillier,
+colorKolkata,
+colorMonteverde,
+colorNara,
+colorPanjin,
+colorPetra,
+colorPrimaryGradientLight,
+colorSagano,
+colorSkyBlue,
+colorSkyBlueShade01,
+colorSkyBlueShade02,
+colorSkyBlueShade03,
+colorSkyBlueTint01,
+colorSkyBlueTint02,
+colorSkyBlueTint03,
+colorSkyGray,
+colorSkyGrayTint01,
+colorSkyGrayTint02,
+colorSkyGrayTint03,
+colorSkyGrayTint04,
+colorSkyGrayTint05,
+colorSkyGrayTint06,
+colorSkyGrayTint07,
+colorSystemGreen,
+colorSystemRed,
+colorTochigi,
+colorValensole,
 colorWhite,
-colorBlue50,
-colorBlue100,
-colorBlue200,
-colorBlue300,
-colorBlue400,
-colorBlue500,
-colorBlue600,
-colorBlue700,
-colorBlue800,
-colorBlue900,
-colorGray50,
-colorGray100,
-colorGray200,
-colorGray300,
-colorGray400,
-colorGray500,
-colorGray600,
-colorGray700,
-colorGray800,
-colorGray900,
-colorGreen50,
-colorGreen100,
-colorGreen200,
-colorGreen300,
-colorGreen400,
-colorGreen500,
-colorGreen600,
-colorGreen700,
-colorGreen800,
-colorGreen900,
-colorRed50,
-colorRed100,
-colorRed200,
-colorRed300,
-colorRed400,
-colorRed500,
-colorRed600,
-colorRed700,
-colorRed800,
-colorRed900,
-colorYellow50,
-colorYellow100,
-colorYellow200,
-colorYellow300,
-colorYellow400,
-colorYellow500,
-colorYellow600,
-colorYellow700,
-colorYellow800,
-colorYellow900,
 primaryGradient,
+};
+export const flare = {
+flareCornerRadius,
+flareHeightDesktop,
+flareHeightMobile,
+};
+export const fontSizes = {
+buttonFontSize,
+h1FontSize,
+h2FontSize,
+h3FontSize,
+h4FontSize,
+h5FontSize,
+h6FontSize,
+textBaseFontSize,
+textLgFontSize,
+textSmFontSize,
+textXlFontSize,
+textXsFontSize,
+textXxlFontSize,
+};
+export const fontWeights = {
+fontWeightBlack,
+fontWeightBold,
+h1FontWeight,
+h2FontWeight,
+h3FontWeight,
+h4FontWeight,
+h5FontWeight,
+h6FontWeight,
+textBaseFontWeight,
+textLgFontWeight,
+textSmFontWeight,
+textXlFontWeight,
+textXsFontWeight,
+textXxlFontWeight,
 };
 export const forms = {
 checkboxCheckedTickColor,
-radioCheckedCircleColor,
-inputHeight,
-inputPaddingX,
-inputPaddingY,
-inputBorderWidth,
+formValidationArrowSize,
+formValidationColor,
+inputBackground,
 inputBorder,
 inputBorderRadius,
-inputBackground,
+inputBorderWidth,
 inputColor,
-inputPlaceholderColor,
-inputPlaceholderFontStyle,
 inputDisabledBorderColor,
 inputDisabledColor,
+inputHeight,
 inputLargeHeight,
-selectHeight,
-selectPaddingTop,
-selectPaddingRight,
-selectPaddingBottom,
-selectPaddingLeft,
-selectBorderWidth,
-selectBorder,
-selectBorderRadius,
-selectColor,
-selectDisabledBorderColor,
-selectDisabledColor,
-selectLargeHeight,
+inputPaddingX,
+inputPaddingY,
+inputPlaceholderColor,
+inputPlaceholderFontStyle,
 labelColor,
 labelDisabledColor,
 labelFontSize,
 labelLineHeight,
-formValidationMargin,
-formValidationPaddingY,
-formValidationPaddingX,
-formValidationBackgroundColor,
-formValidationColor,
-formValidationArrowSize,
-formValidationCheckboxArrowLeft,
-textareaMinHeight,
+radioCheckedCircleColor,
 requiredColor,
+selectBorder,
+selectBorderRadius,
+selectBorderWidth,
+selectColor,
+selectDisabledBorderColor,
+selectDisabledColor,
+selectHeight,
+selectLargeHeight,
+selectPaddingBottom,
+selectPaddingLeft,
+selectPaddingRight,
+selectPaddingTop,
+textareaMinHeight,
 };
 export const grids = {
 gridColumns,
-gridGutter,
-gridContainerPadding,
 gridContainerMobilePadding,
+gridContainerPadding,
+gridGutter,
 };
 export const horizontalNav = {
+horizontalNavBarSelectedColor,
+horizontalNavLinkActiveColor,
 horizontalNavLinkColor,
 horizontalNavLinkHoverColor,
-horizontalNavLinkActiveColor,
 horizontalNavLinkSelectedColor,
-horizontalNavBarSelectedColor,
 };
 export const icons = {
-iconSizeSm,
 iconSizeLg,
+iconSizeSm,
+};
+export const letterSpacings = {
+textBaseLetterSpacing,
+textLgLetterSpacing,
+textSmLetterSpacing,
+textXlLetterSpacing,
+textXsLetterSpacing,
+textXxlLetterSpacing,
+};
+export const lineHeights = {
+h1LineHeight,
+h2LineHeight,
+h3LineHeight,
+h4LineHeight,
+h5LineHeight,
+h6LineHeight,
+textBaseLineHeight,
+textLgLineHeight,
+textSmLineHeight,
+textXlLineHeight,
+textXsLineHeight,
+textXxlLineHeight,
 };
 export const modals = {
-modalScrimBackgroundColor,
-modalScrimInitialOpacity,
-modalScrimOpacity,
-modalScrimMobileOpacity,
 modalBackgroundColor,
-modalInitialOpacity,
-modalOpacity,
-modalMaxWidth,
-modalWideMaxWidth,
-modalHeaderPadding,
-modalCloseIconFill,
-modalCloseIconHoverFill,
 modalContentPadding,
-};
-export const scrims = {
-scrimBackgroundColor,
-scrimInitialOpacity,
-scrimOpacity,
-scrimMobileOpacity,
+modalHeaderPadding,
+modalInitialOpacity,
+modalMaxWidth,
+modalOpacity,
+modalWideMaxWidth,
 };
 export const notifications = {
 bannerAlertBackgroundColor,
-bannerAlertHeaderPaddingY,
-bannerAlertHeaderPaddingX,
-bannerAlertHeaderExpandableHoverBackgroundColor,
+bannerAlertChildrenColor,
+bannerAlertChildrenPaddingX,
+bannerAlertChildrenPaddingY,
+bannerAlertErrorColor,
+bannerAlertExpandIconFill,
 bannerAlertHeaderExpandableActiveBackgroundColor,
+bannerAlertHeaderExpandableHoverBackgroundColor,
+bannerAlertHeaderPaddingX,
+bannerAlertHeaderPaddingY,
+bannerAlertNeutralColor,
 bannerAlertSuccessColor,
 bannerAlertWarnColor,
-bannerAlertErrorColor,
-bannerAlertNeutralColor,
-bannerAlertExpandIconFill,
-bannerAlertChildrenPaddingY,
-bannerAlertChildrenPaddingX,
-bannerAlertChildrenColor,
 };
 export const panels = {
-panelPadding,
-panelBorderColor,
 panelBackgroundColor,
+panelBorderColor,
+panelPadding,
+};
+export const radii = {
+borderRadiusPill,
+borderRadiusPillLg,
+borderRadiusSm,
+borderRadiusXs,
+};
+export const ratings = {
+ratingBaseHeight,
+ratingBaseWidth,
+ratingLgHeight,
+ratingLgWidth,
+ratingSmHeight,
+ratingSmWidth,
+};
+export const scrims = {
+scrimBackgroundColor,
+scrimDarkBackgroundColor,
+scrimDarkOpacity,
+scrimInitialOpacity,
+scrimMobileOpacity,
+scrimOpacity,
 };
 export const spacings = {
-spacingXs,
-spacingSm,
-spacingMd,
+headingContentMarginTop,
+headingMarginBottom,
+headingMarginTop,
+listItemMarginBottom,
+listItemMarginTop,
+listMarginBottom,
+listMarginTop,
+listNestedMarginBottom,
+listNestedMarginTop,
+onePixelRem,
+pMarginBottom,
+pMarginTop,
 spacingBase,
 spacingLg,
+spacingMd,
+spacingNone,
+spacingSm,
 spacingXl,
+spacingXs,
 spacingXxl,
-onePixelRem,
-headingMarginTop,
-headingMarginBottom,
-headingContentMarginTop,
-pMarginTop,
-pMarginBottom,
-listMarginTop,
-listMarginBottom,
-listNestedMarginTop,
-listNestedMarginBottom,
-listItemMarginTop,
-listItemMarginBottom,
 };
 export const states = {
 stateSelectedBackgroundColor,
 };
-export const typesettings = {
-fontFamilyBase,
-lineHeightSm,
-lineHeightBase,
-lineHeightLg,
-lineHeightXl,
-lineHeightXxl,
-fontSizeRoot,
-fontSizeSm,
-fontSizeBase,
-fontSizeLg,
-fontSizeXl,
-fontSizeXxl,
-};
 export const textColors = {
 fontColorBase,
-linkColor,
-linkHoverColor,
 linkActiveColor,
-linkVisitedColor,
-linkWhiteColor,
-linkWhiteHoverColor,
-linkWhiteActiveColor,
-linkWhiteVisitedColor,
+linkAlternateActiveColor,
 linkAlternateColor,
 linkAlternateHoverColor,
-linkAlternateActiveColor,
 linkAlternateVisitedColor,
-};
-export const fontWeights = {
-fontWeightBold,
-h6FontWeight,
-h5FontWeight,
-h4FontWeight,
-h3FontWeight,
-h2FontWeight,
-h1FontWeight,
-textXsFontWeight,
-textSmFontWeight,
-textBaseFontWeight,
-textLgFontWeight,
-textXlFontWeight,
-textXxlFontWeight,
-};
-export const fontSizes = {
-h6FontSize,
-h5FontSize,
-h4FontSize,
-h3FontSize,
-h2FontSize,
-h1FontSize,
-textXsFontSize,
-textSmFontSize,
-textBaseFontSize,
-textLgFontSize,
-textXlFontSize,
-textXxlFontSize,
-};
-export const lineHeights = {
-h6LineHeight,
-h5LineHeight,
-h4LineHeight,
-h3LineHeight,
-h2LineHeight,
-h1LineHeight,
-textXsLineHeight,
-textSmLineHeight,
-textBaseLineHeight,
-textLgLineHeight,
-textXlLineHeight,
-textXxlLineHeight,
+linkColor,
+linkHoverColor,
+linkVisitedColor,
+linkWhiteActiveColor,
+linkWhiteColor,
+linkWhiteHoverColor,
+linkWhiteVisitedColor,
+textPrimaryLightColor,
+textSecondaryLightColor,
 };
 export const textDecorations = {
-linkTextDecoration,
 linkHoverTextDecoration,
+linkTextDecoration,
 };
-export const letterSpacings = {
-textXsLetterSpacing,
-textSmLetterSpacing,
-textBaseLetterSpacing,
-textLgLetterSpacing,
-textXlLetterSpacing,
-textXxlLetterSpacing,
+export const typesettings = {
+fontFamilyBase,
+fontSizeBase,
+fontSizeLg,
+fontSizeRoot,
+fontSizeSm,
+fontSizeXl,
+fontSizeXxl,
+lineHeightBase,
+lineHeightLg,
+lineHeightSm,
+lineHeightXl,
+lineHeightXxl,
 };
 export const zIndices = {
 zindexAutosuggest,
-zindexPopover,
-zindexTooltip,
-zindexModalScrim,
-zindexScrim,
-zindexModal,
 zindexDrawer,
+zindexModal,
+zindexPopover,
+zindexScrim,
+zindexTooltip,
 };

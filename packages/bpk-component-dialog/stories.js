@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2017 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-/* @flow */
+/* @flow strict */
 
 import PropTypes from 'prop-types';
 import React, { Component, type Node } from 'react';
@@ -25,9 +25,9 @@ import BpkButton from 'bpk-component-button';
 import { storiesOf } from '@storybook/react';
 import { cssModules, withDefaultProps } from 'bpk-react-utils';
 
-import BpkDialog from './index';
-
 import STYLES from './stories.scss';
+
+import BpkDialog from './index';
 
 const getClassName = cssModules(STYLES);
 
@@ -79,18 +79,16 @@ class DialogContainer extends Component<Props, State> {
   render() {
     return (
       <div id="dialog-container">
-        <div id="application-container">
+        <div id="pagewrap">
           <BpkButton onClick={this.onOpen}>Open dialog</BpkButton>
         </div>
         <BpkDialog
-          closeLabel={this.props.dismissible ? 'Close dialog' : null}
+          closeLabel="Close dialog"
           id="my-dialog"
           className="my-classname"
           isOpen={this.state.isOpen}
-          onClose={this.props.dismissible ? this.onClose : null}
-          getApplicationElement={() =>
-            document.getElementById('application-container')
-          }
+          onClose={this.onClose}
+          getApplicationElement={() => document.getElementById('pagewrap')}
           renderTarget={() => document.getElementById('dialog-container')}
           {...this.props}
         >

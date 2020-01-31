@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,8 +17,9 @@
  */
 
 import fs from 'fs';
-import del from 'del';
 import path from 'path';
+
+import del from 'del';
 import gulp from 'gulp';
 
 const ICONS_FOLDER_PATH = './node_modules/bpk-svgs/dist/js/icons';
@@ -28,10 +29,10 @@ const getFolders = dir =>
     .readdirSync(dir)
     .filter(file => fs.statSync(path.join(dir, file)).isDirectory());
 
-gulp.task('clean', () => del(getFolders(ICONS_FOLDER_PATH)));
+gulp.task('clean', done => del(getFolders(ICONS_FOLDER_PATH), done));
 
-gulp.task('copy', () => {
-  gulp.src(`${ICONS_FOLDER_PATH}/**/*.js`).pipe(gulp.dest('.'));
-});
+gulp.task('copy', () =>
+  gulp.src(`${ICONS_FOLDER_PATH}/**/*.js`).pipe(gulp.dest('.')),
+);
 
-gulp.task('default', ['copy']);
+gulp.task('default', gulp.series('copy'));

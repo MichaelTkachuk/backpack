@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@
 
 import React from 'react';
 import renderer from 'react-test-renderer';
+
 import BpkCalendarDate from './BpkCalendarDate';
 
 const createNodeMock = () => ({
@@ -69,6 +70,18 @@ describe('BpkCalendarDate', () => {
           aria-label="Nothing happened on this day in 2010"
         />,
         { createNodeMock },
+      )
+      .toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('should set a custom class', () => {
+    const tree = renderer
+      .create(
+        <BpkCalendarDate
+          date={new Date(2010, 1, 15)}
+          className="userlandClassName"
+        />,
       )
       .toJSON();
     expect(tree).toMatchSnapshot();

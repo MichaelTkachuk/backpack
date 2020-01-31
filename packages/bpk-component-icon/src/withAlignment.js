@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,11 +21,12 @@ import { wrapDisplayName } from 'bpk-react-utils';
 
 export default function withAlignment(Component, objectHeight, subjectHeight) {
   const WithAlignment = props => {
-    const { children, ...rest } = props;
     const objectHeightDecimal = `${objectHeight}`.replace('rem', '');
     const subjectHeightDecimal = `${subjectHeight}`.replace('rem', '');
-    const marginTopCalculated =
-      Math.max(0, objectHeightDecimal - subjectHeightDecimal) / 2 + 'rem';
+    const marginTopCalculated = `${Math.max(
+      0,
+      objectHeightDecimal - subjectHeightDecimal,
+    ) / 2}rem`;
 
     return (
       <span
@@ -36,7 +37,7 @@ export default function withAlignment(Component, objectHeight, subjectHeight) {
           verticalAlign: 'top',
         }}
       >
-        <Component {...rest}>{children}</Component>
+        <Component {...props} />
       </span>
     );
   };

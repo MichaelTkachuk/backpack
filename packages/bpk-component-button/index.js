@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,13 +16,31 @@
  * limitations under the License.
  */
 
-/* @flow */
+/* @flow strict */
 
 import BpkButton from './src/BpkButton';
-import {
+import BpkButtonPrimary from './src/BpkButtonPrimary';
+import BpkButtonSecondary from './src/BpkButtonSecondary';
+import BpkButtonDestructive from './src/BpkButtonDestructive';
+import BpkButtonLink from './src/BpkButtonLink';
+import BpkButtonFeatured from './src/BpkButtonFeatured';
+import BpkButtonOutline from './src/BpkButtonOutline';
+
+export {
+  buttonThemeAttributes,
   primaryThemeAttributes,
   secondaryThemeAttributes,
-} from './src/themeAttributes';
+  featuredThemeAttributes,
+  destructiveThemeAttributes,
+} from './themeAttributes';
 
-export { primaryThemeAttributes, secondaryThemeAttributes };
 export default BpkButton;
+
+export {
+  BpkButtonPrimary,
+  BpkButtonSecondary,
+  BpkButtonDestructive,
+  BpkButtonLink,
+  BpkButtonFeatured,
+  BpkButtonOutline,
+};

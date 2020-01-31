@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,16 +15,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/* @flow */
+/* @flow strict */
 
 import PropTypes from 'prop-types';
 import React, { type Node, Component } from 'react';
 import { cssModules } from 'bpk-react-utils';
 import BpkAnimateHeight from 'bpk-animate-height';
 import { durationSm } from 'bpk-tokens/tokens/base.es6';
-import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
-import STYLES from './animate-and-fade.scss';
+import STYLES from './BpkAnimateAndFade.scss';
 
 const getClassName = cssModules(STYLES);
 
@@ -149,25 +149,33 @@ class AnimateAndFade extends Component<Props, State> {
         height={this.state.isExpanded ? 'auto' : 0}
       >
         {showPlaceholder && <div style={{ opacity: 0.35 }}>{children}</div>}
-        <CSSTransitionGroup
-          transitionName={{
-            leave: getClassName('bpk-animate-and-fade--leave'),
-            leaveActive: getClassName('bpk-animate-and-fade--leave-active'),
-            enter: getClassName('bpk-animate-and-fade--enter'),
-            enterActive: getClassName('bpk-animate-and-fade--enter-active'),
-            appear: getClassName('bpk-animate-and-fade--appear'),
-            appearActive: getClassName('bpk-animate-and-fade--appear-active'),
-          }}
-          transitionLeave={animateOnLeave}
-          transitionEnter={animateOnEnter}
-          transitionAppear={animateOnEnter}
-          transitionLeaveTimeout={ANIMATION_DURATION * 2}
-          transitionEnterTimeout={ANIMATION_DURATION * 2}
-          transitionAppearTimeout={ANIMATION_DURATION * 2}
+        <TransitionGroup
+          exit={animateOnLeave}
+          enter={animateOnEnter}
+          appear={animateOnEnter}
           onTransitionEnd={this.onFadeComplete}
         >
-          {this.state.visible && children}
-        </CSSTransitionGroup>
+          {this.state.visible && (
+            <CSSTransition
+              classNames={{
+                exit: getClassName('bpk-animate-and-fade--leave'),
+                exitActive: getClassName('bpk-animate-and-fade--leave-active'),
+                enter: getClassName('bpk-animate-and-fade--enter'),
+                enterActive: getClassName('bpk-animate-and-fade--enter-active'),
+                appear: getClassName('bpk-animate-and-fade--appear'),
+                appearActive: getClassName(
+                  'bpk-animate-and-fade--appear-active',
+                ),
+              }}
+              timeout={{
+                enter: ANIMATION_DURATION * 2,
+                exit: ANIMATION_DURATION * 2,
+              }}
+            >
+              {children}
+            </CSSTransition>
+          )}
+        </TransitionGroup>
       </BpkAnimateHeight>
     ) : null;
   }

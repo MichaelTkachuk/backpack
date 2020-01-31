@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,14 +16,14 @@
  * limitations under the License.
  */
 
-/* @flow */
+/* @flow strict */
 
 import PropTypes from 'prop-types';
 import React, { type Node } from 'react';
 import { cssModules } from 'bpk-react-utils';
 import BpkCloseButton from 'bpk-component-close-button';
 
-import STYLES from './bpk-chip.scss';
+import STYLES from './BpkChip.scss';
 
 const getClassName = cssModules(STYLES);
 
@@ -32,11 +32,19 @@ export type Props = {
   onClose: (event: SyntheticEvent<>) => mixed,
   closeLabel: ((children: Node) => string) | string,
   className: ?string,
+  dismissible: ?boolean,
 };
 
 const BpkChip = (props: Props) => {
   const classNames = [getClassName('bpk-chip')];
-  const { children, className, onClose, closeLabel, ...rest } = props;
+  const {
+    children,
+    className,
+    onClose,
+    closeLabel,
+    dismissible,
+    ...rest
+  } = props;
 
   if (className) {
     classNames.push(className);
@@ -48,7 +56,7 @@ const BpkChip = (props: Props) => {
   return (
     <div className={classNames.join(' ')} {...rest}>
       <span className={getClassName('bpk-chip__label')}>{children}</span>
-      <BpkCloseButton label={label} onClick={onClose} />
+      {dismissible && <BpkCloseButton label={label} onClick={onClose} />}
     </div>
   );
 };
@@ -59,10 +67,12 @@ BpkChip.propTypes = {
   closeLabel: PropTypes.oneOfType([PropTypes.func, PropTypes.string])
     .isRequired,
   className: PropTypes.string,
+  dismissible: PropTypes.bool,
 };
 
 BpkChip.defaultProps = {
   className: null,
+  dismissible: true,
 };
 
 export default BpkChip;

@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,11 +16,12 @@
  * limitations under the License.
  */
 
-/* @flow */
+/* @flow strict */
 
 import React from 'react';
 import { mount } from 'enzyme';
 import renderer from 'react-test-renderer';
+
 import BpkPopover from './BpkPopover';
 
 describe('BpkPopover', () => {
@@ -32,6 +33,25 @@ describe('BpkPopover', () => {
           onClose={() => null}
           label="My popover"
           closeButtonText="Close"
+        >
+          My popover content
+        </BpkPopover>,
+      )
+      .toJSON();
+
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('should render correctly with "closeButtonProps" provided', () => {
+    const tree = renderer
+      .create(
+        <BpkPopover
+          id="my-popover"
+          onClose={() => null}
+          label="My popover"
+          closeButtonText="Close"
+          tabIndex="0"
+          closeButtonProps={{ tabIndex: 0 }}
         >
           My popover content
         </BpkPopover>,

@@ -11,7 +11,6 @@ exports[`BpkDataTable should render correctly with a custom className 1`] = `
 >
   <div
     className="ReactVirtualized__Table bpk-data-table custom-data-table"
-    id={undefined}
     role="grid"
     style={Object {}}
   >
@@ -213,7 +212,6 @@ exports[`BpkDataTable should render correctly with a custom className 1`] = `
       aria-label="grid"
       aria-readonly={true}
       className="ReactVirtualized__Grid ReactVirtualized__Table__Grid"
-      id={undefined}
       onScroll={[Function]}
       role="rowgroup"
       style={
@@ -238,7 +236,6 @@ exports[`BpkDataTable should render correctly with a custom className 1`] = `
 exports[`BpkDataTable should render correctly with a specified width 1`] = `
 <div
   className="ReactVirtualized__Table bpk-data-table"
-  id={undefined}
   role="grid"
   style={Object {}}
 >
@@ -440,7 +437,6 @@ exports[`BpkDataTable should render correctly with a specified width 1`] = `
     aria-label="grid"
     aria-readonly={true}
     className="ReactVirtualized__Grid ReactVirtualized__Table__Grid"
-    id={undefined}
     onScroll={[Function]}
     role="rowgroup"
     style={
@@ -617,7 +613,6 @@ exports[`BpkDataTable should render correctly with multiple columns 1`] = `
 >
   <div
     className="ReactVirtualized__Table bpk-data-table"
-    id={undefined}
     role="grid"
     style={Object {}}
   >
@@ -819,7 +814,6 @@ exports[`BpkDataTable should render correctly with multiple columns 1`] = `
       aria-label="grid"
       aria-readonly={true}
       className="ReactVirtualized__Grid ReactVirtualized__Table__Grid"
-      id={undefined}
       onScroll={[Function]}
       role="rowgroup"
       style={
@@ -852,7 +846,6 @@ exports[`BpkDataTable should render correctly with no data; only headers 1`] = `
 >
   <div
     className="ReactVirtualized__Table bpk-data-table"
-    id={undefined}
     role="grid"
     style={Object {}}
   >
@@ -1054,7 +1047,6 @@ exports[`BpkDataTable should render correctly with no data; only headers 1`] = `
       aria-label="grid"
       aria-readonly={true}
       className="ReactVirtualized__Grid ReactVirtualized__Table__Grid"
-      id={undefined}
       onScroll={[Function]}
       role="rowgroup"
       style={

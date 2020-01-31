@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,115 +16,65 @@
  * limitations under the License.
  */
 
-/* @flow */
+/* @flow strict */
 
 import React, { type Node } from 'react';
 import PropTypes from 'prop-types';
 
-import STYLES from './bpk-button.scss';
-
-// This was originally depended upon from the bpk-react-utils package, however
-// we decided to inline it in this particular component so as not to bloat the
-// the bundles of consumers who are not yet on webpack 2
-// We'll revisit this again soon.
-const cssModules = (styles = {}) => className =>
-  styles[className] ? styles[className] : className;
-
-const getClassName = cssModules(STYLES);
+import {
+  BpkButtonPrimary,
+  BpkButtonSecondary,
+  BpkButtonDestructive,
+  BpkButtonLink,
+  BpkButtonFeatured,
+  BpkButtonOutline,
+} from '../index';
 
 type Props = {
   children: Node,
   href: ?string,
   className: ?string,
   disabled: boolean,
-  onClick: ?(event: SyntheticEvent<>) => void,
+  onClick: ?(event: SyntheticEvent<>) => mixed,
   submit: boolean,
   secondary: boolean,
   destructive: boolean,
+  featured: boolean,
+  outline: boolean,
   large: boolean,
   link: boolean,
   iconOnly: boolean,
-  featured: boolean,
+  blank: boolean,
+  rel: ?string,
 };
 
 const BpkButton = (props: Props) => {
   const {
     children,
-    href,
-    className,
-    onClick,
-    disabled,
-    submit,
     secondary,
     destructive,
     featured,
-    large,
+    outline,
     link,
-    iconOnly,
     ...rest
   } = props;
 
-  const classNames = [getClassName('bpk-button')];
-
   if (secondary) {
-    classNames.push(getClassName('bpk-button--secondary'));
+    return <BpkButtonSecondary {...rest}>{children}</BpkButtonSecondary>;
   }
   if (destructive) {
-    classNames.push(getClassName('bpk-button--destructive'));
-  }
-  if (large) {
-    classNames.push(getClassName('bpk-button--large'));
-  }
-  if (link) {
-    classNames.push(getClassName('bpk-button--link'));
+    return <BpkButtonDestructive {...rest}>{children}</BpkButtonDestructive>;
   }
   if (featured) {
-    classNames.push(getClassName('bpk-button--featured'));
+    return <BpkButtonFeatured {...rest}>{children}</BpkButtonFeatured>;
   }
-  if (iconOnly) {
-    classNames.push(
-      getClassName(
-        large ? 'bpk-button--large-icon-only' : 'bpk-button--icon-only',
-      ),
-    );
+  if (outline) {
+    return <BpkButtonOutline {...rest}>{children}</BpkButtonOutline>;
   }
-  if (className) {
-    classNames.push(className);
+  if (link) {
+    return <BpkButtonLink {...rest}>{children}</BpkButtonLink>;
   }
-
-  const classNameFinal = classNames.join(' ');
-
-  if (href) {
-    return (
-      <a href={href} className={classNameFinal} onClick={onClick} {...rest}>
-        {children}
-      </a>
-    );
-  }
-
-  // Due to React bug in Chrome, the onClick event fires even if the button is disabled.
-  // Pull request is being worked on (as of 2016-12-22): https://github.com/facebook/react/pull/8329
-  const onClickWrapper = onClick
-    ? (...args) => {
-        if (!disabled) {
-          onClick(...args);
-        }
-      }
-    : null;
-
-  const buttonType = submit ? 'submit' : 'button';
-
-  return (
-    <button
-      type={buttonType}
-      disabled={disabled}
-      className={classNameFinal}
-      onClick={onClickWrapper}
-      {...rest}
-    >
-      {children}
-    </button>
-  );
+  return <BpkButtonPrimary {...rest}>{children}</BpkButtonPrimary>;
 };
 
 BpkButton.propTypes = {
@@ -136,10 +86,13 @@ BpkButton.propTypes = {
   submit: PropTypes.bool,
   secondary: PropTypes.bool,
   destructive: PropTypes.bool,
+  featured: PropTypes.bool,
+  outline: PropTypes.bool,
   large: PropTypes.bool,
   link: PropTypes.bool,
   iconOnly: PropTypes.bool,
-  featured: PropTypes.bool,
+  blank: PropTypes.bool,
+  rel: PropTypes.string,
 };
 
 BpkButton.defaultProps = {
@@ -150,10 +103,13 @@ BpkButton.defaultProps = {
   submit: false,
   secondary: false,
   destructive: false,
+  featured: false,
+  outline: false,
   large: false,
   link: false,
   iconOnly: false,
-  featured: false,
+  blank: false,
+  rel: null,
 };
 
 export default BpkButton;

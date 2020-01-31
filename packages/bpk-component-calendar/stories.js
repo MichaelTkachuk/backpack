@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,8 @@ import React, { Component } from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import addMonths from 'date-fns/add_months';
+import BpkText from 'bpk-component-text';
+
 import {
   formatMonth,
   formatDateFull,
@@ -32,16 +34,15 @@ import {
   weekDaysJapanese,
   weekDays,
 } from './test-utils';
+import MonthViewCalendar from './stories-components';
 
 import BpkCalendar, {
-// BpkCalendarView,
+  // BpkCalendarView,
   BpkCalendarGrid,
   BpkCalendarGridHeader,
   BpkCalendarNav,
   BpkCalendarDate,
 } from './index';
-
-import MonthViewCalendar from './stories-components';
 
 class CalendarContainer extends Component {
   constructor(props) {
@@ -53,6 +54,7 @@ class CalendarContainer extends Component {
       date,
     };
   }
+
   render() {
     return (
       <BpkCalendar
@@ -114,6 +116,7 @@ storiesOf('bpk-component-calendar', module)
       formatMonth={formatMonth}
       formatDateFull={formatDateFull}
       daysOfWeek={weekDays}
+      weekStartsOn={1}
       changeMonthLabel="Change month"
     />
   ))
@@ -123,6 +126,7 @@ storiesOf('bpk-component-calendar', module)
       formatMonth={formatMonth}
       formatDateFull={formatDateFull}
       daysOfWeek={weekDays}
+      weekStartsOn={1}
       changeMonthLabel="Change month"
       minDate={new Date(2011, 1, 1)}
       selectTodaysDate={false}
@@ -135,6 +139,7 @@ storiesOf('bpk-component-calendar', module)
       formatMonth={formatMonth}
       formatDateFull={formatDateFull}
       daysOfWeek={weekDays}
+      weekStartsOn={1}
       changeMonthLabel="Change month"
       showWeekendSeparator={false}
     />
@@ -145,8 +150,8 @@ storiesOf('bpk-component-calendar', module)
       formatMonth={formatMonth}
       formatDateFull={formatDateFull}
       daysOfWeek={weekDays}
-      changeMonthLabel="Change month"
       weekStartsOn={0}
+      changeMonthLabel="Change month"
     />
   ))
   .add('Calendar - Honest weekend', () => (
@@ -155,7 +160,19 @@ storiesOf('bpk-component-calendar', module)
       formatMonth={formatMonth}
       formatDateFull={formatDateFull}
       daysOfWeek={weekDaysMoreWeekend}
+      weekStartsOn={1}
       changeMonthLabel="Change month"
+    />
+  ))
+  .add('Calendar - weekDayKey is nameNarrow', () => (
+    <CalendarContainer
+      id="myCalendar"
+      formatMonth={formatMonth}
+      formatDateFull={formatDateFull}
+      daysOfWeek={weekDays}
+      weekStartsOn={0}
+      changeMonthLabel="Change month"
+      weekDayKey="nameNarrow"
     />
   ))
   .add('Calendar - ar-AE locale', () => (
@@ -164,8 +181,8 @@ storiesOf('bpk-component-calendar', module)
       formatMonth={formatMonthArabic}
       formatDateFull={formatDateFullArabic}
       daysOfWeek={weekDaysArabic}
-      changeMonthLabel="Change month"
       weekStartsOn={6}
+      changeMonthLabel="Change month"
     />
   ))
   .add('Calendar - ja-JP locale', () => (
@@ -174,8 +191,8 @@ storiesOf('bpk-component-calendar', module)
       formatMonth={formatMonthJapanese}
       formatDateFull={formatDateFullJapanese}
       daysOfWeek={weekDaysJapanese}
-      changeMonthLabel="Change month"
       weekStartsOn={0}
+      changeMonthLabel="Change month"
     />
   ))
   .add('Calendar - Specify min/max date', () => (
@@ -184,6 +201,7 @@ storiesOf('bpk-component-calendar', module)
       formatMonth={formatMonth}
       formatDateFull={formatDateFull}
       daysOfWeek={weekDays}
+      weekStartsOn={1}
       changeMonthLabel="Change month"
       minDate={new Date(2020, 4, 15)}
       maxDate={new Date(2020, 5, 15)}
@@ -195,6 +213,7 @@ storiesOf('bpk-component-calendar', module)
       formatMonth={formatMonth}
       formatDateFull={formatDateFull}
       daysOfWeek={weekDays}
+      weekStartsOn={1}
       changeMonthLabel="Change month"
       markToday={false}
     />
@@ -205,8 +224,26 @@ storiesOf('bpk-component-calendar', module)
       formatMonth={formatMonth}
       formatDateFull={formatDateFull}
       daysOfWeek={weekDays}
+      weekStartsOn={1}
       changeMonthLabel="Change month"
       markOutsideDays={false}
     />
   ))
-  .add('Custom composed calendar', () => <MonthViewCalendar />);
+  .add('Custom composed calendar', () => <MonthViewCalendar weekStartsOn={1} />)
+  .add('Custom composed calendar (Safary DST bug)', () => (
+    <div>
+      <p>
+        <BpkText>Set your timezone to BRT (Brasilia)</BpkText>
+      </p>
+      <p>
+        <BpkText>Departure date should be Nov 3 and return Nov 4</BpkText>
+      </p>
+      <MonthViewCalendar
+        minDate={new Date(2018, 10, 1)}
+        maxDate={new Date(2018, 10, 20)}
+        departureDate={new Date(2018, 10, 3)}
+        returnDate={new Date(2018, 10, 4, 1, 0, 0, 0)}
+        weekStartsOn={0}
+      />
+    </div>
+  ));

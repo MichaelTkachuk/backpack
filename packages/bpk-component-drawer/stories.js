@@ -1,7 +1,7 @@
 /*
  * Backpack - Skyscanner's Design System
  *
- * Copyright 2018 Skyscanner Ltd
+ * Copyright 2016-2020 Skyscanner Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,13 +20,12 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { storiesOf } from '@storybook/react';
 import { cssModules, withDefaultProps } from 'bpk-react-utils';
-
 import BpkButton from 'bpk-component-button';
 import BpkText from 'bpk-component-text';
 
-import BpkDrawer from './index';
-
 import STYLES from './stories.scss';
+
+import BpkDrawer from './index';
 
 const getClassName = cssModules(STYLES);
 
@@ -40,32 +39,29 @@ class DrawerContainer extends Component {
   constructor() {
     super();
 
-    this.onOpen = this.onOpen.bind(this);
-    this.onClose = this.onClose.bind(this);
-
     this.state = {
       isOpen: false,
     };
   }
 
-  onOpen() {
+  onOpen = () => {
     this.setState({
       isOpen: true,
     });
-  }
+  };
 
-  onClose() {
+  onClose = () => {
     this.setState({
       isOpen: false,
     });
-  }
+  };
 
   render() {
     const { buttonText, ...rest } = this.props;
 
     return (
       <div id="drawer-container">
-        <div id="application-container">
+        <div id="pagewrap">
           <BpkButton onClick={this.onOpen}>{buttonText}</BpkButton>
           <Paragraph>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut egestas
@@ -149,9 +145,7 @@ storiesOf('bpk-component-drawer', module)
       title="Drawer title"
       closeLabel="Close drawer"
       buttonText="Open drawer"
-      getApplicationElement={() =>
-        document.getElementById('application-container')
-      }
+      getApplicationElement={() => document.getElementById('pagewrap')}
     >
       This is a default drawer. You can put anything you want in here.
     </DrawerContainer>
@@ -161,9 +155,7 @@ storiesOf('bpk-component-drawer', module)
       title="Drawer title"
       closeLabel="Close drawer"
       buttonText="Open overflowing drawer"
-      getApplicationElement={() =>
-        document.getElementById('application-container')
-      }
+      getApplicationElement={() => document.getElementById('pagewrap')}
     >
       <Paragraph>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla lacus
@@ -288,9 +280,7 @@ storiesOf('bpk-component-drawer', module)
       title="Drawer title"
       closeText="Done"
       buttonText="Open drawer"
-      getApplicationElement={() =>
-        document.getElementById('application-container')
-      }
+      getApplicationElement={() => document.getElementById('pagewrap')}
     >
       This is a default drawer. You can put anything you want in here.
     </DrawerContainer>
@@ -301,9 +291,7 @@ storiesOf('bpk-component-drawer', module)
       hideTitle
       closeLabel="Close drawer"
       buttonText="Open drawer"
-      getApplicationElement={() =>
-        document.getElementById('application-container')
-      }
+      getApplicationElement={() => document.getElementById('pagewrap')}
     >
       This is a default drawer. You can put anything you want in here.
     </DrawerContainer>
@@ -313,9 +301,7 @@ storiesOf('bpk-component-drawer', module)
       title="Drawer title"
       closeLabel="Close drawer"
       buttonText="Open drawer"
-      getApplicationElement={() =>
-        document.getElementById('application-container')
-      }
+      getApplicationElement={() => document.getElementById('pagewrap')}
       contentClassName={getClassName('bpk-drawer-content-container')}
     >
       This is a flex drawer. You can put anything you want in here.
